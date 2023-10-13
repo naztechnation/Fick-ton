@@ -3,7 +3,7 @@ import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
 
-import '../../ui/widgets/text_edit_view.dart';
+import '../../widgets/text_edit_view.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

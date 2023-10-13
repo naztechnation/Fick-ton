@@ -1,14 +1,14 @@
-import 'package:fikkton/landing_page_component/homepage/movie_details_page.dart';
-import 'package:fikkton/landing_page_component/homepage/search_page.dart';
+import 'package:fikkton/ui/landing_page_component/homepage/movie_details_page.dart';
+import 'package:fikkton/ui/landing_page_component/homepage/search_page.dart';
 import 'package:fikkton/res/app_colors.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
 import 'package:flutter/material.dart';
 
-import '../../res/app_images.dart';
-import '../../ui/widgets/modals.dart';
+import '../../../res/app_images.dart';
+import '../../widgets/modals.dart';
 import '../movie.dart';
 import 'widgets/filter_container.dart';
-import '../../ui/widgets/image_view.dart';
+import '../../widgets/image_view.dart';
 import 'widgets/filter_modal.dart';
 import 'widgets/movies_item.dart';
 
@@ -41,43 +41,47 @@ class _HomePageState extends State<HomePage> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20.0),
         child: Container(
-          decoration: const BoxDecoration(
-               ),
-                  child: Stack(
-                    children: [
-                      
-                      const ImageView.asset(AppImages.house, fit: BoxFit.cover),
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: Container(
-                                   
-                                    color: Colors.black38,
-                                  ),
-                      ),
-                         Positioned(
-                        top: 20,
-                        left: 20,
-                         
-                        child: Text('Tv Series'.toUpperCase(), style:const TextStyle(color: Colors.white),)
-                      ),
-                       const Positioned(
-                        top: 20,
-                        right: 20,
-                         
-                        child: Text('3 min ago', style: TextStyle(color: Colors.white),)
-                      ),
-                       const Positioned(
-                        bottom: 40,
-                        right: 0,
-                        left: 0,
-                         
-                        child: Align(child: Text('House Of The Dragon - Season 1', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800),))
-                      ),
-                    ],
-                  ),
+          decoration: const BoxDecoration(),
+          child: Stack(
+            children: [
+              const ImageView.asset(AppImages.house, fit: BoxFit.cover),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  color: Colors.black38,
+                ),
+              ),
+              Positioned(
+                  top: 20,
+                  left: 20,
+                  child: Text(
+                    'Tv Series'.toUpperCase(),
+                    style: const TextStyle(color: Colors.white),
+                  )),
+              const Positioned(
+                  top: 20,
+                  right: 20,
+                  child: Text(
+                    '3 min ago',
+                    style: TextStyle(color: Colors.white),
+                  )),
+              const Positioned(
+                  bottom: 40,
+                  right: 0,
+                  left: 0,
+                  child: Align(
+                      child: Text(
+                    'House Of The Dragon - Season 1',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800),
+                  ))),
+            ],
+          ),
         ),
       ),
     );
@@ -93,7 +97,7 @@ class _HomePageState extends State<HomePage> {
               height: MediaQuery.sizeOf(context).height * 0.03,
             ),
           ),
-            Padding(
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +121,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    AppNavigator.pushAndStackPage(context, page: const SearchPage());
+                    AppNavigator.pushAndStackPage(context,
+                        page: const SearchPage());
                   },
                   child: const ImageView.svg(
                     AppImages.search,
@@ -137,14 +142,14 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Trending',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400),
                       )),
                 ),
                 const SizedBox(
@@ -183,22 +188,22 @@ class _HomePageState extends State<HomePage> {
                           Modals.showBottomSheetModal(context,
                               isDissmissible: true,
                               heightFactor: 0.8,
-                              page: filterModalContent(filterItems: [
-                                'Recent',
-                                'Popular',
-                                'Oldest',
-                                'A - Z',
-                                'Z - A'
-                              ], title: 'Filter by', context: context,
-                              onPressed: (item) {
-                                Navigator.pop(context);
+                              page: filterModalContent(
+                                  filterItems: [
+                                    'Recent',
+                                    'Popular',
+                                    'Oldest',
+                                    'A - Z',
+                                    'Z - A'
+                                  ],
+                                  title: 'Filter by',
+                                  context: context,
+                                  onPressed: (item) {
+                                    Navigator.pop(context);
                                     setState(() {
                                       recent = item;
                                     });
-                                  }
-                              
-                              ));
-                              
+                                  }));
                         },
                       ),
                       const SizedBox(
@@ -219,9 +224,9 @@ class _HomePageState extends State<HomePage> {
                                   title: 'Filter by Type',
                                   context: context,
                                   onPressed: (item) {
-                                Navigator.pop(context);
-          
-                                   setState(() {
+                                    Navigator.pop(context);
+
+                                    setState(() {
                                       types = item;
                                     });
                                   }));
@@ -236,25 +241,26 @@ class _HomePageState extends State<HomePage> {
                           Modals.showBottomSheetModal(context,
                               isDissmissible: true,
                               heightFactor: 1.2,
-                              page: filterModalContent(filterItems: [
-                                'Action',
-                                'Adventure',
-                                'Animation',
-                                'Comedy',
-                                'Crime',
-                                'Documentary',
-                                'Family',
-                                'Romance'
-                              ], title: 'Filter by Genres', context: context,
-                              onPressed: (item) {
-                                Navigator.pop(context);
-          
+                              page: filterModalContent(
+                                  filterItems: [
+                                    'Action',
+                                    'Adventure',
+                                    'Animation',
+                                    'Comedy',
+                                    'Crime',
+                                    'Documentary',
+                                    'Family',
+                                    'Romance'
+                                  ],
+                                  title: 'Filter by Genres',
+                                  context: context,
+                                  onPressed: (item) {
+                                    Navigator.pop(context);
+
                                     setState(() {
                                       genres = item;
                                     });
-                                  }
-                              
-                              ));
+                                  }));
                         },
                       ),
                     ],
@@ -269,10 +275,11 @@ class _HomePageState extends State<HomePage> {
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, index) {
                       return GestureDetector(
-                        onTap: (){
-                          AppNavigator.pushAndStackPage(context, page:   YoutubePlayerDemoApp());
-                        },
-                        child: MoviesItems());
+                          onTap: () {
+                            AppNavigator.pushAndStackPage(context,
+                                page:   MovieDetailsScreen());
+                          },
+                          child: MoviesItems());
                     }),
                 const SizedBox(
                   height: 30,

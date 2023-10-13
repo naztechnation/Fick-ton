@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../res/app_images.dart';
-import '../ui/widgets/image_view.dart';
-import '../utils/navigator/page_navigator.dart';
+import '../../res/app_images.dart';
+import '../widgets/image_view.dart';
+import '../../utils/navigator/page_navigator.dart';
 import 'homepage/movie_details_page.dart';
 import 'homepage/search_page.dart';
 import 'homepage/widgets/movies_item.dart';
@@ -87,7 +87,7 @@ class BookMarkPage extends StatelessWidget {
                     itemBuilder: (BuildContext context, index) {
                       return GestureDetector(
                         onTap: (){
-                          AppNavigator.pushAndStackPage(context, page: const MovieDetailsScreen());
+                          AppNavigator.pushAndStackPage(context, page:   MovieDetailsScreen());
                         },
                         child: MoviesItems());
                     }),

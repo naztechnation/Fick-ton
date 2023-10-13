@@ -1,4 +1,4 @@
-import 'package:fikkton/landing_page_component/main_page.dart';
+import 'package:fikkton/ui/landing_page_component/main_page.dart';
 import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/auth/otp_page.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';

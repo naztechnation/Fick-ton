@@ -2,7 +2,7 @@ import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
 
-import '../res/app_colors.dart';
+import '../../res/app_colors.dart';
 import 'bookmark_page.dart';
 import 'homepage/home_page.dart';
 
