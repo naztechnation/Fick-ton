@@ -9,9 +9,13 @@ class AppImages {
   static const article = '${_baseUrl}article.svg';
 
   static const articleOutline = '${_baseUrl}article_outline.svg';
-static const campaign = '${_baseUrl}article.svg';
+static const campaign = '${_baseUrl}campaign.svg';
 
   static const campaignOutline = '${_baseUrl}campaign_outline.svg';
+  static const edit = '${_baseUrl}edit.svg';
+  static const group = '${_baseUrl}group.svg';
+  static const news = '${_baseUrl}news.svg';
+  static const visibility = '${_baseUrl}visibility.svg';
 
   static const icon = '${_baseUrl}icon.png';
   static const rectangle = '${_baseUrl}rectangle.png';

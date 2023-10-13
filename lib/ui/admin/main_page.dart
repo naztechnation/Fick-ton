@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_images.dart';
 import '../widgets/custom_button_nav.dart/custom_button_nav.dart';
+import 'dashboard.dart';
 
 class AdminMainPage extends StatefulWidget {
   const AdminMainPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class AdminMainPage extends StatefulWidget {
 
 class _AdminMainPageState extends State<AdminMainPage> {
   final List<Widget> _pages = [
-      Container(),
+    const  Dashboard(),
     Container(),
     Container(),
     Container(),
@@ -57,8 +58,11 @@ class _AdminMainPageState extends State<AdminMainPage> {
         child: FABBottomAppBar(
           height: 80,
           onTabSelected: _onItemTapped,
-          color: AppColors.lightPrimary,
-          selectedColor: AppColors.lightPrimary,
+          color: Colors.black87,
+          selectedIconHeight: 25,
+          iconHeight: 24,
+          
+          selectedColor: AppColors.lightSecondary,
           backgroundColor: AppColors.cardColor,
           notchedShape: const CircularNotchedRectangle(),
           selectedFontSize: 12,
