@@ -56,7 +56,7 @@ class PinCodeView extends StatelessWidget {
             activeBorderWidth: 0.7,
             inactiveBorderWidth: 0.7,
             selectedBorderWidth: 0.7,
-            fieldHeight: 50,
+            fieldHeight: 55,
             fieldWidth: 55,
             
             selectedColor: Colors.white,

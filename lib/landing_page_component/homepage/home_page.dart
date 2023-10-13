@@ -1,3 +1,4 @@
+import 'package:fikkton/landing_page_component/homepage/movie_details_page.dart';
 import 'package:fikkton/landing_page_component/homepage/search_page.dart';
 import 'package:fikkton/res/app_colors.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../res/app_images.dart';
 import '../../ui/widgets/modals.dart';
+import '../movie.dart';
 import 'widgets/filter_container.dart';
 import '../../ui/widgets/image_view.dart';
 import 'widgets/filter_modal.dart';
@@ -266,7 +268,11 @@ class _HomePageState extends State<HomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, index) {
-                      return MoviesItems();
+                      return GestureDetector(
+                        onTap: (){
+                          AppNavigator.pushAndStackPage(context, page:   YoutubePlayerDemoApp());
+                        },
+                        child: MoviesItems());
                     }),
                 const SizedBox(
                   height: 30,
