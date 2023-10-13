@@ -1,10 +1,12 @@
 import 'package:fikkton/res/app_images.dart';
+import 'package:fikkton/ui/landing_page_component/notification/notifications.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../res/app_colors.dart';
 import 'bookmark_page.dart';
 import 'homepage/home_page.dart';
+import 'profile.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -19,8 +21,8 @@ class _LandingPageState extends State<LandingPage> {
   final List<Widget> _pages = [
     const HomePage(),
     const BookMarkPage(),
-    Container(),
-    Container(),
+   const NotificationsScreen(),
+    const ProfileScreen(),
   ];
 
   @override

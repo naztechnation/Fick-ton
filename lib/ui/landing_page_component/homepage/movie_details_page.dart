@@ -84,17 +84,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   height: MediaQuery.sizeOf(context).height * 0.04,
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Align(
-                  alignment: Alignment.topLeft,
-                  child: ImageView.svg(
-                    AppImages.arrowBack,
-                    color: Colors.black,
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: ImageView.svg(
+                        AppImages.arrowBack,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 30,),
+                   const Text(
+                          "Fik-kton",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                ],
               ),
               const SizedBox(
                 height: 20,
@@ -155,8 +164,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         ),
                       ],
                     ),
+                     SizedBox(
+                      height: 25,
+                    ),
+                    Divider(),
                     SizedBox(
-                      height: 55,
+                      height: 30,
                     ),
                     Text(
                       """House of the Dragon" is an American television series that serves as a prequel to the immensely popular fantasy series "Game of Thrones." The show is based on George R.R. Martin's book "Fire & Blood," which chronicles the history of House Targaryen, a prominent family in the fictional world of Westeros.
@@ -220,9 +233,9 @@ The series explores the early days of House Targaryen, focusing on key historica
           )),
         ),
         bottomNavigationBar:  SizedBox(
-          height: 100,
+          height: 90,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
                 Container(
@@ -251,6 +264,7 @@ The series explores the early days of House Targaryen, focusing on key historica
                   controller: TextEditingController(),
                   isDense: true,
                   filled: true,
+                  hintText: 'Add a comment',
                   fillColor: Colors.grey.shade50,
                   suffixIcon: const ImageView.svg(AppImages.send),
                 )),

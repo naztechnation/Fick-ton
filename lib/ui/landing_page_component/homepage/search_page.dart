@@ -25,18 +25,27 @@ class _SearchPageState extends State<SearchPage> {
                 height: MediaQuery.sizeOf(context).height * 0.04,
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Align(
-                alignment: Alignment.topLeft,
-                child: ImageView.svg(
-                  AppImages.arrowBack,
-                  color: Colors.black,
-                ),
+            Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: ImageView.svg(
+                        AppImages.arrowBack,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 30,),
+                   const Text(
+                          "Fik-kton",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                ],
               ),
-            ),
             const SizedBox(
               height: 30,
             ),
@@ -159,7 +168,7 @@ class _SearchPageState extends State<SearchPage> {
                       children: [
                         Align(
                             alignment: Alignment.center,
-                            child: ImageView.asset(AppImages.empty)),
+                            child: ImageView.asset(AppImages.empty, height: 160,)),
                         SizedBox(height: 40.0),
                         Text(
                           "Not Found",
