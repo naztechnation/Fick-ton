@@ -191,6 +191,7 @@ The series explores the early days of House Targaryen, focusing on key historica
               const Row(
                 children: [
                   ImageView.svg(AppImages.thumbUp),
+                    SizedBox(width: 10,),
                   Text(
                     "50",
                   ),
@@ -266,7 +267,9 @@ The series explores the early days of House Targaryen, focusing on key historica
                   filled: true,
                   hintText: 'Add a comment',
                   fillColor: Colors.grey.shade50,
-                  suffixIcon: const ImageView.svg(AppImages.send),
+                  suffixIcon: const SizedBox(
+                    height: 12,
+                    child: ImageView.svg(AppImages.send, height: 10,)),
                 )),
               ],
             ),

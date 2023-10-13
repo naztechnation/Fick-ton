@@ -1,8 +1,9 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../provider/items.dart';
-import '../image_view.dart';
 
 class FABBottomAppBarItem {
   FABBottomAppBarItem({
@@ -65,7 +66,6 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    final pageIndexProvider = Provider.of<PageIndexProvider>(context);
 
     List<Widget> items = List.generate(
         widget.items.length, (int index) {
@@ -80,7 +80,6 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     return BottomAppBar(
       shape: widget.notchedShape,
       notchMargin: 3.0,
-      elevation: 5,
       color: widget.backgroundColor,
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -134,7 +133,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                ImageView.svg(icon,
+                Image.asset(icon,
                   color: color,
                   height: iconHeight,
                   width: iconWidth),

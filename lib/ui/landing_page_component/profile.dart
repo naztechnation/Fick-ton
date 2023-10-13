@@ -4,6 +4,8 @@ import 'package:fikkton/ui/widgets/text_edit_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../res/app_images.dart';
+import '../../utils/navigator/page_navigator.dart';
+import '../admin/main_page.dart';
 import '../widgets/image_view.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -103,7 +105,9 @@ class ProfileScreen extends StatelessWidget {
                   child: const Text('Change Password', style: TextStyle(color: AppColors.lightPrimary, fontSize: 14),),),
 
                   const SizedBox(height:30,),
-                  ButtonView(onPressed: (){}, 
+                  ButtonView(onPressed: (){
+                    AppNavigator.pushAndStackPage(context, page: const AdminMainPage());
+                  }, 
                   borderRadius: 30,
                   color: Colors.white, borderColor: AppColors.lightSecondary,
                   padding: const EdgeInsets.symmetric(vertical: 20), 

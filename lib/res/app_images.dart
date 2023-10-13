@@ -4,6 +4,15 @@ class AppImages {
  
 
   static const logo = '${_baseUrl}logo.svg';
+  static const dashboard = '${_baseUrl}dashboard.svg';
+  static const dashboardOutline = '${_baseUrl}dashboard_outline.svg';
+  static const article = '${_baseUrl}article.svg';
+
+  static const articleOutline = '${_baseUrl}article_outline.svg';
+static const campaign = '${_baseUrl}article.svg';
+
+  static const campaignOutline = '${_baseUrl}campaign_outline.svg';
+
   static const icon = '${_baseUrl}icon.png';
   static const rectangle = '${_baseUrl}rectangle.png';
   static const empty = '${_baseUrl}empty.png';
