@@ -277,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                       return GestureDetector(
                           onTap: () {
                             AppNavigator.pushAndStackPage(context,
-                                page:   MovieDetailsScreen());
+                                page: MovieDetailsScreen());
                           },
                           child: MoviesItems());
                     }),

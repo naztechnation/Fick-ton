@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 Widget filterModalContent(
-    {required String title, required List<String> filterItems,required BuildContext context,required Function(String item) onPressed}) {
+    {required String title,
+    required List<String> filterItems,
+    required BuildContext context,
+    required Function(String item) onPressed}) {
   return Container(
     decoration: const BoxDecoration(
         color: Colors.white,
@@ -20,11 +23,12 @@ Widget filterModalContent(
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
               const SizedBox(width: 8.0),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
                 child: const Padding(
@@ -46,14 +50,16 @@ Widget filterModalContent(
             shrinkWrap: true,
             itemBuilder: (BuildContext context, index) {
               return GestureDetector(
-                onTap: (){
+                onTap: () {
                   onPressed(filterItems[index]);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 28.0),
                   child: Center(
-                    child: Text(filterItems[index],
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    child: Text(
+                      filterItems[index],
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ),

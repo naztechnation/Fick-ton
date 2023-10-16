@@ -73,7 +73,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Scaffold(
-         resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -98,11 +98,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 30,),
-                   const Text(
-                          "Fik-kton",
-                          style: TextStyle(fontSize: 18),
-                        ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  const Text(
+                    "Fik-kton",
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -145,8 +147,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     SizedBox(height: 12.0),
                     Text(
                       "House Of The Dragon - Season 1",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                     ),
                     SizedBox(height: 16.0),
                     Row(
@@ -164,7 +166,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         ),
                       ],
                     ),
-                     SizedBox(
+                    SizedBox(
                       height: 25,
                     ),
                     Divider(),
@@ -191,7 +193,9 @@ The series explores the early days of House Targaryen, focusing on key historica
               const Row(
                 children: [
                   ImageView.svg(AppImages.thumbUp),
-                    SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Text(
                     "50",
                   ),
@@ -211,8 +215,8 @@ The series explores the early days of House Targaryen, focusing on key historica
                   children: [
                     Text(
                       "Comments (20)",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                     ),
                     Icon(Icons.arrow_forward_sharp)
                   ],
@@ -233,7 +237,7 @@ The series explores the early days of House Targaryen, focusing on key historica
             ],
           )),
         ),
-        bottomNavigationBar:  SizedBox(
+        bottomNavigationBar: SizedBox(
           height: 90,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -268,8 +272,11 @@ The series explores the early days of House Targaryen, focusing on key historica
                   hintText: 'Add a comment',
                   fillColor: Colors.grey.shade50,
                   suffixIcon: const SizedBox(
-                    height: 12,
-                    child: ImageView.svg(AppImages.send, height: 10,)),
+                      height: 12,
+                      child: ImageView.svg(
+                        AppImages.send,
+                        height: 10,
+                      )),
                 )),
               ],
             ),
