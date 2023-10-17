@@ -1,5 +1,7 @@
-
-
+import 'package:fikkton/ui/admin/announce.dart';
+import 'package:fikkton/ui/admin/posts.dart';
+import 'package:fikkton/ui/landing_page_component/homepage/widgets/navigation_helper.dart';
+import 'package:fikkton/ui/admin/new_post.dart';
 import 'package:flutter/material.dart';
 
 import '../../res/app_colors.dart';
@@ -16,9 +18,9 @@ class AdminMainPage extends StatefulWidget {
 
 class _AdminMainPageState extends State<AdminMainPage> {
   final List<Widget> _pages = [
-    const  Dashboard(),
-    Container(),
-    Container(),
+    const Dashboard(),
+    const Posts(),
+    const Announce(),
     Container(),
   ];
 
@@ -41,14 +43,17 @@ class _AdminMainPageState extends State<AdminMainPage> {
               borderRadius: BorderRadius.circular(100.0),
               side: const BorderSide(color: AppColors.lightSecondary)),
           splashColor: AppColors.lightSecondary,
-          child: const Icon(Icons.add, color: Colors.white,),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
           onPressed: () {
-            // NavigationHelper.navigateToPage(context, KycServiceScreenOne());
+            NavigationHelper.navigateToPage(context, const NewPost());
           },
         ),
       ),
       bottomNavigationBar: Container(
-        height:80,
+        height: 80,
         decoration: const BoxDecoration(
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -61,12 +66,10 @@ class _AdminMainPageState extends State<AdminMainPage> {
           color: Colors.black87,
           selectedIconHeight: 25,
           iconHeight: 24,
-          
           selectedColor: AppColors.lightSecondary,
           backgroundColor: AppColors.cardColor,
           notchedShape: const CircularNotchedRectangle(),
           selectedFontSize: 12,
-          
           items: [
             FABBottomAppBarItem(
               label: 'Home',
@@ -86,7 +89,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
             FABBottomAppBarItem(
               label: 'Profile',
               icon: AppImages.profileOutline,
-              selectedIcon:AppImages.profile,
+              selectedIcon: AppImages.profile,
             ),
           ],
         ),
@@ -95,7 +98,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
     );
   }
 
-    void _onItemTapped(int index) {
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });

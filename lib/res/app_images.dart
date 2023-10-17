@@ -1,15 +1,13 @@
 class AppImages {
   static const String _baseUrl = 'assets/images/';
 
- 
-
   static const logo = '${_baseUrl}logo.svg';
   static const dashboard = '${_baseUrl}dashboard.svg';
   static const dashboardOutline = '${_baseUrl}dashboard_outline.svg';
   static const article = '${_baseUrl}article.svg';
 
   static const articleOutline = '${_baseUrl}article_outline.svg';
-static const campaign = '${_baseUrl}campaign.svg';
+  static const campaign = '${_baseUrl}campaign.svg';
 
   static const campaignOutline = '${_baseUrl}campaign_outline.svg';
   static const edit = '${_baseUrl}edit.svg';
@@ -18,6 +16,10 @@ static const campaign = '${_baseUrl}campaign.svg';
   static const visibility = '${_baseUrl}visibility.svg';
 
   static const icon = '${_baseUrl}icon.png';
+  static const delete = '${_baseUrl}delete.png';
+  static const uploadimage = '${_baseUrl}upload-image.png';
+  static const uploadd = '${_baseUrl}uploadd.png';
+  static const galleryAdd = '${_baseUrl}gallery-add.png';
   static const rectangle = '${_baseUrl}rectangle.png';
   static const empty = '${_baseUrl}empty.png';
   static const arrowBack = '${_baseUrl}arrow_back_ios.svg';
@@ -39,5 +41,4 @@ static const campaign = '${_baseUrl}campaign.svg';
   static const avengers = '${_baseUrl}avengers.jpeg';
   static const regSuccess = '${_baseUrl}reg_success.png';
   static const loading = '${_baseUrl}loading.gif';
- 
 }
