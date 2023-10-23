@@ -2,6 +2,7 @@
 
 
 import 'package:fikkton/res/app_images.dart';
+import 'package:fikkton/ui/auth/auth.dart';
 import 'package:fikkton/ui/auth/reset_password.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
@@ -48,7 +49,9 @@ class _OtpScreenState extends State<OtpScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final token = Provider.of<AccountViewModel>(context, listen: true).token;
+    final getToken = Provider.of<AccountViewModel>(context, listen: true);
+
+    getToken.getToken();
 
     return   Scaffold(
       body: BlocProvider<AccountCubit>(
@@ -59,10 +62,15 @@ class _OtpScreenState extends State<OtpScreen> {
       child: BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
           if (state is AccountLoaded) {
-            Modals.showToast(state.userData.message!,
+           if(state.userData.status == 1){
+             Modals.showToast(state.userData.message!,
                 messageType: MessageType.success);
 
-             
+              AppNavigator.pushAndReplacePage(context, page:const LoginScreen());
+           }else{
+              Modals.showToast(state.userData.message!,
+                messageType: MessageType.error);
+           }
           } else if (state is AccountApiErr) {
             if (state.message != null) {
               Modals.showToast(state.message!, messageType: MessageType.error);
@@ -118,7 +126,7 @@ class _OtpScreenState extends State<OtpScreen> {
             ),
             const SizedBox(height: 16),
                Text(
-              'We’ve sent a code to\n ${replaceSubstring('agbo.raph123@gmail.com',)}',
+              'We’ve sent a code to\n ${replaceSubstring(widget.email,)}',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.white,
@@ -138,7 +146,8 @@ class _OtpScreenState extends State<OtpScreen> {
                       controller: _pinController,
                       onChanged: (_) {},
                       onCompleted: (_) {
-                        _verifyCode(context, token);
+                        //_verifyCode(context, token);
+                       
                       },
                        validator: Validator.validate
                     ),
@@ -201,12 +210,14 @@ class _OtpScreenState extends State<OtpScreen> {
         child: ButtonView(
           color: Colors.white,
           borderColor: Colors.white,
+          processing: state is AccountLoading,
           borderRadius: 30,
           onPressed: () {
-            AppNavigator.pushAndStackPage(context, page:const ResetPasswordScreen());
+             _verifyCode(context, getToken.token);
+            
           },
           child: const Text(
-            'Change Password',
+            'Verify Code',
             style: TextStyle(color: AppColors.lightSecondary),
           ),
         ),
@@ -241,28 +252,10 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   String replaceSubstring(String input) {
-  // Split the input string by spaces
-  List<String> words = input.split(' ');
+  
+ 
 
-  // Ensure that we have at least three words and there's an email address
-  if (words.length < 3 || !input.contains('@') || !input.contains('.')) {
-    return input; // Return the original string if conditions are not met
-  }
-
-  // Find the index of the word containing the email address
-  int emailIndex = words.indexWhere((word) => word.contains('@'));
-
-  if (emailIndex == -1) {
-    return input; // Return the original string if no email address is found
-  }
-
-  // Replace the substring from the third word to the dot with '*'
-  String emailWord = words[emailIndex];
-  int dotIndex = emailWord.indexOf('.');
-  String replacement = '*' * (dotIndex + 1);
-  words.sublist(2, emailIndex + 1).forEach((word) {
-    input = input.replaceFirst(word, replacement);
-  });
+ input = input.replaceRange(3, 6,'****');
 
   return input;
 }

@@ -1,4 +1,5 @@
 import 'package:fikkton/ui/auth/forgot_password.dart';
+import 'package:fikkton/ui/landing_page_component/main_page.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,20 +12,14 @@ import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_images.dart';
 import '../../res/enum.dart';
-import '../../utils/change_animation.dart';
-import '../../utils/helper_functions.dart';
 import '../../utils/validator.dart';
 import '../auth/otp_page.dart';
-import 'bottom_text.dart';
 import 'button_view.dart';
 import 'image_view.dart';
 import 'modals.dart';
 import 'text_edit_view.dart';
 
-enum Screens {
-  createAccount,
-  welcomeBack,
-}
+ 
 
 class LoginContent extends StatefulWidget {
   const LoginContent({Key? key}) : super(key: key);
@@ -141,22 +136,8 @@ class _LoginContentState extends State<LoginContent>
     );
   }
 
-  @override
-  void initState() {
-    ChangeScreenAnimation.initialize(
-      vsync: this,
-      createAccountItems: 5,
-      loginItems: 5,
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    ChangeScreenAnimation.dispose();
-
-    super.dispose();
-  }
+   
+  
 
 
   List<String> gender = [
@@ -165,6 +146,8 @@ class _LoginContentState extends State<LoginContent>
   ];
   @override
   Widget build(BuildContext context) {
+    final setToken = Provider.of<AccountViewModel>(context, listen: true);
+
     return BlocProvider<AccountCubit>(
         lazy: false,
         create: (_) => AccountCubit(
@@ -175,7 +158,7 @@ class _LoginContentState extends State<LoginContent>
             if (state is AccountLoaded) {
               if (state.userData.status == 1) {
                 
-                
+                setToken.setToken(state.userData.token!);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
                     AppNavigator.pushAndReplacePage(context,
@@ -190,16 +173,15 @@ class _LoginContentState extends State<LoginContent>
             }
             if (state is AccountUpdated) {
               if (state.user.status == 1) {
-                // AppNavigator.pushAndReplacePage(context,
-                //     page: OtpScreen(
-                //       email: _emailController.text,
-                //       password: _passwordController.text,
-                //       phone: _phoneController.text,
-                //       username: _usernameController.text,
-                //     ));
-                Modals.showToast(state.user.message ?? '',
-                    messageType: MessageType.success);
-                // StorageHandler.saveUserName(_usernameController.text.trim());
+
+                  setToken.setToken(state.user.token!);
+                 Modals.showToast(state.user.message ?? '',);
+                
+                AppNavigator.pushAndReplacePage(context,
+                    page: const LandingPage(
+                     
+                    ));
+                
               } else {
                 Modals.showToast(state.user.message ?? '',
                     messageType: MessageType.success);
@@ -533,7 +515,7 @@ class _LoginContentState extends State<LoginContent>
   }
 
   _loginUser(BuildContext ctx) {
-    if (_formKey1.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().loginUser(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());

@@ -79,7 +79,7 @@ import 'account_states.dart';
       final userData=
           await accountRepository.verifyCode(code: code, token: token);
 
-       await viewModel.setToken(userData.token!);
+       await viewModel.setToken(userData.token ?? '');
       emit(AccountLoaded(userData));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));

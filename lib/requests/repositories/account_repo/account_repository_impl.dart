@@ -24,7 +24,7 @@ class AccountRepositoryImpl implements AccountRepository {
   
   @override
   Future<AuthData> loginUser({required String email, required String password}) async {
-    final map = await Requests().post(AppStrings.registerUrl, body: {
+    final map = await Requests().post(AppStrings.loginUrl, body: {
       "email": email,
       "password": password,
       
