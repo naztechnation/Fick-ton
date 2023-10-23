@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../res/app_colors.dart';
+
 class ProgressIndicators{
 
   static Widget circularProgressBar(BuildContext context,
@@ -7,8 +9,8 @@ class ProgressIndicators{
     return CircularProgressIndicator(
         value: value,
         strokeWidth: strokeWidth,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        backgroundColor: (Colors.blue));
+        valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+        backgroundColor: (AppColors.lightSecondary));
   }
 
   static Widget linearProgressBar(BuildContext context,

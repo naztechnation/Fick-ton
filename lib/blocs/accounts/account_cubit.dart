@@ -29,7 +29,7 @@ import 'account_states.dart';
         
           email: email, password: password, phone: phoneNumber,);
 
-       await viewModel.setToken(user.token!);
+       await viewModel.setToken(user.token ?? '');
       emit(AccountLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
@@ -53,6 +53,31 @@ import 'account_states.dart';
 
       final userData=
           await accountRepository.loginUser(email: email, password: password);
+
+       await viewModel.setToken(userData.token ?? '');
+      emit(AccountUpdated(userData));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> verifyCode(
+      {required String code, required String token}) async {
+    try {
+      emit(AccountLoading());
+
+      final userData=
+          await accountRepository.verifyCode(code: code, token: token);
 
        await viewModel.setToken(userData.token!);
       emit(AccountLoaded(userData));

@@ -77,7 +77,7 @@ class SplashScreenState extends State<SplashScreen>
               Padding(
                   padding: EdgeInsets.only(bottom: 30.0),
                   child: Text(
-                    'powered by fik-kton',
+                    'developed by naztech',
                     style: TextStyle(color: AppColors.cardColor),
                   ))
             ],

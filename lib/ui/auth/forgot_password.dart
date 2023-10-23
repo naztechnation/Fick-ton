@@ -98,7 +98,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         borderColor: Colors.white,
         borderRadius: 30,
         onPressed: () {
-          AppNavigator.pushAndStackPage(context, page: const OtpScreen());
+          AppNavigator.pushAndStackPage(context, page: const OtpScreen(email: '',));
         },
         child: const Text(
           'Continue',

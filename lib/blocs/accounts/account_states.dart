@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fikkton/model/auth_model/login.dart';
 
 
 abstract class AccountStates extends Equatable {
@@ -22,7 +23,7 @@ class AccountProcessing extends AccountStates {
 }
 
 class AccountLoaded extends AccountStates {
-  final dynamic userData;
+  final AuthData userData;
   const AccountLoaded(this.userData);
   @override
   List<Object> get props => [userData];
@@ -31,7 +32,7 @@ class AccountLoaded extends AccountStates {
 
 
 class AccountUpdated extends AccountStates {
-  final dynamic user;
+  final AuthData user;
   const AccountUpdated(this.user);
   @override
   List<Object> get props => [user];
