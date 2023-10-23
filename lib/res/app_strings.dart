@@ -6,11 +6,16 @@ class AppStrings {
   static const String interSans = 'InterSans';
   static const String montserrat = 'Montserrat';
 
+  static const String networkErrorMessage = "Network error, try again later";
+
+
 
   /// Base
-  static const String mainBaseUrl = '';
+  static const String _baseUrl = 'https://fikkton.com.ng/api/';
   
 
   /// User Endpoints
-  static const String loginUrl = '';
+  static const String loginUrl = '${_baseUrl}auth/login';
+  static const String registerUrl = '${_baseUrl}auth/register';
+  static const String verifyCodeUrl = '${_baseUrl}auth/verify_token';
 }

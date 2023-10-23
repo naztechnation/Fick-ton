@@ -10,6 +10,23 @@ class StorageHandler {
     }
   }
 
+  static Future<void> saveUserToken([String? token]) async {
+    if (token != null) {
+      await storage.write(key: 'TOKEN', value: token);
+    }
+  }
+
+
+   static Future<String?> getUserToken() async {
+    Map<String, String> value = await storage.readAll();
+    String? user;
+    String? data = value['TOKEN'];
+    if (data != null) {
+      user = data;
+    }
+    return user;
+  }
+
   static Future<String?> getUserDetails() async {
     Map<String, String> value = await storage.readAll();
     String? user;
