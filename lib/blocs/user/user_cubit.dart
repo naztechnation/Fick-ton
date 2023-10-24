@@ -59,6 +59,37 @@ import 'user_states.dart';
       }
     }
   }
+
+  Future<void> getPost({
+    required String token,
+    }) async {
+    try {
+      emit(PostListsLoading());
+
+      final posts = await userRepository.getAllPosts(
+        
+        token: token,
+        
+       
+       );
+
+       await viewModel.setPostLists(posts:posts);
+      
+      emit(PostListsLoaded(posts));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
   
 //   Future<void> getServiceTypes() async {
 //     try {

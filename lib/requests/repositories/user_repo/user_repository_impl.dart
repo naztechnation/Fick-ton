@@ -13,6 +13,7 @@
  import 'dart:io';
 
 import 'package:fikkton/model/auth_model/login.dart';
+import 'package:fikkton/model/posts/get_posts.dart';
 
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
@@ -46,6 +47,15 @@ class UserRepositoryImpl implements UserRepository {
         },
     );
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<GetAllPosts> getAllPosts({required String token}) async {
+    final map = await Requests().get(AppStrings.getPosts(token));
+     
+     
+    
+    return GetAllPosts.fromJson(map);
   }
 
 // @override

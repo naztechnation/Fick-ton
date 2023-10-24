@@ -1,7 +1,7 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/user_view_model.dart';
 import '../../res/app_images.dart';
 import '../widgets/image_view.dart';
 import '../../utils/navigator/page_navigator.dart';
@@ -14,20 +14,21 @@ class BookMarkPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Scaffold(
+    final user = Provider.of<UserViewModel>(context, listen: true);
+    return Scaffold(
       body: Column(
         children: [
-           SafeArea(
+          SafeArea(
             child: SizedBox(
               height: MediaQuery.sizeOf(context).height * 0.03,
             ),
           ),
-            Padding(
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                  const Row(
+                const Row(
                   children: [
                     ImageView.svg(
                       AppImages.logo,
@@ -46,7 +47,8 @@ class BookMarkPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    AppNavigator.pushAndStackPage(context, page: const SearchPage());
+                    AppNavigator.pushAndStackPage(context,
+                        page: const SearchPage());
                   },
                   child: const ImageView.svg(
                     AppImages.search,
@@ -59,42 +61,43 @@ class BookMarkPage extends StatelessWidget {
           ),
           const SizedBox(
             height: 20,
-            
           ),
-           const Align(
+          const Align(
             alignment: Alignment.topLeft,
-             child: Padding(
-               padding: EdgeInsets.symmetric(horizontal: 16.0),
-               child: Text(
-                          'My Bookmarks (33)',
-                          style:
-                              TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                        ),
-             ),
-           ),
-                     const SizedBox(
-                  height: 20,
-                ),
-            Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'My Bookmarks (33)',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
             child: SingleChildScrollView(
-              child: Column(children: [
-               
-         
-                ListView.builder(
-                    itemCount: 18,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, index) {
-                      return GestureDetector(
-                        onTap: (){
-                          AppNavigator.pushAndStackPage(context, page:   MovieDetailsScreen());
-                        },
-                        child: MoviesItems());
-                    }),
-                const SizedBox(
-                  height: 30,
-                ),
-              ],),
+              child: Column(
+                children: [
+                  ListView.builder(
+                      itemCount: user.posts.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, index) {
+                        return GestureDetector(
+                            onTap: () {
+                              AppNavigator.pushAndStackPage(context,
+                                  page: MovieDetailsScreen());
+                            },
+                            child: MoviesItems(
+                              posts: user.posts[index],
+                            ));
+                      }),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

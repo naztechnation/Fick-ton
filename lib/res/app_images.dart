@@ -41,4 +41,6 @@ class AppImages {
   static const avengers = '${_baseUrl}avengers.jpeg';
   static const regSuccess = '${_baseUrl}reg_success.png';
   static const loading = '${_baseUrl}loading.gif';
+  static const loading2 = '${_baseUrl}loading2.gif';
+  static const failed = '${_baseUrl}failed.gif';
 }

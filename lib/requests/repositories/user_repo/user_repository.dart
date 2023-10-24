@@ -3,6 +3,8 @@
 
 import 'package:fikkton/model/auth_model/login.dart';
 
+import '../../../model/posts/get_posts.dart';
+
 abstract class UserRepository {
   Future<AuthData> createPost({
     required String title,
@@ -17,7 +19,9 @@ abstract class UserRepository {
     
     });   
 
-//     Future<GetServiceTypes> getServiceTypes(); 
+     Future<GetAllPosts> getAllPosts({required String token});
+
+
 //     Future<GetReviews> getReviews({required String userId}); 
 //     Future<GalleryAgents> getGallery({required String userId}); 
 //     Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 

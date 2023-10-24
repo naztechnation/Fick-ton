@@ -94,7 +94,7 @@ class ImageView extends StatelessWidget {
         width: width,
         fadeInDuration: const Duration(seconds: 1),
         fadeInCurve: Curves.easeInCirc,
-        placeholder: placeholder ?? AppImages.icon,
+        placeholder: placeholder ?? AppImages.logo,
         image: url!,
         imageErrorBuilder: imageErrorBuilder ??
             (context, error, stackTrace) => Container(

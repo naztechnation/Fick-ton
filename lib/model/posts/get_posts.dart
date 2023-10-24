@@ -1,7 +1,7 @@
 class GetAllPosts {
   int? status;
   String? message;
-  List<Data>? data;
+  List<Posts>? data;
 
   GetAllPosts({this.status, this.message, this.data});
 
@@ -9,9 +9,9 @@ class GetAllPosts {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Posts>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(Posts.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class GetAllPosts {
   }
 }
 
-class Data {
+class Posts {
   String? id;
   String? title;
   String? content;
@@ -37,10 +37,10 @@ class Data {
   String? genre;
   String? isTrending;
   String? createdAt;
-  Null? updatedAt;
+  String? updatedAt;
   String? status;
 
-  Data(
+  Posts(
       {this.id,
       this.title,
       this.content,
@@ -53,7 +53,7 @@ class Data {
       this.updatedAt,
       this.status});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Posts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     content = json['content'];
