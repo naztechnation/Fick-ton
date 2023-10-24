@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,19 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository.dart';
 
- 
- import '../../utils/exceptions.dart';
+import '../../utils/exceptions.dart';
 import 'user_states.dart';
 
- class UserCubit extends Cubit<UserStates> {
-
-
+class UserCubit extends Cubit<UserStates> {
   UserCubit({required this.userRepository, required this.viewModel})
       : super(const InitialState());
   final UserRepository userRepository;
   final UserViewModel viewModel;
 
-  Future<void> createPost({required String title,
+  Future<void> createPost({
+    required String title,
     required String token,
     required String content,
     required File thumbnail,
@@ -26,7 +23,8 @@ import 'user_states.dart';
     required String genre,
     required String status,
     required String author,
-    required String trending,}) async {
+    required String trending,
+  }) async {
     try {
       emit(CreatePostLoading());
 
@@ -40,10 +38,8 @@ import 'user_states.dart';
         status: status,
         author: author,
         trending: trending,
-       
-       );
+      );
 
-      
       emit(CreatePostLoaded(agents));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -62,19 +58,16 @@ import 'user_states.dart';
 
   Future<void> getPost({
     required String token,
-    }) async {
+  }) async {
     try {
       emit(PostListsLoading());
 
       final posts = await userRepository.getAllPosts(
-        
         token: token,
-        
-       
-       );
+      );
 
-       await viewModel.setPostLists(posts:posts);
-      
+      await viewModel.setPostLists(posts: posts);
+
       emit(PostListsLoaded(posts));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -90,7 +83,35 @@ import 'user_states.dart';
       }
     }
   }
-  
+
+  Future<void> getPostDetails({
+    required String token,
+  }) async {
+    try {
+      emit(PostDetailsLoading());
+
+      final postsDetails = await userRepository.getPostsDetails(
+        token: token,
+      );
+
+      //  await viewModel.setPostLists(posts:posts);
+
+      emit(PostDetailsLoaded(postsDetails));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
 //   Future<void> getServiceTypes() async {
 //     try {
 //       emit(ServiceProviderListLoading());
@@ -99,7 +120,6 @@ import 'user_states.dart';
 //        );
 
 //        await viewModel.setServicesList(services:service.serviceTypes ?? []);
-
 
 //       emit(ServicesLoaded(service));
 //     } on ApiException catch (e) {
@@ -123,7 +143,7 @@ import 'user_states.dart';
 
 //       final user = await userRepository.serviceProvided(services: services, username: username, agentId: agentId
 //           );
- 
+
 //       emit(ServiceProviderListLoaded(user));
 //     } on ApiException catch (e) {
 //       emit(UserNetworkErrApiErr(e.message));
@@ -148,7 +168,7 @@ import 'user_states.dart';
 //          userId: userId
 //           );
 //        await viewModel.setReviews(reviews:reviews);
- 
+
 //       emit(ReviewLoaded(reviews));
 //     } on ApiException catch (e) {
 //       emit(UserNetworkErrApiErr(e.message));
@@ -173,7 +193,7 @@ import 'user_states.dart';
 //          userId: userId
 //           );
 //        await viewModel.setGallery(gallery:gallery);
- 
+
 //       emit(GalleryLoaded(gallery));
 //     } on ApiException catch (e) {
 //       emit(UserNetworkErrApiErr(e.message));
@@ -195,10 +215,10 @@ import 'user_states.dart';
 //       emit(AgentPackagesLoading());
 
 //       final packages = await userRepository.getAgentPackages(agentId: agentId, serviceId: serviceId
-          
+
 //           );
 //        await viewModel.setAgentPackages(agentPackage:packages);
- 
+
 //       emit(AgentPackagesLoaded(packages));
 //     } on ApiException catch (e) {
 //       emit(UserNetworkErrApiErr(e.message));
@@ -220,9 +240,9 @@ import 'user_states.dart';
 //       emit(ConfirmPaymentLoading());
 
 //       final payment = await userRepository.confirmPayment(agentId: agentId, username: username, purchaseId: purchaseId
-          
+
 //           );
-      
+
 //       emit(ConfirmPaymentLoaded(payment));
 //     } on ApiException catch (e) {
 //       emit(UserNetworkErrApiErr(e.message));
@@ -238,5 +258,4 @@ import 'user_states.dart';
 //       }
 //     }
 //   }
-
- }
+}

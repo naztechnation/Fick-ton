@@ -15,6 +15,7 @@
 import 'package:fikkton/model/auth_model/login.dart';
 import 'package:fikkton/model/posts/get_posts.dart';
 
+import '../../../model/posts/post_details.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
 import 'user_repository.dart';
@@ -56,6 +57,15 @@ class UserRepositoryImpl implements UserRepository {
      
     
     return GetAllPosts.fromJson(map);
+  }
+
+  @override
+  Future<PostDetails> getPostsDetails({required String token}) async {
+    final map = await Requests().get(AppStrings.getPostsDetails(token));
+     
+     
+    
+    return PostDetails.fromJson(map);
   }
 
 // @override

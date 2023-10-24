@@ -73,9 +73,11 @@ class _HomeState extends State<Home> {
   }
 
   static Widget _buildPage(
+     
       {required String image,
       required String title,
       required String genre,
+      required BuildContext context,
       required String time}) {
     return Padding(
       padding: const EdgeInsets.only(right: 20.0),
@@ -88,6 +90,7 @@ class _HomeState extends State<Home> {
               ImageView.network(
                 image,
                 fit: BoxFit.cover,
+                width: MediaQuery.sizeOf(context).width,
                 placeholder: AppImages.logo,
               ),
               Positioned(
@@ -140,8 +143,8 @@ class _HomeState extends State<Home> {
             builder: (context, state) {
               if (state is PostListsLoaded) {
                 if (state.postLists.status == 1) {
-                  trendingPosts = _userCubit.viewModel.posts;
-                  allPosts = _userCubit.viewModel.postsList;
+                  trendingPosts = _userCubit.viewModel.posts.reversed.toList();
+                  allPosts = _userCubit.viewModel.postsList.reversed.toList();
                 } else {
                   Modals.showToast(state.postLists.message!,
                       messageType: MessageType.error);
@@ -241,6 +244,7 @@ class _HomeState extends State<Home> {
                                   children: <Widget>[
                                     for (var trendingPosts in trendingPosts)
                                       _buildPage(
+                                        context: context,
                                           image: trendingPosts.thumbnail!,
                                           title: trendingPosts.title!,
                                           genre: trendingPosts.genre!,
@@ -353,13 +357,14 @@ class _HomeState extends State<Home> {
                               ),
                               ListView.builder(
                                   itemCount: allPosts.length,
+                                  
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemBuilder: (BuildContext context, index) {
                                     return GestureDetector(
                                         onTap: () {
                                           AppNavigator.pushAndStackPage(context,
-                                              page: MovieDetailsScreen());
+                                              page: MovieDetailsScreen(videoLinks: allPosts[index].videoLink!,));
                                         },
                                         child: MoviesItems(
                                             posts: allPosts[index]));
@@ -375,21 +380,45 @@ class _HomeState extends State<Home> {
             }));
   }
 
+ String formatTime(timestamp){
+    String formattedTime = timestampToHoursAgo(timestamp);
+
+    return formattedTime;
+  }
+
+  String timestampToHoursAgo(int timestamp) {
+  final now = DateTime.now();
+  final time = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000); 
+
+  final difference = now.difference(time);
+  final hours = difference.inHours;
+
+  if (hours == 0) {
+    final minutes = difference.inMinutes;
+    return '$minutes minutes ago';
+  } else if (hours == 1) {
+    return '1 hour ago';
+  } else {
+    return '$hours hours ago';
+  }
+}
+
   List<Widget> _buildPageIndicator() {
-    List<Widget> indicators = [];
-    for (int i = 0; i < trendingPosts.length; i++) {
-      indicators.add(
-        Container(
-          width: 8.0,
-          height: 8.0,
-          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: _currentPage == i ? AppColors.lightSecondary : Colors.grey,
-          ),
-        ),
-      );
-    }
-    return indicators;
+    List<Widget> reverseIndicators = [];
+for (int i = trendingPosts.length - 1; i >= 0; i--) {
+  reverseIndicators.add(
+    Container(
+      width: 8.0,
+      height: 8.0,
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _currentPage == (trendingPosts.length - 1 - i) ? AppColors.lightSecondary : Colors.grey,
+      ),
+    ),
+  );
+}
+return reverseIndicators;
+
   }
 }

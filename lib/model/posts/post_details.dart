@@ -1,19 +1,14 @@
-class GetAllPosts {
+class PostDetails {
   int? status;
   String? message;
-  List<Posts>? data;
+  Data? data;
 
-  GetAllPosts({this.status, this.message, this.data});
+  PostDetails({this.status, this.message, this.data});
 
-  GetAllPosts.fromJson(Map<String, dynamic> json) {
+  PostDetails.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <Posts>[];
-      json['data'].forEach((v) {
-        data!.add(Posts.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,14 +16,13 @@ class GetAllPosts {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
-class Posts {
-  
+class Data {
   String? id;
   String? title;
   String? content;
@@ -40,9 +34,8 @@ class Posts {
   String? createdAt;
   String? updatedAt;
   String? status;
-  String? isBooked;
 
-  Posts(
+  Data(
       {this.id,
       this.title,
       this.content,
@@ -53,10 +46,9 @@ class Posts {
       this.isTrending,
       this.createdAt,
       this.updatedAt,
-      this.status,
-      this.isBooked});
+      this.status});
 
-  Posts.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     content = json['content'];
@@ -68,7 +60,6 @@ class Posts {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     status = json['status'];
-    isBooked = json['is_booked'];
   }
 
   Map<String, dynamic> toJson() {
@@ -84,7 +75,6 @@ class Posts {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['status'] = status;
-    data['is_booked'] = isBooked;
     return data;
   }
 }

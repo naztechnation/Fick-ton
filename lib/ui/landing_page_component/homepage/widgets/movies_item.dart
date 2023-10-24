@@ -3,15 +3,21 @@
 import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../../model/posts/get_posts.dart';
 
 class MoviesItems extends StatelessWidget {
  final  Posts posts ;
     const MoviesItems({super.key, required this.posts});
+    
 
   @override
   Widget build(BuildContext context) {
+
+
+    int minutes = (int.parse(posts.createdAt!) / 60000).round();
+    final ago =   DateTime.now().subtract(  Duration(minutes: minutes));
     return  Container(
         decoration: const BoxDecoration(
           border: Border(
@@ -24,14 +30,20 @@ class MoviesItems extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child:   Row(
           children: [
-            ClipRRect(
-        borderRadius: BorderRadius.circular(20.0),
-              child: const Stack(
-                children: [
-                  ImageView.asset(AppImages.avengers, height: 120,),
-                  //  
-                ],
-              )), 
+            Stack(
+              children: [
+                ClipRRect(
+        borderRadius: BorderRadius.circular(30.0),
+              child: SizedBox(
+                    height: 120,
+                    width: 130,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                            child: ImageView.network(posts.thumbnail, height: 120, placeholder: AppImages.logo,fit: BoxFit.cover,))),
+                ),
+                //  
+              ],
+            ), 
             const SizedBox(width: 16.0),
               Expanded(
               child: Column(
@@ -53,12 +65,15 @@ class MoviesItems extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                        Text(
-                   posts.createdAt!,
+                   timeago.format(
+                          ago,
+                          
+                        ),
                   ),
                       const SizedBox(width: 8.0),
-                       const Padding(
-                         padding: EdgeInsets.only(right:12.0),
-                         child: ImageView.svg(AppImages.bookmarkOutline, height: 25,),
+                        Padding(
+                         padding: const EdgeInsets.only(right:12.0),
+                         child: ImageView.svg(  posts.isBooked  == '0' ?  AppImages.bookmarkOutline : AppImages.bookmark, height: 25,),
                        ),  
                     
                     ],
@@ -72,3 +87,7 @@ class MoviesItems extends StatelessWidget {
     );
   }
 }
+
+
+
+// my_custom_messages.dart

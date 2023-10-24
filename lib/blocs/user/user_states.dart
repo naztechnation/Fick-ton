@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:fikkton/model/auth_model/login.dart';
 import 'package:fikkton/model/posts/get_posts.dart';
+import 'package:fikkton/model/posts/post_details.dart';
 
 // import '../../model/account_models/agents_packages.dart';
 // import '../../model/account_models/confirm_payment.dart';
@@ -36,11 +37,24 @@ class PostListsLoading extends UserStates {
   List<Object> get props => [];
 }
 
+
+
 class PostListsLoaded extends UserStates {
   final GetAllPosts postLists;
   const PostListsLoaded(this.postLists);
   @override
   List<Object> get props => [postLists];
+}
+
+class PostDetailsLoaded extends UserStates {
+  final PostDetails postDetails ;
+  const PostDetailsLoaded(this.postDetails);
+  @override
+  List<Object> get props => [postDetails];
+}
+class PostDetailsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
 }
 // class ServiceProviderListLoaded extends UserStates {
 //   final ServiceProvidersList userData;

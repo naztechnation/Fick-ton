@@ -1,3 +1,4 @@
+import 'package:fikkton/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../res/app_images.dart';
@@ -21,7 +22,7 @@ class EmptyWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const ImageView.svg(AppImages.failed),
+            const ImageView.asset(AppImages.failed),
             const SizedBox(height: 25),
             Text(title,
                 style: const TextStyle(fontSize: 24,
@@ -38,6 +39,7 @@ class EmptyWidget extends StatelessWidget {
               const SizedBox(height: 25),
               ButtonView(
                   onPressed: onRefresh!,
+                  color: AppColors.lightSecondary,
                   child: const Text('Refresh',
                       style: TextStyle(fontWeight: FontWeight.w600,
                           fontSize: 18)))

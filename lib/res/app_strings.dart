@@ -20,4 +20,5 @@ class AppStrings {
   static const String verifyCodeUrl = '${_baseUrl}auth/verify_token';
   static const String createPost = '${_baseUrl}posts/create';
   static   String getPosts(String token) => '${_baseUrl}posts/index?token=$token';
+  static   String getPostsDetails(String token) => '${_baseUrl}posts/show?post_id=2&token=$token';
 }

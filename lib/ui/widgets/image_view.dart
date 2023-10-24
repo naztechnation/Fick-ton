@@ -100,7 +100,7 @@ class ImageView extends StatelessWidget {
             (context, error, stackTrace) => Container(
                   height: height,
                   width: width,
-                  color: Theme.of(context).shadowColor,
+                 decoration: BoxDecoration(image: DecorationImage(image: AssetImage(placeholder ?? AppImages.logo))),
                 ),
       );
     } else if (type == ImageType.asset) {
