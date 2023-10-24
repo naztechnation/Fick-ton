@@ -1,11 +1,27 @@
+import 'dart:io';
+
 import 'package:fikkton/res/app_colors.dart';
 import 'package:fikkton/ui/widgets/button_view.dart';
-import 'package:fikkton/ui/widgets/image_picker.dart';
+import 'package:fikkton/ui/widgets/image_container.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:fikkton/ui/widgets/text_edit_view.dart';
+import 'package:fikkton/utils/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import '../../../res/app_images.dart';
+import '../../blocs/accounts/account.dart';
+import '../../blocs/user/user_cubit.dart';
+import '../../blocs/user/user_states.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../model/view_models/user_view_model.dart';
+import '../../requests/repositories/account_repo/account_repository_impl.dart';
+import '../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../../res/enum.dart';
+import '../../utils/navigator/page_navigator.dart';
+import '../auth/auth.dart';
+import '../widgets/modals.dart';
 
 class NewPost extends StatefulWidget {
   const NewPost({super.key});
@@ -15,211 +31,302 @@ class NewPost extends StatefulWidget {
 }
 
 class _NewPostState extends State<NewPost> {
-  bool? isChecked = false; // Initialize the checkbox state.
+  bool isChecked = false;
+
+  int isTrending = 0;
+
+  final _formKey = GlobalKey<FormState>();
 
   void _toggleCheckbox(bool? value) {
     setState(() {
-      isChecked = value;
+      isChecked = value!;
+      if (isChecked) {
+        isTrending = 1;
+      } else {
+        isTrending = 0;
+      }
     });
   }
 
+  final videoUrlController = TextEditingController();
+  final titleController = TextEditingController();
+  final contentController = TextEditingController();
+  final genresController = TextEditingController();
+  final authorController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserViewModel>(context, listen: false);
+    final setToken = Provider.of<AccountViewModel>(context, listen: true);
+    setToken.getToken();
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SafeArea(
-              child: SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.03,
+        body: BlocProvider<UserCubit>(
+      lazy: false,
+      create: (_) => UserCubit(
+          userRepository: UserRepositoryImpl(),
+          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+      child: BlocConsumer<UserCubit, UserStates>(
+        listener: (context, state) {
+          if (state is CreatePostLoaded) {
+            if (state.createPost.status == 1) {
+              Modals.showToast(state.createPost.message!,
+                  messageType: MessageType.success);
+            } else {
+              Modals.showToast(state.createPost.message!,
+                  messageType: MessageType.error);
+            }
+          } else if (state is UserNetworkErr) {
+            if (state.message != null) {
+              Modals.showToast(state.message!, messageType: MessageType.error);
+            }
+          } else if (state is UserNetworkErrApiErr) {
+            if (state.message != null) {
+              Modals.showToast(state.message!, messageType: MessageType.error);
+            }
+          }
+        },
+        builder: (context, state) => Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              SafeArea(
+                child: SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.03,
+                ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      ImageView.svg(
-                        AppImages.logo,
-                        width: 40,
-                        height: 40,
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        'Fik-kton',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 14,
-                  ),
-                  const Align(
-                    child: Text(
-                      'New Post',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        ImageView.asset(
+                          AppImages.logo,
+                          width: 40,
+                          height: 40,
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text(
+                          'Fik-kton',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(
-                    "Add Cover Image",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  CoverImageContainer(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  //video url
-                  const Text(
-                    "Video URL",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextEditView(
-                    borderRadius: 16,
-                    controller: TextEditingController(text: ''),
-                    isDense: true,
-                    fillColor: Colors.grey.shade200,
-                  ),
-                  //title
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const Text(
-                    "Title",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextEditView(
-                    borderRadius: 16,
-                    controller: TextEditingController(text: ''),
-                    isDense: true,
-                    fillColor: Colors.grey.shade200,
-                  ),
-                  //article
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const Text(
-                    "Article",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextEditView(
-                    maxLines: 20,
-                    hintText: 'Start writing your article here...',
-                    borderRadius: 16,
-                    controller: TextEditingController(text: ''),
-                    isDense: true,
-                    fillColor: Colors.grey.shade200,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const Text(
-                    "Type",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextEditView(
-                    onChanged: (value) {},
-                    readOnly: true,
-                    hintText: 'Select Category',
-                    borderRadius: 16,
-                    controller: TextEditingController(text: ''),
-                    isDense: true,
-                    fillColor: Colors.grey.shade200,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const Text(
-                    "Genres",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextEditView(
-                    onChanged: (value) {},
-                    readOnly: true,
-                    hintText: 'Select Genres',
-                    borderRadius: 16,
-                    controller: TextEditingController(text: ''),
-                    isDense: true,
-                    fillColor: Colors.grey.shade200,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Row(
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Checkbox(
-                        fillColor: const MaterialStatePropertyAll(
-                            AppColors.lightPrimary),
-                        value: isChecked,
-                        onChanged: _toggleCheckbox,
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      const Align(
+                        child: Text(
+                          'New Post',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
                       ),
                       const Text(
-                        "Make it Trending",
+                        "Add Cover Image",
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w400),
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CoverImageContainer(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      const Text(
+                        "Video URL",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TextEditView(
+                        borderRadius: 16,
+                        controller: videoUrlController,
+                        validator: Validator.validate,
+                        isDense: true,
+                        fillColor: Colors.grey.shade200,
+                      ),
+                      //title
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      const Text(
+                        "Title",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TextEditView(
+                        borderRadius: 16,
+                        controller: titleController,
+                        validator: Validator.validate,
+                        isDense: true,
+                        fillColor: Colors.grey.shade200,
+                      ),
+                      //article
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      const Text(
+                        "Article",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TextEditView(
+                        maxLines: 20,
+                        hintText: 'Start writing your article here...',
+                        validator: Validator.validate,
+                        borderRadius: 16,
+                        controller: contentController,
+                        isDense: true,
+                        fillColor: Colors.grey.shade200,
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      const Text(
+                        "Author",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TextEditView(
+                        onChanged: (value) {},
+                        validator: Validator.validate,
+                        hintText: 'Enter Author',
+                        borderRadius: 16,
+                        controller: authorController,
+                        isDense: true,
+                        fillColor: Colors.grey.shade200,
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      const Text(
+                        "Genres",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      TextEditView(
+                        onChanged: (value) {},
+                        validator: Validator.validate,
+                        readOnly: true,
+                        hintText: 'Enter Genres',
+                        borderRadius: 16,
+                        controller: genresController,
+                        isDense: true,
+                        fillColor: Colors.grey.shade200,
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        children: [
+                          Checkbox(
+                            fillColor: const MaterialStatePropertyAll(
+                                AppColors.lightSecondary),
+                            value: isChecked,
+                            onChanged: _toggleCheckbox,
+                          ),
+                          const Text(
+                            "Make it Trending",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      ButtonView(
+                        onPressed: () {
+                          if (user.imageURl != null) {
+                            _verifyCode(
+                                context, setToken.token, user.imageURl!, '1');
+                          } else {
+                            Modals.showToast('please upload image');
+                          }
+                        },
+                        color: AppColors.lightPrimary,
+                        child: const Text('Publish'),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      ButtonView(
+                        onPressed: () {
+                          if (user.imageURl != null) {
+                            _verifyCode(
+                                context, setToken.token, user.imageURl!, '0');
+                          } else {
+                            Modals.showToast('please upload image');
+                          }
+                        },
+                        processing: state is CreatePostLoading,
+                        color: Colors.white,
+                        borderColor: AppColors.lightPrimary,
+                        child: const Text(
+                          'Save to Draft',
+                          style: TextStyle(color: AppColors.lightPrimary),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  ButtonView(
-                    onPressed: () {},
-                    color: AppColors.lightPrimary,
-                    child: const Text('Publish'),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ButtonView(
-                    onPressed: () {},
-                    color: Colors.white,
-                    borderColor: AppColors.lightPrimary,
-                    child: const Text(
-                      'Save to Draft',
-                      style: TextStyle(color: AppColors.lightPrimary),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    );
+    ));
+  }
+
+  _verifyCode(BuildContext ctx, String token, File thumbnail, String status) {
+    if (_formKey.currentState!.validate()) {
+      ctx.read<UserCubit>().createPost(
+            title: titleController.text,
+            token: token,
+            content: contentController.text,
+            videoLink: videoUrlController.text,
+            thumbnail: thumbnail,
+            genre: genresController.text,
+            status: status,
+            author: authorController.text,
+            trending: isTrending.toString(),
+          );
+      FocusScope.of(ctx).unfocus();
+    }
   }
 }

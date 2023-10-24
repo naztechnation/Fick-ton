@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'res/app_colors.dart';
 import 'res/app_images.dart';
@@ -23,16 +22,16 @@ class SplashScreenState extends State<SplashScreen>
   late Animation<double> animation;
 
   startTime() async {
-     
-    Future.delayed(const Duration(seconds:5, ),(){
-   navigationPage();
+    Future.delayed(
+        const Duration(
+          seconds: 5,
+        ), () {
+      navigationPage();
     });
-    
   }
 
   void navigationPage() {
     AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
-    
   }
 
   @override
@@ -49,7 +48,7 @@ class SplashScreenState extends State<SplashScreen>
     setState(() {
       _visible = !_visible;
     });
-     startTime();
+    startTime();
   }
 
   @override
@@ -66,9 +65,10 @@ class SplashScreenState extends State<SplashScreen>
                     ),
                     fit: BoxFit.cover)),
           ),
-          Container(color: AppColors.lightPrimary.withOpacity(0.97),
-          height: MediaQuery.sizeOf(context).height,
-          width: MediaQuery.sizeOf(context).width,
+          Container(
+            color: AppColors.lightPrimary.withOpacity(0.97),
+            height: MediaQuery.sizeOf(context).height,
+            width: MediaQuery.sizeOf(context).width,
           ),
           const Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -85,16 +85,18 @@ class SplashScreenState extends State<SplashScreen>
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ImageView.svg(
-                AppImages.logo ,
+              ImageView.asset(
+                AppImages.logo,
                 width: animation.value * 200,
                 height: animation.value * 150,
               ),
-              const SizedBox(height: 20,),
-             const Text(
-                    'FIK-KTON',
-                    style: TextStyle(color: AppColors.cardColor, fontSize: 24),
-                  )
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'FIK-KTON',
+                style: TextStyle(color: AppColors.cardColor, fontSize: 24),
+              )
             ],
           ),
         ],

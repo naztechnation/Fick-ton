@@ -10,16 +10,43 @@
 // import '../../setup/requests.dart';
 // import 'user_repository.dart';
 
-// class UserRepositoryImpl implements UserRepository {
+ import 'dart:io';
+
+import 'package:fikkton/model/auth_model/login.dart';
+
+import '../../../res/app_strings.dart';
+import '../../setup/requests.dart';
+import 'user_repository.dart';
+
+class UserRepositoryImpl implements UserRepository {
  
   
-//   @override
-//   Future<ServiceProvidersList> getServiceProviderList({required String serviceId}) async {
-//     final map = await Requests().get(AppStrings.getServiceProvidersList(serviceId), headers: {
-//       'Authorization': AppStrings.token,
-//      });
-//     return ServiceProvidersList.fromJson(map);
-//   }
+  @override
+  Future<AuthData> createPost({required String title,
+    required String token,
+    required String content,
+    required File thumbnail,
+    required String videoLink,
+    required String genre,
+    required String status,
+    required String author,
+    required String trending,}) async {
+    final map = await Requests().post(AppStrings.createPost,
+      files: {'thumbnail': thumbnail},
+     body: {
+          "title": title,
+          "token": token,
+          "content": content,
+          "video_link": videoLink,
+          "genre": genre,
+          "author": author,
+          "status": status,
+          "trending": trending,
+          
+        },
+    );
+    return AuthData.fromJson(map);
+  }
 
 // @override
 //   Future<GetServiceTypes> getServiceTypes() async {
@@ -85,4 +112,4 @@
 //     return PaymentResponse.fromJson(map);
 //   }
 
-// }
+ }

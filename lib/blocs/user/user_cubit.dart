@@ -1,47 +1,64 @@
 
-// import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:io';
 
-// import '../../model/view_models/user_view_model.dart';
-// import '../../requests/repositories/user_repo/user_repository.dart';
-// import '../../utils/exceptions.dart';
-// import 'user_states.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// class UserCubit extends Cubit<UserStates> {
+import '../../model/view_models/user_view_model.dart';
+import '../../requests/repositories/user_repo/user_repository.dart';
+
+ 
+ import '../../utils/exceptions.dart';
+import 'user_states.dart';
+
+ class UserCubit extends Cubit<UserStates> {
 
 
-//   UserCubit({required this.userRepository, required this.viewModel})
-//       : super(const InitialState());
-//   final UserRepository userRepository;
-//   final UserViewModel viewModel;
+  UserCubit({required this.userRepository, required this.viewModel})
+      : super(const InitialState());
+  final UserRepository userRepository;
+  final UserViewModel viewModel;
 
-//   Future<void> getServiceProviderList({
-//     required String serviceId,
-    
-//   }) async {
-//     try {
-//       emit(ServiceProviderListLoading());
+  Future<void> createPost({required String title,
+    required String token,
+    required String content,
+    required File thumbnail,
+    required String videoLink,
+    required String genre,
+    required String status,
+    required String author,
+    required String trending,}) async {
+    try {
+      emit(CreatePostLoading());
 
-//       final agents = await userRepository.getServiceProviderList(
-//         serviceId: serviceId,
-//        );
+      final agents = await userRepository.createPost(
+        title: title,
+        token: token,
+        content: content,
+        videoLink: videoLink,
+        thumbnail: thumbnail,
+        genre: genre,
+        status: status,
+        author: author,
+        trending: trending,
+       
+       );
 
-//        await viewModel.setAgentDetails(agents:agents.agents ?? []);
-
-//       emit(ServiceProviderListLoaded(agents));
-//     } on ApiException catch (e) {
-//       emit(UserNetworkErrApiErr(e.message));
-//     } catch (e) {
-//       if (e is NetworkException ||
-//           e is BadRequestException ||
-//           e is UnauthorisedException ||
-//           e is FileNotFoundException ||
-//           e is AlreadyRegisteredException) {
-//         emit(UserNetworkErr(e.toString()));
-//       } else {
-//         rethrow;
-//       }
-//     }
-//   }
+      
+      emit(CreatePostLoaded(agents));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
   
 //   Future<void> getServiceTypes() async {
 //     try {
@@ -191,4 +208,4 @@
 //     }
 //   }
 
-// }
+ }

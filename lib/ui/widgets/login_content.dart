@@ -19,8 +19,6 @@ import 'image_view.dart';
 import 'modals.dart';
 import 'text_edit_view.dart';
 
- 
-
 class LoginContent extends StatefulWidget {
   const LoginContent({Key? key}) : super(key: key);
 
@@ -31,8 +29,6 @@ class LoginContent extends StatefulWidget {
 class _LoginContentState extends State<LoginContent>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
-  final _formKey1 = GlobalKey<FormState>();
-
   
 
   final _emailController = TextEditingController();
@@ -136,10 +132,6 @@ class _LoginContentState extends State<LoginContent>
     );
   }
 
-   
-  
-
-
   List<String> gender = [
     'Female',
     'Male',
@@ -157,14 +149,11 @@ class _LoginContentState extends State<LoginContent>
           listener: (context, state) {
             if (state is AccountLoaded) {
               if (state.userData.status == 1) {
-                
                 setToken.setToken(state.userData.token!);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
-                    AppNavigator.pushAndReplacePage(context,
-                    page:   OtpScreen(
-                        email: _emailController.text.trim()
-                    ));
+                AppNavigator.pushAndReplacePage(context,
+                    page: OtpScreen(email: _emailController.text.trim()));
                 clearTextViews();
               } else {
                 Modals.showToast(state.userData.message ?? '',
@@ -173,15 +162,13 @@ class _LoginContentState extends State<LoginContent>
             }
             if (state is AccountUpdated) {
               if (state.user.status == 1) {
+                setToken.setToken(state.user.token!);
+                Modals.showToast(
+                  state.user.message ?? '',
+                );
 
-                  setToken.setToken(state.user.token!);
-                 Modals.showToast(state.user.message ?? '',);
-                
                 AppNavigator.pushAndReplacePage(context,
-                    page: const LandingPage(
-                     
-                    ));
-                
+                    page: const LandingPage());
               } else {
                 Modals.showToast(state.user.message ?? '',
                     messageType: MessageType.success);
@@ -247,7 +234,6 @@ class _LoginContentState extends State<LoginContent>
                                 child: TextEditView(
                                   controller: _emailController,
                                   validator: Validator.validate,
-
                                   labelText: 'Email',
                                   prefixIcon: const Icon(
                                     Ionicons.mail_outline,
@@ -267,7 +253,7 @@ class _LoginContentState extends State<LoginContent>
                                 child: TextEditView(
                                   controller: _phoneController,
                                   validator: Validator.validate,
-                                    keyboardType: TextInputType.phone,
+                                  keyboardType: TextInputType.phone,
                                   labelText: 'Phone Number',
                                   prefixIcon: const Icon(
                                     Ionicons.call_outline,
@@ -289,12 +275,11 @@ class _LoginContentState extends State<LoginContent>
                                   labelText: 'Gender',
                                   validator: Validator.validate,
                                   readOnly: true,
-                                  
-                                  onTap: (){
-                                    Modals.showBottomSheetModal(context, 
-                                    isDissmissible: true,
-                                    heightFactor: 0.3,
-                                    page: selectGender());
+                                  onTap: () {
+                                    Modals.showBottomSheetModal(context,
+                                        isDissmissible: true,
+                                        heightFactor: 0.3,
+                                        page: selectGender());
                                   },
                                   prefixIcon: const Icon(
                                     Ionicons.male_female_outline,
@@ -319,7 +304,6 @@ class _LoginContentState extends State<LoginContent>
                                 child: TextEditView(
                                   controller: _passwordController,
                                   validator: Validator.validate,
-
                                   labelText: 'Password',
                                   prefixIcon: const Icon(
                                     Ionicons.lock_closed_outline,
@@ -412,7 +396,6 @@ class _LoginContentState extends State<LoginContent>
                                 child: TextEditView(
                                   controller: _passwordController,
                                   validator: Validator.validate,
-
                                   labelText: 'Password',
                                   prefixIcon: const Icon(
                                     Ionicons.lock_closed_outline,
@@ -523,38 +506,44 @@ class _LoginContentState extends State<LoginContent>
     }
   }
 
-  selectGender(){
+  selectGender() {
     return ListView.builder(
-      itemCount: gender.length,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, index){
-
-      return  GestureDetector(
-        onTap: (){
-          setState(() {
-            
-            _genderController.text = gender[index];
-            Navigator.pop(context);
-          });
-        },
-        child: Container(
-            height : 50,
-            decoration: const BoxDecoration(
-              border: Border(
-            bottom: BorderSide(color: AppColors.lightPrimary, width: 0.3),
-          ),
-            ),
-          child: Center(child: Text(gender[index], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.lightSecondary),))),
-      );
-    });
+        itemCount: gender.length,
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, index) {
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                _genderController.text = gender[index];
+                Navigator.pop(context);
+              });
+            },
+            child: Container(
+                height: 50,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom:
+                        BorderSide(color: AppColors.lightPrimary, width: 0.3),
+                  ),
+                ),
+                child: Center(
+                    child: Text(
+                  gender[index],
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.lightSecondary),
+                ))),
+          );
+        });
   }
 
-  clearTextViews(){
+  clearTextViews() {
     setState(() {
       _emailController.clear();
-    _phoneController.clear();
-    _genderController.clear();
-    _passwordController.clear();
+      _phoneController.clear();
+      _genderController.clear();
+      _passwordController.clear();
     });
   }
 }

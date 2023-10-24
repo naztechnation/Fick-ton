@@ -16,11 +16,11 @@ class AccountViewModel extends BaseViewModel {
 
   String _token = "";
 
-//   File? _imageURl;
+
 
 //   UserType _userType = UserType.none;
 
-//   ImagePicker picker = ImagePicker();
+
 
 //   bool _showPassword = false;
 
@@ -140,68 +140,6 @@ class AccountViewModel extends BaseViewModel {
 //     setViewState(ViewState.success);
 //   }
 
-//   loadImage(BuildContext context) async {
-//     await showModalBottomSheet<dynamic>(
-//         context: context,
-//         shape: const RoundedRectangleBorder(
-//             borderRadius: BorderRadius.vertical(top: Radius.circular(16.0))),
-//         builder: (BuildContext bc) {
-//           return Column(
-//             mainAxisSize: MainAxisSize.min,
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: <Widget>[
-//               const SizedBox(height: 15),
-//               Padding(
-//                 padding: const EdgeInsets.only(
-//                     left: 30.0, right: 8.0, top: 8.0, bottom: 8.0),
-//                 child: Text('Select the images source',
-//                     textAlign: TextAlign.center,
-//                     style: TextStyle(
-//                         fontSize: 20,
-//                         color: Theme.of(context).colorScheme.secondary,
-//                         fontWeight: FontWeight.bold)),
-//               ),
-//               ListTile(
-//                 leading: Icon(
-//                   Icons.photo_camera,
-//                   size: 35.0,
-//                   color: Theme.of(context).colorScheme.secondary,
-//                 ),
-//                 title: const Text('Camera'),
-//                 onTap: () async {
-//                   Navigator.pop(context);
-
-//                   final image = await ImagePicker().pickImage(
-//                       source: ImageSource.camera,
-//                       imageQuality: 80,
-//                       maxHeight: 1000,
-//                       maxWidth: 1000);
-//                   _imageURl = File(image!.path);
-//                   setViewState(ViewState.success);
-//                 },
-//               ),
-//               ListTile(
-//                 leading: Icon(
-//                   Icons.photo,
-//                   size: 35.0,
-//                   color: Theme.of(context).colorScheme.secondary,
-//                 ),
-//                 title: const Text('Gallery'),
-//                 onTap: () async {
-//                   Navigator.pop(context);
-//                   final image = await ImagePicker().pickImage(
-//                       source: ImageSource.gallery,
-//                       imageQuality: 80,
-//                       maxHeight: 1000,
-//                       maxWidth: 1000);
-//                   _imageURl = File(image!.path);
-//                   setViewState(ViewState.success);
-//                 },
-//               ),
-//             ],
-//           );
-//         });
-//   }
 
 //   Future<void> setAddress(String address) async {
 //     _address = address;
