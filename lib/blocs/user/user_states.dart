@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fikkton/model/auth_model/login.dart';
+import 'package:fikkton/model/posts/comment_lists.dart';
 import 'package:fikkton/model/posts/get_posts.dart';
 import 'package:fikkton/model/posts/post_details.dart';
 
@@ -67,6 +68,18 @@ class CreateCommentLoading extends UserStates {
 class CreateCommentLoaded extends UserStates {
   final AuthData postComment ;
   const CreateCommentLoaded(this.postComment);
+  @override
+  List<Object> get props => [postComment];
+}
+
+class CommentLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class CommentLoaded extends UserStates {
+  final CommentData postComment ;
+  const CommentLoaded(this.postComment);
   @override
   List<Object> get props => [postComment];
 }

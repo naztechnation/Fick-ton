@@ -42,9 +42,12 @@ class CommentSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        Text(
-          comment,
-          style: const TextStyle(fontSize: 14),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            comment,
+            style: const TextStyle(fontSize: 14),
+          ),
         ),
         const SizedBox(height: 30),
       ],

@@ -87,7 +87,7 @@ class BookMarkPage extends StatelessWidget {
                         return GestureDetector(
                             onTap: () {
                               AppNavigator.pushAndStackPage(context,
-                                  page: const MovieDetailsScreen(videoLinks: 'https://www.youtube.com/watch?v=WVMNtd6P9gg',));
+                                  page: const MovieDetailsScreen(videoLinks: 'https://www.youtube.com/watch?v=WVMNtd6P9gg', postId: '',));
                             },
                             child: MoviesItems(
                               posts: user.posts[index],

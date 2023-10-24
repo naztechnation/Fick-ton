@@ -31,6 +31,8 @@ class Data {
   String? author;
   String? genre;
   String? isTrending;
+  String? views;
+  String? likes;
   String? createdAt;
   String? updatedAt;
   String? status;
@@ -44,6 +46,8 @@ class Data {
       this.author,
       this.genre,
       this.isTrending,
+      this.views,
+      this.likes,
       this.createdAt,
       this.updatedAt,
       this.status});
@@ -57,6 +61,8 @@ class Data {
     author = json['author'];
     genre = json['genre'];
     isTrending = json['is_trending'];
+    views = json['views'];
+    likes = json['likes'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     status = json['status'];
@@ -72,6 +78,8 @@ class Data {
     data['author'] = author;
     data['genre'] = genre;
     data['is_trending'] = isTrending;
+    data['views'] = views;
+    data['likes'] = likes;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['status'] = status;

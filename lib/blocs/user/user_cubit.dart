@@ -121,10 +121,10 @@ class UserCubit extends Cubit<UserStates> {
       emit(CreateCommentLoading());
 
       final comments = await userRepository.addComment(
-        token: token, postId: postId, comment: comment,
+        token: token,
+        postId: postId,
+        comment: comment,
       );
-
-      
 
       emit(CreateCommentLoaded(comments));
     } on ApiException catch (e) {
@@ -142,150 +142,31 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-//   Future<void> getServiceTypes() async {
-//     try {
-//       emit(ServiceProviderListLoading());
+  Future<void> getComment({
+    required String token,
+    required String postId,
+  }) async {
+    try {
+      emit(CommentLoading());
 
-//       final service = await userRepository.getServiceTypes(
-//        );
+      final comments = await userRepository.getComment(
+        token: token,
+        postId: postId,
+      );
 
-//        await viewModel.setServicesList(services:service.serviceTypes ?? []);
-
-//       emit(ServicesLoaded(service));
-//     } on ApiException catch (e) {
-//       emit(UserNetworkErrApiErr(e.message));
-//     } catch (e) {
-//       if (e is NetworkException ||
-//           e is BadRequestException ||
-//           e is UnauthorisedException ||
-//           e is FileNotFoundException ||
-//           e is AlreadyRegisteredException) {
-//         emit(UserNetworkErr(e.toString()));
-//       } else {
-//         rethrow;
-//       }
-//     }
-//   }
-
-//   Future<void> serviceProvided({required List<String> services,required String username, required String agentId}) async {
-//     try {
-//       emit(ServiceProviderListLoading());
-
-//       final user = await userRepository.serviceProvided(services: services, username: username, agentId: agentId
-//           );
-
-//       emit(ServiceProviderListLoaded(user));
-//     } on ApiException catch (e) {
-//       emit(UserNetworkErrApiErr(e.message));
-//     } catch (e) {
-//       if (e is NetworkException ||
-//           e is BadRequestException ||
-//           e is UnauthorisedException ||
-//           e is FileNotFoundException ||
-//           e is AlreadyRegisteredException) {
-//         emit(UserNetworkErr(e.toString()));
-//       } else {
-//         rethrow;
-//       }
-//     }
-//   }
-
-//     Future<void> getReviews({ required String userId}) async {
-//     try {
-//       emit(ReviewLoading());
-
-//       final reviews = await userRepository.getReviews(
-//          userId: userId
-//           );
-//        await viewModel.setReviews(reviews:reviews);
-
-//       emit(ReviewLoaded(reviews));
-//     } on ApiException catch (e) {
-//       emit(UserNetworkErrApiErr(e.message));
-//     } catch (e) {
-//       if (e is NetworkException ||
-//           e is BadRequestException ||
-//           e is UnauthorisedException ||
-//           e is FileNotFoundException ||
-//           e is AlreadyRegisteredException) {
-//         emit(UserNetworkErr(e.toString()));
-//       } else {
-//         rethrow;
-//       }
-//     }
-//   }
-
-//     Future<void> getGallery({ required String userId}) async {
-//     try {
-//       emit(GalleryLoading());
-
-//       final gallery = await userRepository.getGallery(
-//          userId: userId
-//           );
-//        await viewModel.setGallery(gallery:gallery);
-
-//       emit(GalleryLoaded(gallery));
-//     } on ApiException catch (e) {
-//       emit(UserNetworkErrApiErr(e.message));
-//     } catch (e) {
-//       if (e is NetworkException ||
-//           e is BadRequestException ||
-//           e is UnauthorisedException ||
-//           e is FileNotFoundException ||
-//           e is AlreadyRegisteredException) {
-//         emit(UserNetworkErr(e.toString()));
-//       } else {
-//         rethrow;
-//       }
-//     }
-//   }
-
-//   Future<void> getAgentPackages({ required String agentId, required String serviceId}) async {
-//     try {
-//       emit(AgentPackagesLoading());
-
-//       final packages = await userRepository.getAgentPackages(agentId: agentId, serviceId: serviceId
-
-//           );
-//        await viewModel.setAgentPackages(agentPackage:packages);
-
-//       emit(AgentPackagesLoaded(packages));
-//     } on ApiException catch (e) {
-//       emit(UserNetworkErrApiErr(e.message));
-//     } catch (e) {
-//       if (e is NetworkException ||
-//           e is BadRequestException ||
-//           e is UnauthorisedException ||
-//           e is FileNotFoundException ||
-//           e is AlreadyRegisteredException) {
-//         emit(UserNetworkErr(e.toString()));
-//       } else {
-//         rethrow;
-//       }
-//     }
-//   }
-
-//   Future<void> confirmPayment({ required String agentId, required String username,  required String purchaseId}) async {
-//     try {
-//       emit(ConfirmPaymentLoading());
-
-//       final payment = await userRepository.confirmPayment(agentId: agentId, username: username, purchaseId: purchaseId
-
-//           );
-
-//       emit(ConfirmPaymentLoaded(payment));
-//     } on ApiException catch (e) {
-//       emit(UserNetworkErrApiErr(e.message));
-//     } catch (e) {
-//       if (e is NetworkException ||
-//           e is BadRequestException ||
-//           e is UnauthorisedException ||
-//           e is FileNotFoundException ||
-//           e is AlreadyRegisteredException) {
-//         emit(UserNetworkErr(e.toString()));
-//       } else {
-//         rethrow;
-//       }
-//     }
-//   }
+      emit(CommentLoaded(comments));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

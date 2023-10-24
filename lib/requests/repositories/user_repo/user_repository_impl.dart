@@ -72,7 +72,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<CommentData> getComment({required String token, required String postId}) async {
-    final map = await Requests().get(AppStrings.getPostsDetails(token));
+    final map = await Requests().get(AppStrings.getComments(token,postId));
 
     return CommentData.fromJson(map);
   }

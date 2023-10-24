@@ -364,7 +364,7 @@ class _HomeState extends State<Home> {
                                     return GestureDetector(
                                         onTap: () {
                                           AppNavigator.pushAndStackPage(context,
-                                              page: MovieDetailsScreen(videoLinks: allPosts[index].videoLink!,));
+                                              page: MovieDetailsScreen(videoLinks: allPosts[index].videoLink!,postId: allPosts[index].id!,));
                                         },
                                         child: MoviesItems(
                                             posts: allPosts[index]));
