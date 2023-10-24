@@ -76,4 +76,18 @@ class UserRepositoryImpl implements UserRepository {
 
     return CommentData.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> likeBookmark({required String token, required String postId, required String url}) async {
+    final map = await Requests().post(
+      url,
+      body: {
+        "token": token,
+        "post_id": postId,
+      },
+    );
+
+    return AuthData.fromJson(map);
+  }
+
 }

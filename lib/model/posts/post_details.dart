@@ -8,7 +8,7 @@ class PostDetails {
   PostDetails.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +36,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
   String? status;
+  String? isBooked;
 
   Data(
       {this.id,
@@ -50,7 +51,8 @@ class Data {
       this.likes,
       this.createdAt,
       this.updatedAt,
-      this.status});
+      this.status,
+      this.isBooked});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -66,6 +68,7 @@ class Data {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     status = json['status'];
+    isBooked = json['is_booked'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +86,7 @@ class Data {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['status'] = status;
+    data['is_booked'] = isBooked;
     return data;
   }
 }

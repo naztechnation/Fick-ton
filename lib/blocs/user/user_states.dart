@@ -38,6 +38,19 @@ class PostListsLoading extends UserStates {
   List<Object> get props => [];
 }
 
+class LikeBookmarkLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+class LikeBookmarkLoaded extends UserStates {
+  final AuthData createPost;
+  const LikeBookmarkLoaded(this.createPost);
+  @override
+  List<Object> get props => [createPost];
+}
+
+
+
 
 
 class PostListsLoaded extends UserStates {

@@ -25,6 +25,7 @@ abstract class UserRepository {
      Future<PostDetails> getPostsDetails({required String token});
      Future<AuthData> addComment({required String token, required String postId, required String comment});
      Future<CommentData> getComment({required String token, required String postId, });
+     Future<AuthData> likeBookmark({required String token, required String postId,  required String url});
 
 
 //     Future<GetReviews> getReviews({required String userId}); 

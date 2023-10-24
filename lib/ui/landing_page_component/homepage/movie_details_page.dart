@@ -1,4 +1,5 @@
 import 'package:fikkton/model/posts/comment_lists.dart';
+import 'package:fikkton/res/app_strings.dart';
 import 'package:fikkton/ui/widgets/text_edit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,35 +78,25 @@ class _MovieDetailsState extends State<MovieDetails> {
   bool isPostComment = false;
 
   String token = '';
+  String email = '';
   getPosts() async {
     _userCubit = context.read<UserCubit>();
 
     token = await StorageHandler.getUserToken() ?? '';
+    email = await StorageHandler.getUserEmail() ?? '';
 
     _userCubit.getPostDetails(token: token);
 
-    _userCubit.getComment(token: token, postId: widget.postId);
+    await _userCubit.getComment(token: token, postId: widget.postId);
+
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {});
+    });
   }
 
   @override
   void initState() {
     getPosts();
-    _controller = YoutubePlayerController(
-      initialVideoId: widget.videoLinks,
-      flags: const YoutubePlayerFlags(
-        mute: false,
-        autoPlay: true,
-        disableDragSeek: false,
-        loop: false,
-        isLive: false,
-        forceHD: false,
-        enableCaption: true,
-      ),
-    )..addListener(listener);
-    _idController = TextEditingController();
-    _seekToController = TextEditingController();
-    _videoMetaData = const YoutubeMetaData();
-    _playerState = PlayerState.unknown;
 
     super.initState();
   }
@@ -128,18 +119,12 @@ class _MovieDetailsState extends State<MovieDetails> {
           if (state is PostDetailsLoaded) {
             if (state.postDetails.status == 1) {
               postDetails = state.postDetails.data;
-            } else {
-              Modals.showToast(state.postDetails.message ?? '',
-                  messageType: MessageType.error);
-            }
+            } else {}
           }
           if (state is CommentLoaded) {
             if (state.postComment.status == 1) {
               comments = state.postComment.data ?? [];
-            } else {
-              Modals.showToast(state.postComment.message ?? '',
-                  messageType: MessageType.error);
-            }
+            } else {}
           }
 
           if (state is CreateCommentLoaded) {
@@ -147,25 +132,29 @@ class _MovieDetailsState extends State<MovieDetails> {
               setState(() {
                 isPostComment = false;
               });
-              Modals.showToast(state.postComment.message ?? '',
-                  messageType: MessageType.success);
-            } else {
-              Modals.showToast(state.postComment.message ?? '',
-                  messageType: MessageType.error);
-            }
+            } else {}
           }
           if (state is CreateCommentLoading) {
             isPostComment = true;
           } else {}
+          if (state is LikeBookmarkLoaded) {
+            if (state.createPost.status == 1) {
+                  _userCubit.getPostDetails(token: token);
+             
+              Modals.showToast(state.createPost.message ?? '',
+                  messageType: MessageType.error);
+            } else {
+              Modals.showToast(state.createPost.message ?? '',
+                  messageType: MessageType.error);
+            }
+          }
         }, builder: (context, state) {
           if (state is PostDetailsLoaded) {
             if (state.postDetails.status == 1) {
               postDetails = state.postDetails.data;
-              Modals.showToast(state.postDetails.message ?? '',
-                  messageType: MessageType.error);
+               
             } else {
-              Modals.showToast(state.postDetails.message ?? '',
-                  messageType: MessageType.error);
+               
             }
           } else if (state is UserNetworkErr) {
             return EmptyWidget(
@@ -181,55 +170,57 @@ class _MovieDetailsState extends State<MovieDetails> {
             );
           } else if (state is PostDetailsLoading) {
             return const LoadingPage();
+          }else if (state is LikeBookmarkLoading) {
+            return const LoadingPage();
           }
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                 SafeArea(
-                      child: SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.04,
+                SafeArea(
+                  child: SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.04,
+                  ),
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Align(
+                        alignment: Alignment.topLeft,
+                        child: ImageView.svg(
+                          AppImages.arrowBack,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Align(
-                            alignment: Alignment.topLeft,
-                            child: ImageView.svg(
-                              AppImages.arrowBack,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        const Text(
-                          "Fik-kton",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
                     const SizedBox(
-                      height: 20,
+                      width: 30,
                     ),
-                    Container(
-                        height: 300,
-                        decoration:
-                            BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
-                            child: YoutubePlayerDemoApp())),
+                    const Text(
+                      "Fik-kton",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    height: 300,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: YoutubePlayerDemoApp(
+                            videoLink: widget.videoLinks))),
                 Expanded(
                   child: SingleChildScrollView(
                       child: Column(
-                                      children: [
-                                       
+                    children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -248,13 +239,20 @@ class _MovieDetailsState extends State<MovieDetails> {
                                       fontSize: 14,
                                       color: Colors.black),
                                 ),
-                                //   Padding(
-                                //   padding: EdgeInsets.only(right: 12.0),
-                                //   child: ImageView.svg(
-                                //     postDetails.isBooked  == '0' ?  AppImages.bookmarkOutline : AppImages.bookmark,
-                                //     height: 25,
-                                //   ),
-                                // ),
+                                GestureDetector(
+                                  onTap: (){
+                                    likeBookmark(context, widget.postId, AppStrings.bookmarkPost);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 12.0),
+                                    child: ImageView.svg(
+                                      postDetails?.isBooked == '0'
+                                          ? AppImages.bookmarkOutline
+                                          : AppImages.bookmark,
+                                      height: 25,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                             const SizedBox(height: 12.0),
@@ -280,11 +278,11 @@ class _MovieDetailsState extends State<MovieDetails> {
                               ],
                             ),
                             const SizedBox(
-                              height: 25,
+                              height: 15,
                             ),
                             const Divider(),
                             const SizedBox(
-                              height: 30,
+                              height: 20,
                             ),
                             Text(
                               postDetails?.content ?? '',
@@ -300,16 +298,21 @@ class _MovieDetailsState extends State<MovieDetails> {
                       const SizedBox(
                         height: 20,
                       ),
-                        Row(
-                        children: [
-                          const ImageView.svg(AppImages.thumbUp),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            postDetails?.likes?? '',
-                          ),
-                        ],
+                      GestureDetector(
+                         onTap: (){
+                                    likeBookmark(context, widget.postId, AppStrings.likePost);
+                                  },
+                        child: Row(
+                          children: [
+                            const ImageView.svg(AppImages.thumbUp),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              postDetails?.likes ?? '',
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 15,
@@ -342,11 +345,12 @@ class _MovieDetailsState extends State<MovieDetails> {
                               itemBuilder: (BuildContext context, index) {
                                 return CommentSection(
                                   comment: comments[index].comment ?? '',
-                                  title: replaceSubstring(comments[index].email ?? ''),
+                                  title: replaceSubstring(
+                                      comments[index].email ?? ''),
                                 );
                               }),
-                                      ],
-                                    )),
+                    ],
+                  )),
                 ),
               ],
             ),
@@ -370,10 +374,10 @@ class _MovieDetailsState extends State<MovieDetails> {
                           color: AppColors.lightPrimary,
                           shape: BoxShape.circle,
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            'K',
-                            style: TextStyle(
+                            email.isNotEmpty ? email[0].toUpperCase() : '?',
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -417,17 +421,16 @@ class _MovieDetailsState extends State<MovieDetails> {
 
   makeComment(BuildContext ctx, String postId, String comment) {
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        isPostComment = true;
-      });
       ctx
           .read<UserCubit>()
           .createComment(token: token, postId: postId, comment: comment);
       FocusScope.of(ctx).unfocus();
-      setState(() {
-        isPostComment = false;
-      });
     }
+  }
+
+  likeBookmark(BuildContext ctx, String postId, String url) {
+    ctx.read<UserCubit>().likeBookMark(token: token, postId: postId, url: url);
+    FocusScope.of(ctx).unfocus();
   }
 
   String replaceSubstring(String input) {

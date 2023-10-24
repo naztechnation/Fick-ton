@@ -7,6 +7,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
+import '../../handlers/secure_handler.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_colors.dart';
@@ -150,6 +151,7 @@ class _LoginContentState extends State<LoginContent>
             if (state is AccountLoaded) {
               if (state.userData.status == 1) {
                 setToken.setToken(state.userData.token!);
+                StorageHandler.saveUserEmail(_emailController.text);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
                 AppNavigator.pushAndReplacePage(context,
@@ -163,6 +165,8 @@ class _LoginContentState extends State<LoginContent>
             if (state is AccountUpdated) {
               if (state.user.status == 1) {
                 setToken.setToken(state.user.token!);
+                StorageHandler.saveUserEmail(_emailController.text);
+
                 Modals.showToast(
                   state.user.message ?? '',
                 );

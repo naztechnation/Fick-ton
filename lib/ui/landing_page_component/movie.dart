@@ -1,20 +1,24 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../res/app_colors.dart';
-import '../../res/app_images.dart';
-import '../widgets/image_view.dart';
 
 class YoutubePlayerDemoApp extends StatelessWidget {
+  final String videoLink;
+
+  const YoutubePlayerDemoApp({super.key, required this.videoLink});
   @override
   Widget build(BuildContext context) {
-    return MyHomePage();
+    return MyHomePage(videoLink: videoLink,);
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final String videoLink;
+
+  const MyHomePage({super.key, required this.videoLink});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -30,24 +34,16 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _muted = false;
   bool _isPlayerReady = false;
 
-  final List<String> _ids = [
-    'nPt8bK2gbaU',
-    'gQDByCdjUXw',
-    'iLnmTe5Q2Qw',
-    '_WoCV4c6XOE',
-    'KmzdUe0RSJo',
-    '6jZDSSZZxjQ',
-    'p2lYr3vM_1w',
-    '7QUtEmBT_-w',
-    '34_PXCzGw1M',
-  ];
+  String videoId = "";
 
   @override
   void initState() {
     super.initState();
     
+videoId = YoutubePlayer.convertUrlToId(widget.videoLink) ?? '';
+
     _controller = YoutubePlayerController(
-      initialVideoId: 'tuIJ7uz9x8E',
+      initialVideoId: videoId,
       flags: const YoutubePlayerFlags(
         mute: false,
         autoPlay: false,
@@ -135,8 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _isPlayerReady = true;
         },
         onEnded: (data) {
-          _controller
-              .load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
+           
         },
       ),
       builder: (context, player) => Scaffold(

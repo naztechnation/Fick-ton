@@ -169,4 +169,33 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+   Future<void> likeBookMark({
+    required String token,
+    required String postId,
+    required String url,
+  }) async {
+    try {
+      emit(LikeBookmarkLoading());
+
+      final comments = await userRepository.likeBookmark(
+        token: token,
+        postId: postId, url: url,
+      );
+
+      emit(LikeBookmarkLoaded(comments));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }
