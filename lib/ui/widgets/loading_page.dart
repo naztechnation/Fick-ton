@@ -14,7 +14,7 @@ class LoadingPage extends StatelessWidget {
         width: MediaQuery.sizeOf(context).width,
         decoration: const BoxDecoration(
             color:Colors.white,),
-        child: const Align(child: ImageView.asset(AppImages.loading2, height: 70,)),
+        child: const Align(child: ImageView.asset(AppImages.loading2, height: 100, width: 100,)),
       ),
     );
     

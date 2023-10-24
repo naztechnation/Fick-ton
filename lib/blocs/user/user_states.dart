@@ -46,69 +46,31 @@ class PostListsLoaded extends UserStates {
   List<Object> get props => [postLists];
 }
 
+
+class PostDetailsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
 class PostDetailsLoaded extends UserStates {
   final PostDetails postDetails ;
   const PostDetailsLoaded(this.postDetails);
   @override
   List<Object> get props => [postDetails];
 }
-class PostDetailsLoading extends UserStates {
+
+class CreateCommentLoading extends UserStates {
   @override
   List<Object> get props => [];
 }
-// class ServiceProviderListLoaded extends UserStates {
-//   final ServiceProvidersList userData;
-//   const ServiceProviderListLoaded(this.userData);
-//   @override
-//   List<Object> get props => [userData];
-// }
 
-// class ReviewLoading extends UserStates {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ReviewLoaded extends UserStates {
-//   final GetReviews reviews;
-//   const ReviewLoaded(this.reviews);
-//   @override
-//   List<Object> get props => [reviews];
-// }
-// class GalleryLoading extends UserStates {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class GalleryLoaded extends UserStates {
-//   final GalleryAgents galleryAgents;
-//   const GalleryLoaded(this.galleryAgents);
-//   @override
-//   List<Object> get props => [galleryAgents];
-// }
+class CreateCommentLoaded extends UserStates {
+  final AuthData postComment ;
+  const CreateCommentLoaded(this.postComment);
+  @override
+  List<Object> get props => [postComment];
+}
 
-// class AgentPackagesLoading extends UserStates {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class AgentPackagesLoaded extends UserStates {
-//   final GetAgentsPackages packages;
-//   const AgentPackagesLoaded(this.packages);
-//   @override
-//   List<Object> get props => [packages];
-// }
-
-// class ConfirmPaymentLoading extends UserStates {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ConfirmPaymentLoaded extends UserStates {
-//   final PaymentResponse packages;
-//   const ConfirmPaymentLoaded(this.packages);
-//   @override
-//   List<Object> get props => [packages];
-// }
 
 class UserNetworkErr extends UserStates {
   final String? message;

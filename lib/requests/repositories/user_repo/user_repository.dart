@@ -2,6 +2,7 @@
  import 'dart:io';
 
 import 'package:fikkton/model/auth_model/login.dart';
+import 'package:fikkton/model/posts/comment_lists.dart';
 import 'package:fikkton/model/posts/post_details.dart';
 
 import '../../../model/posts/get_posts.dart';
@@ -22,6 +23,8 @@ abstract class UserRepository {
 
      Future<GetAllPosts> getAllPosts({required String token});
      Future<PostDetails> getPostsDetails({required String token});
+     Future<AuthData> addComment({required String token, required String postId, required String comment});
+     Future<CommentData> getComment({required String token, required String postId, });
 
 
 //     Future<GetReviews> getReviews({required String userId}); 

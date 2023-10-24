@@ -14,10 +14,10 @@ class CommentSection extends StatelessWidget {
         Row(
           children: <Widget>[
             Container(
-              width: 31,  
+              width: 31,
               height: 31,
               decoration: const BoxDecoration(
-                color: AppColors.lightPrimary, 
+                color: AppColors.lightPrimary,
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -31,8 +31,8 @@ class CommentSection extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 16),  
-              Text(
+            const SizedBox(width: 16),
+            Text(
               title,
               style: const TextStyle(
                 fontSize: 16,
@@ -41,17 +41,13 @@ class CommentSection extends StatelessWidget {
             ),
           ],
         ),
-            const SizedBox(height: 12),  
-
-         Text(
-                  comment,
-                  style: const TextStyle(fontSize: 14),
-                ),
-            const SizedBox(height: 30),  
-
+        const SizedBox(height: 12),
+        Text(
+          comment,
+          style: const TextStyle(fontSize: 14),
+        ),
+        const SizedBox(height: 30),
       ],
     );
   }
 }
-
- 

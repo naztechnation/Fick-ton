@@ -16,6 +16,7 @@ import '../../widgets/empty_widget.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/loading_page.dart';
 import '../../widgets/modals.dart';
+import '../../widgets/progress_indicator.dart';
 import '../movie.dart';
 import 'widgets/comment_section.dart';
 
@@ -55,9 +56,16 @@ class _MovieDetailsState extends State<MovieDetails> {
   bool _muted = false;
   bool _isPlayerReady = false;
 
+  final _formKey = GlobalKey<FormState>();
+
+  final commentController  = TextEditingController();
+
+
     late UserCubit _userCubit;
 
     Data? postDetails;
+
+    bool isPostComment = false;
 
   String token = '';
  getPosts() async {
@@ -106,15 +114,47 @@ class _MovieDetailsState extends State<MovieDetails> {
       body: Scaffold(
         resizeToAvoidBottomInset: false,
         body: BlocConsumer<UserCubit, UserStates>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              if (state is PostDetailsLoaded) {
+                  isPostComment = false;
+
+                if (state.postDetails.status == 1) {
+                  postDetails = state.postDetails.data;
+                   
+                } else {
+                  Modals.showToast(state.postDetails.message ?? '',
+                      messageType: MessageType.error);
+                }
+              }if (state is CreateCommentLoaded) {
+               
+                if (state.postComment.status == 1) {
+                  
+                 setState(() {
+                   isPostComment = false;
+                 });
+                  Modals.showToast(state.postComment.message ?? '',
+                      messageType: MessageType.success);
+                } else {
+                 
+                  Modals.showToast(state.postComment.message ?? '',
+                      messageType: MessageType.error);
+                }
+              }if (state is CreateCommentLoading) {
+                isPostComment = true;
+              }else{
+                 
+              }
+
+             
+            },
             builder: (context, state) {
               if (state is PostDetailsLoaded) {
                 if (state.postDetails.status == 1) {
                   postDetails = state.postDetails.data;
-                  Modals.showToast(state.postDetails.message!,
+                  Modals.showToast(state.postDetails.message ?? '',
                       messageType: MessageType.error);
                 } else {
-                  Modals.showToast(state.postDetails.message!,
+                  Modals.showToast(state.postDetails.message ?? '',
                       messageType: MessageType.error);
                 }
               } else if (state is UserNetworkErr) {
@@ -129,11 +169,11 @@ class _MovieDetailsState extends State<MovieDetails> {
                   description: state.message,
                   onRefresh: () => _userCubit.getPostDetails(token: token),
                 );
+              } else if (state is PostDetailsLoading) {
+                return const LoadingPage();
               }
 
-              return (state is PostDetailsLoading)
-                  ? const LoadingPage()
-                  : Padding(
+              return  Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
                 child: Column(
@@ -188,24 +228,24 @@ class _MovieDetailsState extends State<MovieDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            postDetails!.genre!,
+                            postDetails?.genre ?? '',
                             style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                                 color: Colors.black),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 12.0),
-                            child: ImageView.svg(
-                              AppImages.bookmark,
-                              height: 25,
-                            ),
-                          ),
+                          //   Padding(
+                          //   padding: EdgeInsets.only(right: 12.0),
+                          //   child: ImageView.svg(
+                          //     postDetails.isBooked  == '0' ?  AppImages.bookmarkOutline : AppImages.bookmark,
+                          //     height: 25,
+                          //   ),
+                          // ),
                         ],
                       ),
                       const SizedBox(height: 12.0),
                         Text(
-                        postDetails!.title!,
+                        postDetails?.title ??'',
                         style:
                             const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                       ),
@@ -214,13 +254,13 @@ class _MovieDetailsState extends State<MovieDetails> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            postDetails!.createdAt!,
+                            postDetails?.createdAt ?? '',
                           ),
                           const SizedBox(width: 15.0),
                           Padding(
                             padding: const EdgeInsets.only(right: 12.0),
                             child: Text(
-                               postDetails!.createdAt!,
+                               postDetails?.createdAt ?? '',
                             ),
                           ),
                         ],
@@ -233,7 +273,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         height: 30,
                       ),
                         Text(
-                         postDetails!.content!,
+                         postDetails?.content?? '',
                         textAlign: TextAlign.justify,
                         style: const TextStyle(
                             fontWeight: FontWeight.w400,
@@ -294,7 +334,10 @@ class _MovieDetailsState extends State<MovieDetails> {
             )),
           );
   }),
-        bottomNavigationBar: SizedBox(
+        bottomNavigationBar: (isPostComment) ? Container(
+          height: 25,
+          padding: const EdgeInsets.only(bottom: 20),
+          child: ProgressIndicators.linearProgressBar(context)) : SizedBox(
           height: 90,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -322,24 +365,48 @@ class _MovieDetailsState extends State<MovieDetails> {
                   width: 14,
                 ),
                 Expanded(
-                    child: TextEditView(
-                  controller: TextEditingController(),
-                  isDense: true,
-                  filled: true,
-                  hintText: 'Add a comment',
-                  fillColor: Colors.grey.shade50,
-                  suffixIcon: const SizedBox(
-                      height: 12,
-                      child: ImageView.svg(
-                        AppImages.send,
-                        height: 10,
-                      )),
-                )),
+                    child: Form(
+                      key: _formKey,
+                      child: TextEditView(
+                                      controller: commentController,
+                                      isDense: true,
+                                      filled: true,
+                                      hintText: 'Add a comment',
+                                      fillColor: Colors.grey.shade50,
+                                      suffixIcon: GestureDetector(
+                                        onTap: (){
+                          makeComment(context,postDetails?.content ?? '',commentController.text);
+                        },
+                                        child: const SizedBox(
+                                                            height: 12,
+                                                            child: ImageView.svg(
+                                                              AppImages.send,
+                                                              height: 10,
+                                                            )),
+                                      ),
+                                    ),
+                    )),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  makeComment(BuildContext ctx,String postId, String comment) {
+    if (_formKey.currentState!.validate()) {
+
+      setState(() {
+        isPostComment = true;
+      });
+      ctx.read<UserCubit>().createComment(
+          
+          token: token, postId: postId, comment: comment);
+      FocusScope.of(ctx).unfocus();
+       setState(() {
+        isPostComment = false;
+      });
+    }
   }
 }

@@ -112,6 +112,36 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+  Future<void> createComment({
+    required String token,
+    required String postId,
+    required String comment,
+  }) async {
+    try {
+      emit(CreateCommentLoading());
+
+      final comments = await userRepository.addComment(
+        token: token, postId: postId, comment: comment,
+      );
+
+      
+
+      emit(CreateCommentLoaded(comments));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
 //   Future<void> getServiceTypes() async {
 //     try {
 //       emit(ServiceProviderListLoading());
