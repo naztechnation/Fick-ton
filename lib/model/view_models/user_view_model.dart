@@ -12,7 +12,7 @@ import 'base_viewmodel.dart';
 class UserViewModel extends BaseViewModel {
   ImagePicker picker = ImagePicker();
 
-  File? _imageURl;
+  File? imageURl;
 
     List<get_posts.Posts> _postsList = [];
 
@@ -40,20 +40,21 @@ class UserViewModel extends BaseViewModel {
                 child: Text('Select the images source',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         color: AppColors.lightSecondary,
-                        fontWeight: FontWeight.bold)),
+                        fontWeight: FontWeight.w400)),
               ),
               ListTile(
                 leading: const Icon(
                   Icons.photo_camera,
-                  size: 35.0,
-                  color: AppColors.lightPrimary,
+                  size: 25.0,
+                                    color: Colors.grey,
+
                 ),
                 title: const Text('Camera', style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         color: AppColors.lightSecondary,
-                        fontWeight: FontWeight.w600)),
+                        fontWeight: FontWeight.w400)),
                 onTap: () async {
                   Navigator.pop(context);
 
@@ -62,20 +63,20 @@ class UserViewModel extends BaseViewModel {
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);
-                  _imageURl = File(image!.path);
+                  imageURl = File(image!.path);
                   setViewState(ViewState.success);
                 },
               ),
               ListTile(
                 leading: const Icon(
                   Icons.photo,
-                  size: 35.0,
-                  color: AppColors.lightPrimary,
+                  size: 25.0,
+                  color: Colors.grey,
                 ),
                 title: const Text('Gallery',style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         color: AppColors.lightSecondary,
-                        fontWeight: FontWeight.w600)),
+                        fontWeight: FontWeight.w400)),
                 onTap: () async {
                   Navigator.pop(context);
                   final image = await ImagePicker().pickImage(
@@ -83,7 +84,7 @@ class UserViewModel extends BaseViewModel {
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);
-                  _imageURl = File(image!.path);
+                  imageURl = File(image!.path);
                   setViewState(ViewState.success);
                 },
               ),
@@ -92,7 +93,7 @@ class UserViewModel extends BaseViewModel {
         });
   }
 
-  File? get imageURl => _imageURl;
+  File? get imgURl => imageURl;
 
   List<get_posts.Posts> get postsList => _postsList;
 

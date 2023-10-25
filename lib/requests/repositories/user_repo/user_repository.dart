@@ -2,6 +2,7 @@
  import 'dart:io';
 
 import 'package:fikkton/model/auth_model/login.dart';
+import 'package:fikkton/model/posts/bookmark_lists.dart';
 import 'package:fikkton/model/posts/comment_lists.dart';
 import 'package:fikkton/model/posts/post_details.dart';
 
@@ -26,6 +27,7 @@ abstract class UserRepository {
      Future<AuthData> addComment({required String token, required String postId, required String comment});
      Future<CommentData> getComment({required String token, required String postId, });
      Future<AuthData> likeBookmark({required String token, required String postId,  required String url});
+     Future<BookmarkList> bookmarkList({required String token, });
 
 
 //     Future<GetReviews> getReviews({required String userId}); 

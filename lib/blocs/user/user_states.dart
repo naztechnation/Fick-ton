@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fikkton/model/auth_model/login.dart';
+import 'package:fikkton/model/posts/bookmark_lists.dart';
 import 'package:fikkton/model/posts/comment_lists.dart';
 import 'package:fikkton/model/posts/get_posts.dart';
 import 'package:fikkton/model/posts/post_details.dart';
@@ -47,6 +48,17 @@ class LikeBookmarkLoaded extends UserStates {
   const LikeBookmarkLoaded(this.createPost);
   @override
   List<Object> get props => [createPost];
+}
+
+class BookmarkListLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+class BookmarkListLoaded extends UserStates {
+  final BookmarkList bookmarkList;
+  const BookmarkListLoaded(this.bookmarkList);
+  @override
+  List<Object> get props => [bookmarkList];
 }
 
 

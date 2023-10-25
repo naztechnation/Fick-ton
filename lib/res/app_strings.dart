@@ -21,7 +21,10 @@ class AppStrings {
   static const String createPost = '${_baseUrl}posts/create';
   static const String createComments = '${_baseUrl}comments/create';
   static const String likePost = '${_baseUrl}likes/create';
+  static const String unLikePost = '${_baseUrl}likes/delete';
   static const String bookmarkPost = '${_baseUrl}book/create';
+  static const String unBookmarkPost = '${_baseUrl}book/delete';
+  static   String bookmarkListUrl(String token) => '${_baseUrl}book/index?token=$token';
   static   String getPosts(String token) => '${_baseUrl}posts/index?token=$token';
   static   String getComments(String token, String post) => '${_baseUrl}comments/show?token=$token&post_id=$post';
   static   String getPostsDetails(String token) => '${_baseUrl}posts/show?post_id=2&token=$token';

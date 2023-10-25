@@ -198,4 +198,33 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+
+  Future<void> bookmarkList({
+    required String token,
+    
+  }) async {
+    try {
+      emit(BookmarkListLoading());
+
+      final bookmarkList = await userRepository.bookmarkList(
+        token: token,
+        
+      );
+
+      emit(BookmarkListLoaded(bookmarkList));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

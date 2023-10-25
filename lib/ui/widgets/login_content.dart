@@ -28,7 +28,7 @@ class LoginContent extends StatefulWidget {
 }
 
 class _LoginContentState extends State<LoginContent>
-    with TickerProviderStateMixin {
+     {
   final _formKey = GlobalKey<FormState>();
   
 
@@ -139,7 +139,7 @@ class _LoginContentState extends State<LoginContent>
   ];
   @override
   Widget build(BuildContext context) {
-    final setToken = Provider.of<AccountViewModel>(context, listen: true);
+    final setToken = Provider.of<AccountViewModel>(context, listen: false);
 
     return BlocProvider<AccountCubit>(
         lazy: false,

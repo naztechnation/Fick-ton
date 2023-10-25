@@ -1,7 +1,9 @@
+import 'package:fikkton/model/posts/get_posts.dart';
+
 class BookmarkList {
   int? status;
   String? message;
-  List<Data>? data;
+  List<Posts>? data;
 
   BookmarkList({this.status, this.message, this.data});
 
@@ -9,9 +11,9 @@ class BookmarkList {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Posts>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(  Posts.fromJson(v));
       });
     }
   }
@@ -27,27 +29,3 @@ class BookmarkList {
   }
 }
 
-class Data {
-  String? id;
-  String? userId;
-  String? postId;
-  String? createdAt;
-
-  Data({this.id, this.userId, this.postId, this.createdAt});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    postId = json['post_id'];
-    createdAt = json['created_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['user_id'] = userId;
-    data['post_id'] = postId;
-    data['created_at'] = createdAt;
-    return data;
-  }
-}

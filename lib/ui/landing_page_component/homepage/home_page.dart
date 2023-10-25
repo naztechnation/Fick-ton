@@ -73,7 +73,6 @@ class _HomeState extends State<Home> {
   }
 
   static Widget _buildPage(
-     
       {required String image,
       required String title,
       required String genre,
@@ -215,210 +214,235 @@ class _HomeState extends State<Home> {
                         Expanded(
                           child: SingleChildScrollView(
                               child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      'Trending',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400),
-                                    )),
-                              ),
-                              const SizedBox(
-                                height: 26,
-                              ),
-                              SizedBox(
-                                height: 190,
-                                child: PageView(
-                                  controller: _pageController,
-                                  onPageChanged: (int page) {
-                                    setState(() {
-                                      _currentPage = page;
-                                    });
-                                  },
-                                  children: <Widget>[
-                                    for (var trendingPosts in trendingPosts)
-                                      _buildPage(
-                                        context: context,
-                                          image: trendingPosts.thumbnail!,
-                                          title: trendingPosts.title!,
-                                          genre: trendingPosts.genre!,
-                                          time: trendingPosts.createdAt!),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: _buildPageIndicator(),
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    FilterContainer(
-                                      text: recent,
-                                      onPressed: () {
-                                        Modals.showBottomSheetModal(context,
-                                            isDissmissible: true,
-                                            heightFactor: 0.8,
-                                            page: filterModalContent(
-                                                filterItems: [
-                                                  'Recent',
-                                                  'Popular',
-                                                  'Oldest',
-                                                  'A - Z',
-                                                  'Z - A'
-                                                ],
-                                                title: 'Filter by',
-                                                context: context,
-                                                onPressed: (item) {
-                                                  Navigator.pop(context);
-                                                  setState(() {
-                                                    recent = item;
-                                                  });
-                                                }));
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    FilterContainer(
-                                      text: types,
-                                      onPressed: () {
-                                        Modals.showBottomSheetModal(context,
-                                            isDissmissible: true,
-                                            heightFactor: 0.6,
-                                            page: filterModalContent(
-                                                filterItems: [
-                                                  'Movies',
-                                                  'TV Series',
-                                                  'Drama',
-                                                ],
-                                                title: 'Filter by Type',
-                                                context: context,
-                                                onPressed: (item) {
-                                                  Navigator.pop(context);
-
-                                                  setState(() {
-                                                    types = item;
-                                                  });
-                                                }));
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    FilterContainer(
-                                      text: genres,
-                                      onPressed: () {
-                                        Modals.showBottomSheetModal(context,
-                                            isDissmissible: true,
-                                            heightFactor: 1.2,
-                                            page: filterModalContent(
-                                                filterItems: [
-                                                  'Action',
-                                                  'Adventure',
-                                                  'Animation',
-                                                  'Comedy',
-                                                  'Crime',
-                                                  'Documentary',
-                                                  'Family',
-                                                  'Romance'
-                                                ],
-                                                title: 'Filter by Genres',
-                                                context: context,
-                                                onPressed: (item) {
-                                                  Navigator.pop(context);
-
-                                                  setState(() {
-                                                    genres = item;
-                                                  });
-                                                }));
-                                      },
-                                    ),
-                                  ],
+                                const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Trending',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w400),
+                                      )),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              ListView.builder(
-                                  itemCount: allPosts.length,
-                                  
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder: (BuildContext context, index) {
-                                    return GestureDetector(
-                                        onTap: () {
-                                          AppNavigator.pushAndStackPage(context,
-                                              page: MovieDetailsScreen(videoLinks: allPosts[index].videoLink!,postId: allPosts[index].id!,));
+                                const SizedBox(
+                                  height: 26,
+                                ),
+                                if (trendingPosts.isEmpty) ...[
+                                  const SizedBox(
+                                    height: 190,
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text('No trending posts')),
+                                  )
+                                ] else ...[
+                                  SizedBox(
+                                    height: 190,
+                                    child: PageView(
+                                      controller: _pageController,
+                                      onPageChanged: (int page) {
+                                        setState(() {
+                                          _currentPage = page;
+                                        });
+                                      },
+                                      children: <Widget>[
+                                        for (var trendingPosts in trendingPosts)
+                                          _buildPage(
+                                              context: context,
+                                              image: trendingPosts.thumbnail!,
+                                              title: trendingPosts.title!,
+                                              genre: trendingPosts.genre!,
+                                              time: trendingPosts.createdAt!),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: _buildPageIndicator(),
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                ],
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      FilterContainer(
+                                        text: recent,
+                                        onPressed: () {
+                                          Modals.showBottomSheetModal(context,
+                                              isDissmissible: true,
+                                              heightFactor: 0.8,
+                                              page: filterModalContent(
+                                                  filterItems: [
+                                                    'Recent',
+                                                    'Popular',
+                                                    'Oldest',
+                                                    'A - Z',
+                                                    'Z - A'
+                                                  ],
+                                                  title: 'Filter by',
+                                                  context: context,
+                                                  onPressed: (item) {
+                                                    Navigator.pop(context);
+                                                    setState(() {
+                                                      recent = item;
+                                                    });
+                                                  }));
                                         },
-                                        child: MoviesItems(
-                                            posts: allPosts[index]));
-                                  }),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                            ],
-                          )),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      FilterContainer(
+                                        text: types,
+                                        onPressed: () {
+                                          Modals.showBottomSheetModal(context,
+                                              isDissmissible: true,
+                                              heightFactor: 0.6,
+                                              page: filterModalContent(
+                                                  filterItems: [
+                                                    'Movies',
+                                                    'TV Series',
+                                                    'Drama',
+                                                  ],
+                                                  title: 'Filter by Type',
+                                                  context: context,
+                                                  onPressed: (item) {
+                                                    Navigator.pop(context);
+
+                                                    setState(() {
+                                                      types = item;
+                                                    });
+                                                  }));
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      FilterContainer(
+                                        text: genres,
+                                        onPressed: () {
+                                          Modals.showBottomSheetModal(context,
+                                              isDissmissible: true,
+                                              heightFactor: 1.2,
+                                              page: filterModalContent(
+                                                  filterItems: [
+                                                    'Action',
+                                                    'Adventure',
+                                                    'Animation',
+                                                    'Comedy',
+                                                    'Crime',
+                                                    'Documentary',
+                                                    'Family',
+                                                    'Romance'
+                                                  ],
+                                                  title: 'Filter by Genres',
+                                                  context: context,
+                                                  onPressed: (item) {
+                                                    Navigator.pop(context);
+
+                                                    setState(() {
+                                                      genres = item;
+                                                    });
+                                                  }));
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                if (allPosts.isEmpty) ...[
+                                  const SizedBox(
+                                    height: 390,
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text('No posts')),
+                                  )
+                                ] else ...[
+                                  ListView.builder(
+                                      itemCount: allPosts.length,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemBuilder:
+                                          (BuildContext context, index) {
+                                        return GestureDetector(
+                                            onTap: () {
+                                              AppNavigator.pushAndStackPage(
+                                                  context,
+                                                  page: MovieDetailsScreen(
+                                                    videoLinks: allPosts[index]
+                                                        .videoLink!,
+                                                    postId: allPosts[index].id!,
+                                                  ));
+                                            },
+                                            child: MoviesItems(
+                                                posts: allPosts[index]));
+                                      }),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                ],
+                              ])),
                         ),
                       ],
                     );
             }));
   }
 
- String formatTime(timestamp){
+  String formatTime(timestamp) {
     String formattedTime = timestampToHoursAgo(timestamp);
 
     return formattedTime;
   }
 
   String timestampToHoursAgo(int timestamp) {
-  final now = DateTime.now();
-  final time = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000); 
+    final now = DateTime.now();
+    final time = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
 
-  final difference = now.difference(time);
-  final hours = difference.inHours;
+    final difference = now.difference(time);
+    final hours = difference.inHours;
 
-  if (hours == 0) {
-    final minutes = difference.inMinutes;
-    return '$minutes minutes ago';
-  } else if (hours == 1) {
-    return '1 hour ago';
-  } else {
-    return '$hours hours ago';
+    if (hours == 0) {
+      final minutes = difference.inMinutes;
+      return '$minutes minutes ago';
+    } else if (hours == 1) {
+      return '1 hour ago';
+    } else {
+      return '$hours hours ago';
+    }
   }
-}
 
   List<Widget> _buildPageIndicator() {
     List<Widget> reverseIndicators = [];
-for (int i = trendingPosts.length - 1; i >= 0; i--) {
-  reverseIndicators.add(
-    Container(
-      width: 8.0,
-      height: 8.0,
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _currentPage == (trendingPosts.length - 1 - i) ? AppColors.lightSecondary : Colors.grey,
-      ),
-    ),
-  );
-}
-return reverseIndicators;
-
+    for (int i = trendingPosts.length - 1; i >= 0; i--) {
+      reverseIndicators.add(
+        Container(
+          width: 8.0,
+          height: 8.0,
+          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _currentPage == (trendingPosts.length - 1 - i)
+                ? AppColors.lightSecondary
+                : Colors.grey,
+          ),
+        ),
+      );
+    }
+    return reverseIndicators;
   }
 }

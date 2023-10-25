@@ -100,15 +100,7 @@ class _MovieDetailsState extends State<MovieDetails> {
 
     super.initState();
   }
-
-  void listener() {
-    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
-      setState(() {
-        _playerState = _controller.value.playerState;
-        _videoMetaData = _controller.metadata;
-      });
-    }
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +233,13 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 ),
                                 GestureDetector(
                                   onTap: (){
+                                    if(postDetails?.isBooked == '0'){
                                     likeBookmark(context, widget.postId, AppStrings.bookmarkPost);
+
+                                    }else{
+                                    likeBookmark(context, widget.postId, AppStrings.unBookmarkPost);
+
+                                    }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 12.0),

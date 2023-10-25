@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fikkton/model/auth_model/login.dart';
 import 'package:fikkton/model/posts/get_posts.dart';
 
+import '../../../model/posts/bookmark_lists.dart';
 import '../../../model/posts/comment_lists.dart';
 import '../../../model/posts/post_details.dart';
 import '../../../res/app_strings.dart';
@@ -88,6 +89,16 @@ class UserRepositoryImpl implements UserRepository {
     );
 
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<BookmarkList> bookmarkList({required String token,}) async {
+    final map = await Requests().get(
+      AppStrings.bookmarkListUrl(token)
+       
+    );
+
+    return BookmarkList.fromJson(map);
   }
 
 }
