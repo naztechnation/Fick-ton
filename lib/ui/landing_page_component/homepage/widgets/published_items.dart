@@ -2,8 +2,12 @@ import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../model/posts/get_posts.dart';
+
 class PublishedItems extends StatelessWidget {
-  PublishedItems({super.key});
+
+ final Posts posts;
+  const PublishedItems({super.key, required this.posts});
 
   @override
   Widget build(BuildContext context) {
@@ -21,38 +25,42 @@ class PublishedItems extends StatelessWidget {
         children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              child: const Stack(
+              child:   Stack(
                 children: [
-                  ImageView.asset(
-                    AppImages.avengers,
+                  ClipRRect(
+        borderRadius: BorderRadius.circular(30.0),
+              child: SizedBox(
                     height: 120,
-                  ),
-                  //
+                    width: 130,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                            child: ImageView.network(posts.thumbnail, height: 120, placeholder: AppImages.logo,fit: BoxFit.cover,))),
+                ),
                 ],
               )),
           const SizedBox(width: 16.0),
-          const Expanded(
+            Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "TV SERIES",
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+                  posts.genre ?? "",
+                  style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
                 ),
-                SizedBox(height: 12.0),
+                const SizedBox(height: 12.0),
                 Text(
-                  "House Of The Dragon - Season 1",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                  posts.title ?? "",
+                  style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Today",
+                      posts.createdAt ?? "",
                     ),
-                    SizedBox(width: 8.0),
-                    Row(
+                    const SizedBox(width: 8.0),
+                    const Row(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(right: 12.0),

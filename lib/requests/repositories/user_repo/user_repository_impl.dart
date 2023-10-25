@@ -41,8 +41,8 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<GetAllPosts> getAllPosts({required String token}) async {
-    final map = await Requests().get(AppStrings.getPosts(token));
+  Future<GetAllPosts> getAllPosts({ required String url}) async {
+    final map = await Requests().get(url);
 
     return GetAllPosts.fromJson(map);
   }

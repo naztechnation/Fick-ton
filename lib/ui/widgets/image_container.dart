@@ -18,7 +18,7 @@ class _CoverImageContainerState extends State<CoverImageContainer> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: false);
+    final user = Provider.of<UserViewModel>(context, listen: true);
 
     return GestureDetector(
       onTap: () {

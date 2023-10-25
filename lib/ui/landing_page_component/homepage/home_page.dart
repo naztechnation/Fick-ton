@@ -13,6 +13,7 @@ import '../../../model/posts/get_posts.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
+import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/modals.dart';
@@ -56,7 +57,7 @@ class _HomeState extends State<Home> {
 
     token = await StorageHandler.getUserToken() ?? '';
 
-    _userCubit.getPost(token: token);
+    _userCubit.getPost(url: AppStrings.getPosts(token));
   }
 
   List<Posts> allPosts = [];
@@ -152,13 +153,13 @@ class _HomeState extends State<Home> {
                 return EmptyWidget(
                   title: 'Network error',
                   description: state.message,
-                  onRefresh: () => _userCubit.getPost(token: token),
+                  onRefresh: () => _userCubit.getPost(url: AppStrings.getPosts(token)),
                 );
               } else if (state is UserNetworkErrApiErr) {
                 return EmptyWidget(
                   title: 'Network error',
                   description: state.message,
-                  onRefresh: () => _userCubit.getPost(token: token),
+                  onRefresh: () => _userCubit.getPost(url: AppStrings.getPosts(token)),
                 );
               }
 

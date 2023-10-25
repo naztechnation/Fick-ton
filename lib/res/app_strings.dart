@@ -28,6 +28,7 @@ class AppStrings {
   static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total?token=';
   static   String bookmarkListUrl(String token) => '${_baseUrl}book/index?token=$token';
   static   String getPosts(String token) => '${_baseUrl}posts/index?token=$token';
+  static   String getDraftedPosts(String token) => '${_baseUrl}posts/draft?token=$token';
   static   String getComments(String token, String post) => '${_baseUrl}comments/show?token=$token&post_id=$post';
   static   String getPostsDetails(String token) => '${_baseUrl}posts/show?post_id=2&token=$token';
 }

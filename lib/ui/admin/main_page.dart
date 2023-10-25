@@ -1,5 +1,5 @@
 import 'package:fikkton/ui/admin/announce.dart';
-import 'package:fikkton/ui/admin/posts.dart';
+import 'package:fikkton/ui/admin/posts_page.dart';
 import 'package:fikkton/ui/landing_page_component/homepage/widgets/navigation_helper.dart';
 import 'package:fikkton/ui/admin/new_post.dart';
 import 'package:flutter/material.dart';

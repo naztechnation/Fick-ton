@@ -13,12 +13,24 @@ class UserViewModel extends BaseViewModel {
   ImagePicker picker = ImagePicker();
 
   File? imageURl;
+  String _draftLength = "0";
+  String _publishedLength = "0";
 
     List<get_posts.Posts> _postsList = [];
 
 
    Future<void> setPostLists({required get_posts.GetAllPosts posts}) async {
     _postsList = posts.data ?? [];
+    setViewState(ViewState.success);
+  }
+
+   Future<void> setPublishedLength({required String publishedLength}) async {
+    _publishedLength = publishedLength;
+    setViewState(ViewState.success);
+  }
+
+   Future<void> setDraftLength({required String draftedLength}) async {
+    _draftLength = draftedLength;
     setViewState(ViewState.success);
   }
 
@@ -96,6 +108,8 @@ class UserViewModel extends BaseViewModel {
   File? get imgURl => imageURl;
 
   List<get_posts.Posts> get postsList => _postsList;
+  String get draftedLength => _draftLength;
+  String get publishedLength => _publishedLength;
 
 
   List<get_posts.Posts> get posts =>

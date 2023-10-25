@@ -57,13 +57,15 @@ class UserCubit extends Cubit<UserStates> {
   }
 
   Future<void> getPost({
-    required String token,
+    
+    required String url
   }) async {
     try {
       emit(PostListsLoading());
 
       final posts = await userRepository.getAllPosts(
-        token: token,
+        
+        url: url
       );
 
       await viewModel.setPostLists(posts: posts);
