@@ -18,6 +18,7 @@ import 'homepage/search_page.dart';
 import 'homepage/widgets/movies_item.dart';
 
 class BookMarkPage extends StatelessWidget {
+
   const BookMarkPage({
     Key? key,
   }) : super(key: key);
@@ -80,13 +81,13 @@ class _BookMarkState extends State<BookMark> {
           return EmptyWidget(
             title: 'Network error',
             description: state.message,
-            onRefresh: () => _userCubit.getPostDetails(token: token),
+            onRefresh: () => _userCubit.bookmarkList(token: token, ),
           );
         } else if (state is UserNetworkErrApiErr) {
           return EmptyWidget(
             title: 'Network error',
             description: state.message,
-            onRefresh: () => _userCubit.getPostDetails(token: token),
+            onRefresh: () => _userCubit.bookmarkList(token: token),
           );
         } else if (state is BookmarkListLoading) {
           return const LoadingPage();

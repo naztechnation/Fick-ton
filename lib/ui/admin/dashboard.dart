@@ -84,7 +84,7 @@ class _DashboardState extends State<Dashboard> {
                             child: GestureDetector(
                           onTap: () {
                             NavigationHelper.navigateToPage(
-                                context, const NewPost());
+                                context, const NewPost(isUpdate: false, postId: '',));
                           },
                           child: const dashBoardContainer(
                             color: AppColors.lightSecondary,

@@ -9,6 +9,8 @@ import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
+import '../../../utils/navigator/page_navigator.dart';
+import '../../landing_page_component/homepage/movie_details_page.dart';
 import '../../landing_page_component/homepage/widgets/draft_items.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/loading_page.dart';
@@ -46,7 +48,7 @@ class _DraftPageState extends State<DraftPage> {
 
     token = await StorageHandler.getUserToken() ?? '';
 
-    _userCubit.getPost(url: AppStrings.getPosts(token));
+    _userCubit.getPost(url:AppStrings.getDraftedPosts(token));
   }
 
   List<Posts> draftedPosts = [];
@@ -92,14 +94,14 @@ class _DraftPageState extends State<DraftPage> {
               return (state is PostListsLoading)
                   ? const LoadingPage()
                   : ListView.builder(
-            itemCount: 9,
+            itemCount: draftedPosts.length,
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, index) {
               return GestureDetector(
                   onTap: () {
-                    // AppNavigator.pushAndStackPage(context,
-                    //     page: MovieDetailsScreen());
+                    AppNavigator.pushAndStackPage(context,
+                        page:   MovieDetailsScreen(videoLinks: draftedPosts[index].videoLink!, postId: draftedPosts[index].id!,));
                   },
                   child: DraftItems(posts: draftedPosts[index],));
             });

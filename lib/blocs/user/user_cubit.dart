@@ -88,16 +88,17 @@ class UserCubit extends Cubit<UserStates> {
 
   Future<void> getPostDetails({
     required String token,
+    required String postId
   }) async {
     try {
       emit(PostDetailsLoading());
 
       final postsDetails = await userRepository.getPostsDetails(
         token: token,
+        postId: postId,
       );
 
-      //  await viewModel.setPostLists(posts:posts);
-
+       
       emit(PostDetailsLoaded(postsDetails));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));

@@ -9,6 +9,8 @@ import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
+import '../../../utils/navigator/page_navigator.dart';
+import '../../landing_page_component/homepage/movie_details_page.dart';
 import '../../landing_page_component/homepage/widgets/published_items.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/loading_page.dart';
@@ -96,12 +98,7 @@ class _PublishedPageState extends State<PublishedPage> {
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, index) {
-              return GestureDetector(
-                  onTap: () {
-                    // AppNavigator.pushAndStackPage(context,
-                    //     page: MovieDetailsScreen());
-                  },
-                  child: PublishedItems(posts: allPosts[index],));
+              return PublishedItems(posts: allPosts[index],);
             });
   }),
     );

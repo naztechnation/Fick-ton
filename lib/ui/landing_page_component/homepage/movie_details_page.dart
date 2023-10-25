@@ -85,7 +85,7 @@ class _MovieDetailsState extends State<MovieDetails> {
     token = await StorageHandler.getUserToken() ?? '';
     email = await StorageHandler.getUserEmail() ?? '';
 
-    _userCubit.getPostDetails(token: token);
+    _userCubit.getPostDetails(token: token, postId: widget.postId);
 
     await _userCubit.getComment(token: token, postId: widget.postId);
 
@@ -100,7 +100,6 @@ class _MovieDetailsState extends State<MovieDetails> {
 
     super.initState();
   }
- 
 
   @override
   Widget build(BuildContext context) {
@@ -131,8 +130,8 @@ class _MovieDetailsState extends State<MovieDetails> {
           } else {}
           if (state is LikeBookmarkLoaded) {
             if (state.createPost.status == 1) {
-                  _userCubit.getPostDetails(token: token);
-             
+              _userCubit.getPostDetails(token: token, postId: widget.postId);
+
               Modals.showToast(state.createPost.message ?? '',
                   messageType: MessageType.error);
             } else {
@@ -144,25 +143,22 @@ class _MovieDetailsState extends State<MovieDetails> {
           if (state is PostDetailsLoaded) {
             if (state.postDetails.status == 1) {
               postDetails = state.postDetails.data;
-               
-            } else {
-               
-            }
+            } else {}
           } else if (state is UserNetworkErr) {
             return EmptyWidget(
               title: 'Network error',
               description: state.message,
-              onRefresh: () => _userCubit.getPostDetails(token: token),
+              onRefresh: () => _userCubit.getPostDetails(token: token, postId: widget.postId),
             );
           } else if (state is UserNetworkErrApiErr) {
             return EmptyWidget(
               title: 'Network error',
               description: state.message,
-              onRefresh: () => _userCubit.getPostDetails(token: token),
+              onRefresh: () => _userCubit.getPostDetails(token: token, postId: widget.postId),
             );
           } else if (state is PostDetailsLoading) {
             return const LoadingPage();
-          }else if (state is LikeBookmarkLoading) {
+          } else if (state is LikeBookmarkLoading) {
             return const LoadingPage();
           }
 
@@ -172,7 +168,7 @@ class _MovieDetailsState extends State<MovieDetails> {
               children: [
                 SafeArea(
                   child: SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.04,
+                    height: MediaQuery.sizeOf(context).height * 0.03,
                   ),
                 ),
                 Row(
@@ -191,6 +187,14 @@ class _MovieDetailsState extends State<MovieDetails> {
                     ),
                     const SizedBox(
                       width: 30,
+                    ),
+                    const ImageView.asset(
+                      AppImages.logo,
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(
+                      width: 12,
                     ),
                     const Text(
                       "Fik-kton",
@@ -232,13 +236,13 @@ class _MovieDetailsState extends State<MovieDetails> {
                                       color: Colors.black),
                                 ),
                                 GestureDetector(
-                                  onTap: (){
-                                    if(postDetails?.isBooked == '0'){
-                                    likeBookmark(context, widget.postId, AppStrings.bookmarkPost);
-
-                                    }else{
-                                    likeBookmark(context, widget.postId, AppStrings.unBookmarkPost);
-
+                                  onTap: () {
+                                    if (postDetails?.isBooked == '0') {
+                                      likeBookmark(context, widget.postId,
+                                          AppStrings.bookmarkPost);
+                                    } else {
+                                      likeBookmark(context, widget.postId,
+                                          AppStrings.unBookmarkPost);
                                     }
                                   },
                                   child: Padding(
@@ -276,18 +280,19 @@ class _MovieDetailsState extends State<MovieDetails> {
                               ],
                             ),
                             const SizedBox(
-                              height: 15,
+                              height: 10,
                             ),
                             const Divider(),
                             const SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
                             Text(
                               postDetails?.content ?? '',
                               textAlign: TextAlign.justify,
+
                               style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
                                   color: Colors.black),
                             ),
                           ],
@@ -297,9 +302,10 @@ class _MovieDetailsState extends State<MovieDetails> {
                         height: 20,
                       ),
                       GestureDetector(
-                         onTap: (){
-                                    likeBookmark(context, widget.postId, AppStrings.likePost);
-                                  },
+                        onTap: () {
+                          likeBookmark(
+                              context, widget.postId, AppStrings.likePost);
+                        },
                         child: Row(
                           children: [
                             const ImageView.svg(AppImages.thumbUp),

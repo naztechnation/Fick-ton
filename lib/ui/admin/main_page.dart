@@ -49,7 +49,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
             color: Colors.white,
           ),
           onPressed: () {
-            NavigationHelper.navigateToPage(context, const NewPost());
+            NavigationHelper.navigateToPage(context, const NewPost(isUpdate: false, postId: '',));
           },
         ),
       ),

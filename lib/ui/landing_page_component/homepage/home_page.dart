@@ -128,6 +128,15 @@ class _HomeState extends State<Home> {
                         fontSize: 18,
                         fontWeight: FontWeight.w800),
                   ))),
+                  
+                const Positioned(
+                  top: 80,
+                  left: 0,
+                  right: 0,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: ImageView.svg(AppImages.play, height: 35,)),
+                )
             ],
           ),
         ),
@@ -382,6 +391,7 @@ class _HomeState extends State<Home> {
                                           (BuildContext context, index) {
                                         return GestureDetector(
                                             onTap: () {
+
                                               AppNavigator.pushAndStackPage(
                                                   context,
                                                   page: MovieDetailsScreen(

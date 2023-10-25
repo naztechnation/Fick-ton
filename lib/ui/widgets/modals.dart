@@ -51,15 +51,21 @@ class Modals {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(title),
-            content: Text(message),
+               shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0), 
+                  ),
+            title: Text(title, style: const TextStyle(color: Colors.red),),
+            content: Text(message, style: const TextStyle(fontSize: 20, color: AppColors.lightPrimary),),
             actions: [
               TextButton(
-                child: Text(buttonNoText),
+                style: TextButton.styleFrom(foregroundColor: AppColors.lightSecondary),
+                child: Text(buttonNoText, style: const TextStyle(fontSize: 16, )),
                 onPressed: () => Navigator.pop(context, false),
               ),
               TextButton(
-                child: Text(buttonYesText),
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+
+                child: Text(buttonYesText, style: const TextStyle(fontSize: 16, )),
                 onPressed: () => Navigator.pop(context, true),
               )
             ],
