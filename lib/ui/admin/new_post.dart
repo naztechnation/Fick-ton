@@ -328,7 +328,7 @@ class _NewPostState extends State<NewPost> {
                                   Modals.showToast('please upload image');
                                 }
                               },
-                              color: AppColors.lightPrimary,
+                              color: AppColors.lightSecondary,
                               child: const Text('Publish'),
                             ),
                              const SizedBox(
@@ -345,10 +345,10 @@ class _NewPostState extends State<NewPost> {
                           },
                           
                           color: Colors.white,
-                          borderColor: AppColors.lightPrimary,
+                          borderColor: AppColors.lightSecondary,
                           child: const Text(
                             'Save to Draft',
-                            style: TextStyle(color: AppColors.lightPrimary),
+                            style: TextStyle(color: AppColors.lightSecondary),
                           ),
                         ),
                           ],

@@ -24,6 +24,8 @@ class AppStrings {
   static const String unLikePost = '${_baseUrl}likes/delete';
   static const String bookmarkPost = '${_baseUrl}book/create';
   static const String unBookmarkPost = '${_baseUrl}book/delete';
+  static const  String createNotificationUrl  = '${_baseUrl}notify/create';
+  static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total?token=';
   static   String bookmarkListUrl(String token) => '${_baseUrl}book/index?token=$token';
   static   String getPosts(String token) => '${_baseUrl}posts/index?token=$token';
   static   String getComments(String token, String post) => '${_baseUrl}comments/show?token=$token&post_id=$post';

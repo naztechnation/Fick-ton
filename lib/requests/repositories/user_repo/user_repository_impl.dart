@@ -87,6 +87,18 @@ class UserRepositoryImpl implements UserRepository {
         "post_id": postId,
       },
     );
+        return AuthData.fromJson(map);
+  }
+@override
+  Future<AuthData> createNotification({required String token, required String title, required String content}) async {
+    final map = await Requests().post(
+      AppStrings.createNotificationUrl,
+      body: {
+        "token": token,
+        "content": content,
+        "title": title,
+      },
+    );
 
     return AuthData.fromJson(map);
   }

@@ -8,6 +8,7 @@ import '../../res/app_colors.dart';
 import '../../res/app_images.dart';
 import '../widgets/custom_button_nav.dart/custom_button_nav.dart';
 import 'dashboard.dart';
+import 'profile.dart';
 
 class AdminMainPage extends StatefulWidget {
   const AdminMainPage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
     const Dashboard(),
     const Posts(),
     const Announce(),
-    Container(),
+   const Notifications(),
   ];
 
   int _selectedIndex = 0;
@@ -87,9 +88,9 @@ class _AdminMainPageState extends State<AdminMainPage> {
               selectedIcon: AppImages.campaign,
             ),
             FABBottomAppBarItem(
-              label: 'Profile',
-              icon: AppImages.profileOutline,
-              selectedIcon: AppImages.profile,
+              label: 'Notify',
+              icon: AppImages.notificationsOutline,
+              selectedIcon: AppImages.notifications,
             ),
           ],
         ),

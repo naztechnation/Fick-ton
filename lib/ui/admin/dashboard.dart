@@ -52,8 +52,8 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     Text(
                       'Fik-kton',
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -72,27 +72,30 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     const Text(
                       'Dashboard',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
-                     Row(
+                    Row(
                       children: [
                         Expanded(
                             child: GestureDetector(
-                              onTap: (){
-                                            NavigationHelper.navigateToPage(context, const NewPost());
-            
-                              },
-                              child:const dashBoardContainer(
-                                                    description: ImageView.svg(AppImages.edit,
-                                color: AppColors.lightPrimary),
-                                                    imageUrl: '',
-                                                    title: 'Create New Post',
-                                                  ),
-                            )),
-                        Expanded(
+                          onTap: () {
+                            NavigationHelper.navigateToPage(
+                                context, const NewPost());
+                          },
+                          child: const dashBoardContainer(
+                            color: AppColors.lightSecondary,
+                            txtColor: Colors.white,
+                            description: ImageView.svg(AppImages.edit,
+                                color: Colors.white,height: 28,),
+                            imageUrl: '',
+                            title: 'Create New Post',
+                          ),
+                        )),
+                        const Expanded(
                             child: dashBoardContainer(
                           description: Text(
                             '18',
@@ -138,8 +141,8 @@ class _DashboardState extends State<Dashboard> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "User Demographic",
-                        style:
-                            TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16),
                       ),
                     ),
                     const SizedBox(

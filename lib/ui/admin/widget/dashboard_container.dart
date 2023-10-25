@@ -1,18 +1,21 @@
-
-
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
 
 class dashBoardContainer extends StatelessWidget {
   final String title;
   final String imageUrl;
-  final Color  color;
+  final Color color;
+  final Color txtColor;
+
   final Widget description;
 
-  const dashBoardContainer({super.key, 
+  const dashBoardContainer({
+    super.key,
     required this.title,
     required this.imageUrl,
-    required this.description,   this.color = Colors.white,
+    required this.description,
+    this.color = Colors.white,
+    this.txtColor = Colors.black,
   });
 
   @override
@@ -40,27 +43,28 @@ class dashBoardContainer extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
                     fontSize: 15,
+                    color: txtColor,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
               const SizedBox(width: 5.0),
-           if(imageUrl != '')   ImageView.svg(
-                imageUrl,
-                width: 30,
-                height: 20,
-                
-              ),
+              if (imageUrl != '')
+                ImageView.svg(
+                  imageUrl,
+                  width: 30,
+                  height: 20,
+                  color: txtColor,
+                ),
             ],
           ),
           const SizedBox(height: 10.0),
-         description
+          description
         ],
       ),
     );
   }
 }
-
- 
