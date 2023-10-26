@@ -37,6 +37,18 @@ class CreatePostLoaded extends UserStates {
   List<Object> get props => [createPost];
 }
 
+class ChangePasswordLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class ChangePasswordLoaded extends UserStates {
+  final AuthData data;
+  const ChangePasswordLoaded(this.data);
+  @override
+  List<Object> get props => [data];
+}
+
 class PostListsLoading extends UserStates {
   @override
   List<Object> get props => [];

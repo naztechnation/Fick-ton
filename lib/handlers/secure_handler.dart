@@ -16,6 +16,30 @@ class StorageHandler {
     }
   }
 
+   static Future<void> saveUserGender([String? email]) async {
+    if (email != null) {
+      await storage.write(key: 'GENDER', value: email);
+    }
+  }
+
+   static Future<void> saveUserPhone([String? email]) async {
+    if (email != null) {
+      await storage.write(key: 'PHONE', value: email);
+    }
+  }
+
+  static Future<void> saveUserAdmin([String? email]) async {
+    if (email != null) {
+      await storage.write(key: 'ADMIN', value: email);
+    }
+  }
+
+   static Future<void> saveUserPassword([String? email]) async {
+    if (email != null) {
+      await storage.write(key: 'PASSWORD', value: email);
+    }
+  }
+
   static Future<void> saveUserToken([String? token]) async {
     if (token != null) {
       await storage.write(key: 'TOKEN', value: token);
@@ -26,6 +50,45 @@ class StorageHandler {
     Map<String, String> value = await storage.readAll();
     String? user;
     String? data = value['EMAIL'];
+    if (data != null) {
+      user = data;
+    }
+    return user;
+  }
+
+  static Future<String?> getUserAdmin() async {
+    Map<String, String> value = await storage.readAll();
+    String? user;
+    String? data = value['ADMIN'];
+    if (data != null) {
+      user = data;
+    }
+    return user;
+  }
+
+   static Future<String?> getUserGender() async {
+    Map<String, String> value = await storage.readAll();
+    String? user;
+    String? data = value['GENDER'];
+    if (data != null) {
+      user = data;
+    }
+    return user;
+  }
+   static Future<String?> getUserPhone() async {
+    Map<String, String> value = await storage.readAll();
+    String? user;
+    String? data = value['PHONE'];
+    if (data != null) {
+      user = data;
+    }
+    return user;
+  }
+
+   static Future<String?> getUserPassword() async {
+    Map<String, String> value = await storage.readAll();
+    String? user;
+    String? data = value['PASSWORD'];
     if (data != null) {
       user = data;
     }

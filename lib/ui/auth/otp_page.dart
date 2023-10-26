@@ -16,13 +16,11 @@ import '../../blocs/accounts/account.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_colors.dart';
-import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/validator.dart';
 import '../widgets/button_view.dart';
 import '../widgets/modals.dart';
 import '../widgets/pin_code_view.dart';
-import '../widgets/text_edit_view.dart';
 
 class OtpScreen extends StatefulWidget {
   final String email;

@@ -150,13 +150,23 @@ class _LoginContentState extends State<LoginContent>
           listener: (context, state) {
             if (state is AccountLoaded) {
               if (state.userData.status == 1) {
-                setToken.setToken(state.userData.token!);
+                if(state.userData.data!.status! == '1'){
+                  setToken.setToken(state.userData.token!);
                 StorageHandler.saveUserEmail(_emailController.text);
+                StorageHandler.saveUserPassword(_passwordController.text);
+                StorageHandler.saveUserGender(state.userData.data!.gender!);
+                StorageHandler.saveUserPhone(state.userData.data!.phone!);
+                StorageHandler.saveUserAdmin(state.userData.data!.isAdmin!);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
                 AppNavigator.pushAndReplacePage(context,
                     page: OtpScreen(email: _emailController.text.trim()));
                 clearTextViews();
+                }else{
+                  Modals.showToast(state.userData.message ?? '',
+                    messageType: MessageType.error);
+                }
+                
               } else {
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);

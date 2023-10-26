@@ -37,6 +37,7 @@ abstract class UserRepository {
      Future<BookmarkList> bookmarkList({required String token, });
      Future<DashBoardAnalysis> dashboardAnalysis({required String token, });
      Future<NotificationData> getNotifications({required String token, });
+     Future<AuthData> changePassword({required String token, required String password,});
      Future<AuthData> createNotification({required String token,required String title,required String content});
 
 

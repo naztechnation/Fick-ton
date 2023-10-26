@@ -357,4 +357,30 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+  Future<void> changePassword(
+      {required String token, required password}) async {
+    try {
+      emit(ChangePasswordLoading());
+
+      final notifications = await userRepository.changePassword(
+        token: token,
+        password: password
+      );
+
+      emit(ChangePasswordLoaded(notifications));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

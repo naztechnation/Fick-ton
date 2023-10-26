@@ -163,4 +163,17 @@ class UserRepositoryImpl implements UserRepository {
 
     return AuthData.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> changePassword({required String token, required String password})  async {
+    final map = await Requests().post(AppStrings.deleteNotification,
+    body: {
+        "token": token,
+        "password": password,
+         
+      },
+    );
+
+    return AuthData.fromJson(map);
+  }
 }
