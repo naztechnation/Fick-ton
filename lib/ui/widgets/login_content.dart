@@ -37,6 +37,14 @@ class _LoginContentState extends State<LoginContent>
   final _genderController = TextEditingController();
   final _phoneController = TextEditingController();
 
+
+bool isShowPassword = true;
+  showPassword(){
+    setState(() {
+      isShowPassword = !isShowPassword;
+    });
+
+  }
   Widget inputField(String hint, IconData iconData) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 8),
@@ -150,23 +158,13 @@ class _LoginContentState extends State<LoginContent>
           listener: (context, state) {
             if (state is AccountLoaded) {
               if (state.userData.status == 1) {
-                if(state.userData.data!.status! == '1'){
-                  setToken.setToken(state.userData.token!);
+                setToken.setToken(state.userData.token!);
                 StorageHandler.saveUserEmail(_emailController.text);
-                StorageHandler.saveUserPassword(_passwordController.text);
-                StorageHandler.saveUserGender(state.userData.data!.gender!);
-                StorageHandler.saveUserPhone(state.userData.data!.phone!);
-                StorageHandler.saveUserAdmin(state.userData.data!.isAdmin!);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
                 AppNavigator.pushAndReplacePage(context,
                     page: OtpScreen(email: _emailController.text.trim()));
                 clearTextViews();
-                }else{
-                  Modals.showToast(state.userData.message ?? '',
-                    messageType: MessageType.error);
-                }
-                
               } else {
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
@@ -174,15 +172,25 @@ class _LoginContentState extends State<LoginContent>
             }
             if (state is AccountUpdated) {
               if (state.user.status == 1) {
-                setToken.setToken(state.user.token!);
+                if(state.user.data!.status! == '1'){
+                  setToken.setToken(state.user.token!);
                 StorageHandler.saveUserEmail(_emailController.text);
-
-                Modals.showToast(
+                StorageHandler.saveUserPassword(_passwordController.text);
+                StorageHandler.saveUserGender(state.user.data!.gender!);
+                StorageHandler.saveUserPhone(state.user.data!.phone!);
+                StorageHandler.saveUserAdmin(state.user.data!.isAdmin!);
+                 Modals.showToast(
                   state.user.message ?? '',
                 );
 
                 AppNavigator.pushAndReplacePage(context,
                     page: const LandingPage());
+                }else{
+                  Modals.showToast(state.user.message ?? '',
+                    messageType: MessageType.success);
+                }
+
+               
               } else {
                 Modals.showToast(state.user.message ?? '',
                     messageType: MessageType.success);
@@ -319,14 +327,21 @@ class _LoginContentState extends State<LoginContent>
                                   controller: _passwordController,
                                   validator: Validator.validate,
                                   labelText: 'Password',
+                                   suffixIcon: isShowPassword ? GestureDetector(
+                          onTap: (){
+                            showPassword();
+                          },
+                          child: Icon(Ionicons.eye, color: AppColors.lightPrimary,size: 25,)) :
+                          GestureDetector(
+                             onTap: (){
+                            showPassword();
+                          },
+                            child: Icon(Ionicons.eye_off, color: AppColors.lightPrimary,size: 25,)),
                                   prefixIcon: const Icon(
                                     Ionicons.lock_closed_outline,
                                     color: Colors.white,
                                   ),
-                                  suffixIcon: const Icon(
-                                    Ionicons.eye,
-                                    color: Colors.white,
-                                  ),
+                                   
                                   filled: false,
                                   borderColor: Colors.white,
                                   textColor: Colors.white,
@@ -415,6 +430,16 @@ class _LoginContentState extends State<LoginContent>
                                     Ionicons.lock_closed_outline,
                                     color: Colors.white,
                                   ),
+                                   suffixIcon: isShowPassword ? GestureDetector(
+                          onTap: (){
+                            showPassword();
+                          },
+                          child: Icon(Ionicons.eye, color: AppColors.lightPrimary,size: 25,)) :
+                          GestureDetector(
+                             onTap: (){
+                            showPassword();
+                          },
+                            child: Icon(Ionicons.eye_off, color: AppColors.lightPrimary,size: 25,)),
                                   filled: false,
                                   borderColor: Colors.white,
                                   textColor: Colors.white,

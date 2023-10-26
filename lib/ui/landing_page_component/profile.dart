@@ -4,6 +4,7 @@ import 'package:fikkton/ui/widgets/button_view.dart';
 import 'package:fikkton/ui/widgets/text_edit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/user/user_cubit.dart';
@@ -48,6 +49,7 @@ class _ProfileState extends State<Profile> {
   String phone = '';
   String gender = '';
   String token = '';
+  String isAdmin = '';
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -56,6 +58,14 @@ class _ProfileState extends State<Profile> {
 
   final FocusNode myFocusNode = FocusNode();
   late UserCubit _userCubit;
+
+  bool isShowPassword = true;
+  showPassword(){
+    setState(() {
+      isShowPassword = !isShowPassword;
+    });
+
+  }
 
 
 
@@ -67,6 +77,7 @@ class _ProfileState extends State<Profile> {
     phone = await StorageHandler.getUserPhone() ?? '';
     gender = await StorageHandler.getUserGender() ?? '';
     token = await StorageHandler.getUserToken() ?? '';
+    isAdmin = await StorageHandler.getUserAdmin() ?? '';
 
 
     setState(() {
@@ -97,6 +108,8 @@ class _ProfileState extends State<Profile> {
           if (state.data.status == 1) {
            
                   Modals.showToast(state.data.message!, messageType: MessageType.error);
+                  StorageHandler.saveUserPassword(passwordController.text);
+                  getEmail();
 
           } else {}
         }
@@ -105,13 +118,13 @@ class _ProfileState extends State<Profile> {
           return EmptyWidget(
             title: 'Network error',
             description: state.message,
-            onRefresh: () => changePassword(context, token),
+            onRefresh: () => changePassword(context,  ),
           );
         } else if (state is UserNetworkErrApiErr) {
           return EmptyWidget(
             title: 'Network error',
             description: state.message,
-            onRefresh: () => changePassword(context, token),
+            onRefresh: () => changePassword(context,  ),
           );
         } else if (state is ChangePasswordLoading) {
           return const LoadingPage();
@@ -218,6 +231,17 @@ class _ProfileState extends State<Profile> {
                         hintText: 'Password',
                         focusNode: myFocusNode,
                         controller: passwordController,
+                        obscureText: isShowPassword,
+                        suffixIcon: isShowPassword ? GestureDetector(
+                          onTap: (){
+                            showPassword();
+                          },
+                          child: Icon(Ionicons.eye, color: AppColors.lightPrimary,size: 25,)) :
+                          GestureDetector(
+                             onTap: (){
+                            showPassword();
+                          },
+                            child: Icon(Ionicons.eye_off, color: AppColors.lightPrimary,size: 25,)),
                         isDense: true,
                         fillColor: const Color(0xfffeee),
                       ),
@@ -225,7 +249,9 @@ class _ProfileState extends State<Profile> {
                         height: 50,
                       ),
                       ButtonView(
-                        onPressed: () {},
+                        onPressed: () {
+                          changePassword(context);
+                        },
                         borderRadius: 30,
                         color: Colors.white,
                         borderColor: AppColors.lightSecondary,
@@ -239,7 +265,7 @@ class _ProfileState extends State<Profile> {
                       const SizedBox(
                         height: 30,
                       ),
-                      ButtonView(
+                   if(isAdmin == '1')   ButtonView(
                         onPressed: () {
                           AppNavigator.pushAndStackPage(context,
                               page: const AdminMainPage());
@@ -265,12 +291,16 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-     changePassword(BuildContext ctx,String token) {
-    if (password == passwordController.text) {
+     changePassword(BuildContext ctx) {
+     
+    if (password.trim() != passwordController.text.trim() ) {
       ctx.read<UserCubit>().changePassword(
           password: passwordController.text,
           token: token);
       FocusScope.of(ctx).unfocus();
+    }else if(passwordController.text.isEmpty){
+      Modals.showToast('Please enter a password', messageType: MessageType.error);
+      
     }else{
       Modals.showToast('please enter a different password from the existing password', messageType: MessageType.error);
     }

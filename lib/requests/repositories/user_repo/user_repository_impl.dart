@@ -166,7 +166,7 @@ class UserRepositoryImpl implements UserRepository {
   
   @override
   Future<AuthData> changePassword({required String token, required String password})  async {
-    final map = await Requests().post(AppStrings.deleteNotification,
+    final map = await Requests().post(AppStrings.changePasswordUrl,
     body: {
         "token": token,
         "password": password,
