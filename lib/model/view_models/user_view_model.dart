@@ -1,10 +1,12 @@
-
 import 'dart:io';
 
 import 'package:fikkton/model/posts/get_posts.dart' as get_posts;
 import 'package:fikkton/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 import '../../res/enum.dart';
 import 'base_viewmodel.dart';
@@ -16,24 +18,38 @@ class UserViewModel extends BaseViewModel {
   String _draftLength = "0";
   String _publishedLength = "0";
 
-    List<get_posts.Posts> _postsList = [];
+  List<get_posts.Posts> _postsList = [];
 
-
-   Future<void> setPostLists({required get_posts.GetAllPosts posts}) async {
+  Future<void> setPostLists({required get_posts.GetAllPosts posts}) async {
     _postsList = posts.data ?? [];
     setViewState(ViewState.success);
   }
 
-   Future<void> setPublishedLength({required String publishedLength}) async {
+  Future<void> setPublishedLength({required String publishedLength}) async {
     _publishedLength = publishedLength;
     setViewState(ViewState.success);
   }
 
-   Future<void> setDraftLength({required String draftedLength}) async {
+  Future<void> setDraftLength({required String draftedLength}) async {
     _draftLength = draftedLength;
     setViewState(ViewState.success);
   }
 
+  Future<File> fileFromImageUrl(String imageUrl, ) async {
+    String img = imageUrl;
+    final response = await http.get(Uri.parse(img));
+
+    final documentDirectory = await getApplicationDocumentsDirectory();
+
+    final String imageName = imageUrl.split('/').last;
+        final file = File('${documentDirectory.path}/$imageName');
+
+        await file.writeAsBytes(response.bodyBytes);
+
+    imageURl = file;
+    setViewState(ViewState.success);
+    return file;
+  }
 
   loadImage(BuildContext context) async {
     await showModalBottomSheet<dynamic>(
@@ -60,10 +76,10 @@ class UserViewModel extends BaseViewModel {
                 leading: const Icon(
                   Icons.photo_camera,
                   size: 25.0,
-                                    color: Colors.grey,
-
+                  color: Colors.grey,
                 ),
-                title: const Text('Camera', style: TextStyle(
+                title: const Text('Camera',
+                    style: TextStyle(
                         fontSize: 16,
                         color: AppColors.lightSecondary,
                         fontWeight: FontWeight.w400)),
@@ -85,7 +101,8 @@ class UserViewModel extends BaseViewModel {
                   size: 25.0,
                   color: Colors.grey,
                 ),
-                title: const Text('Gallery',style: TextStyle(
+                title: const Text('Gallery',
+                    style: TextStyle(
                         fontSize: 16,
                         color: AppColors.lightSecondary,
                         fontWeight: FontWeight.w400)),
@@ -110,7 +127,6 @@ class UserViewModel extends BaseViewModel {
   List<get_posts.Posts> get postsList => _postsList;
   String get draftedLength => _draftLength;
   String get publishedLength => _publishedLength;
-
 
   List<get_posts.Posts> get posts =>
       _postsList.where((p) => p.isTrending == '1').toList();

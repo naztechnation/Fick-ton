@@ -16,6 +16,7 @@ abstract class UserRepository {
     required String title,
     required String url,
     required String token,
+    required String postId,
     required String content,
     required File thumbnail,
     required String videoLink,

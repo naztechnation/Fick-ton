@@ -18,6 +18,7 @@ class UserRepositoryImpl implements UserRepository {
     required String title,
     required String url,
     required String token,
+    required String postId,
     required String content,
     required File thumbnail,
     required String videoLink,
@@ -38,6 +39,7 @@ class UserRepositoryImpl implements UserRepository {
         "author": author,
         "status": status,
         "trending": trending,
+        "post_id": trending,
       },
     );
     return AuthData.fromJson(map);

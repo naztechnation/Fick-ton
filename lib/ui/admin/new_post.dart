@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../res/app_images.dart';
-import '../../blocs/accounts/account.dart';
 import '../../blocs/user/user_cubit.dart';
 import '../../blocs/user/user_states.dart';
 import '../../handlers/secure_handler.dart';
@@ -24,6 +23,8 @@ import '../../res/enum.dart';
 import '../widgets/loading_page.dart';
 import '../widgets/modals.dart';
 import '../widgets/progress_indicator.dart';
+ 
+
 
 class NewPost extends StatelessWidget {
   final bool isUpdate;
@@ -68,6 +69,7 @@ class _NewPostState extends State<Post> {
   Data? postDetails;
 
   String token = '';
+  String postId = '';
 
   bool isLoading = false;
   getPosts() async {
@@ -123,8 +125,12 @@ class _NewPostState extends State<Post> {
             videoUrlController.text = state.postDetails.data!.videoLink!;
             genresController.text = state.postDetails.data!.genre!;
             authorController.text = state.postDetails.data!.author!;
+            postId = state.postDetails.data!.id!;
             isChecked =
                 state.postDetails.data!.isTrending == "0" ? false : true;
+                isTrending = int.parse(state.postDetails.data!.isTrending!); 
+
+                user.fileFromImageUrl(state.postDetails.data!.thumbnail!);
           } else {}
         }
       }, builder: (context, state) {
@@ -321,6 +327,11 @@ class _NewPostState extends State<Post> {
                                       onTap: () {
                                         setState(() {
                                           isChecked = !isChecked;
+                                          if(isChecked) {
+                                            isTrending = 1;
+                                          }else{
+                                            isTrending = 0;
+                                          }
                                         });
                                       },
                                       child: Container(
@@ -371,12 +382,14 @@ class _NewPostState extends State<Post> {
                                           onPressed: () {
                                             if (user.imageURl != null) {
                                               if (widget.isUpdate) {
+                                                
                                                  _createPost(
                                                   context,
                                                   setToken.token,
                                                   user.imageURl!,
                                                   '1',
-                                                  AppStrings.updatePost
+                                                  AppStrings.updatePost,
+                                                  postId
                                                 );
                                               } else {
                                                 _createPost(
@@ -384,9 +397,10 @@ class _NewPostState extends State<Post> {
                                                   setToken.token,
                                                   user.imageURl!,
                                                   '1',
-                                                  AppStrings.createPost
+                                                  AppStrings.createPost,
+                                                  postId
                                                 );
-                                              }
+                                               }
                                             } else {
                                               Modals.showToast(
                                                   'please upload image');
@@ -407,7 +421,8 @@ class _NewPostState extends State<Post> {
                                                   setToken.token,
                                                   user.imageURl!,
                                                   '0',
-                                                  AppStrings.updatePost
+                                                  AppStrings.updatePost,
+                                                  postId
                                                 );
                                               } else {
                                                 _createPost(
@@ -415,7 +430,8 @@ class _NewPostState extends State<Post> {
                                                   setToken.token,
                                                   user.imageURl!,
                                                   '0',
-                                                  AppStrings.createPost
+                                                  AppStrings.createPost,
+                                                  postId
                                                 );
                                               }
                                             } else {
@@ -450,12 +466,13 @@ class _NewPostState extends State<Post> {
   }
 
   _createPost(BuildContext ctx, String token, File thumbnail, String status,
-      String url) {
+      String url, String postId) {
     if (_formKey.currentState!.validate()) {
       ctx.read<UserCubit>().createPost(
             url: url,
             title: titleController.text,
             token: token,
+            postId: postId,
             content: contentController.text,
             videoLink: videoUrlController.text,
             thumbnail: thumbnail,
@@ -467,6 +484,7 @@ class _NewPostState extends State<Post> {
       FocusScope.of(ctx).unfocus();
     }
   }
+ 
 
   clearFields() {
     titleController.text = "";

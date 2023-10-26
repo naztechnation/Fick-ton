@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fikkton/blocs/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,7 +64,16 @@ class _DraftPageState extends State<DraftPage> {
 
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is CreatePostLoaded) {
+          if (state.createPost.status == 1) {
+            Modals.showToast(state.createPost.message!,
+                messageType: MessageType.success);
+                _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
+           
+          } else {}
+        }
+          },
           builder: (context, state) {
             if (state is PostListsLoaded) {
               if (state.postLists.status == 1) {
@@ -74,7 +85,14 @@ class _DraftPageState extends State<DraftPage> {
                 Modals.showToast(state.postLists.message!,
                     messageType: MessageType.error);
               }
-            } else if (state is UserNetworkErr) {
+            }if (state is CreatePostLoaded) {
+          if (state.createPost.status == 1) {
+            Modals.showToast(state.createPost.message!,
+                messageType: MessageType.success);
+                _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
+           
+          } else {}
+        } else if (state is UserNetworkErr) {
               return EmptyWidget(
                 title: 'Network error',
                 description: state.message,
@@ -102,7 +120,7 @@ class _DraftPageState extends State<DraftPage> {
               }
             }
 
-            return (state is PostListsLoading || state is DeletePostLoading)
+            return (state is PostListsLoading || state is DeletePostLoading || state is CreatePostLoading)
                 ? const LoadingPage()
                 : (draftedPosts.isEmpty) ? const SizedBox(
                                     height: 390,
@@ -116,7 +134,16 @@ class _DraftPageState extends State<DraftPage> {
                     itemBuilder: (BuildContext context, index) {
                       return DraftItems(
                         posts: draftedPosts[index],
-                        onPublishedTapped: () {},
+                        onPublishedTapped: () {
+                          _publishDraft(context, token, user.imageURl!,
+                          '1',AppStrings.updatePost,
+                          draftedPosts[index].id!,draftedPosts[index].title!,
+                          draftedPosts[index].content!, 
+                          draftedPosts[index].videoLink!,
+                          draftedPosts[index].genre!, 
+                          draftedPosts[index].author!,
+                          draftedPosts[index].isTrending.toString());
+                        },
                         onDeleteTapped: () {
                           _deletePost(context, draftedPosts[index].id!);
                         },
@@ -129,5 +156,25 @@ class _DraftPageState extends State<DraftPage> {
   _deletePost(BuildContext ctx, String postId) {
     ctx.read<UserCubit>().deletePost(postId: postId, token: token);
     FocusScope.of(ctx).unfocus();
+  }
+
+  _publishDraft(BuildContext ctx, String token, File thumbnail, String status,
+      String url, String postId, String title, String content, String videoLink, String genre, String author, String trending) {
+    
+      ctx.read<UserCubit>().createPost(
+            url: url,
+            title: title,
+            token: token,
+            postId: postId,
+            content: content,
+            videoLink: videoLink,
+            thumbnail: thumbnail,
+            genre: genre,
+            status: status,
+            author: author,
+            trending: trending,
+          );
+     
+    
   }
 }
