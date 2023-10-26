@@ -6,6 +6,7 @@ import 'package:fikkton/model/posts/get_posts.dart';
 import 'package:fikkton/model/posts/post_details.dart';
 
 import '../../model/posts/admin_model.dart';
+import '../../model/posts/notification_model.dart';
 
 // import '../../model/account_models/agents_packages.dart';
 // import '../../model/account_models/confirm_payment.dart';
@@ -134,6 +135,30 @@ class AdminAnalysisLoaded extends UserStates {
   const AdminAnalysisLoaded(this.analysis);
   @override
   List<Object> get props => [analysis];
+}
+
+class NotificationsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class NotificationsLoaded extends UserStates {
+  final NotificationData notify ;
+  const NotificationsLoaded(this.notify);
+  @override
+  List<Object> get props => [notify];
+}
+
+class DelNotificationsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class DelNotificationsLoaded extends UserStates {
+  final AuthData notify ;
+  const DelNotificationsLoaded(this.notify);
+  @override
+  List<Object> get props => [notify];
 }
 
 class UserNetworkErr extends UserStates {

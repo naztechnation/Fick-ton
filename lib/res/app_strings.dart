@@ -26,6 +26,7 @@ class AppStrings {
   static const String bookmarkPost = '${_baseUrl}book/create';
   static const String unBookmarkPost = '${_baseUrl}book/delete';
   static const  String deletePost = '${_baseUrl}posts/delete';
+  static const  String deleteNotification = '${_baseUrl}notify/delete';
 
   static const  String createNotificationUrl  = '${_baseUrl}notify/create';
   static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total?token=$token';

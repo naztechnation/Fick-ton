@@ -31,6 +31,7 @@ abstract class UserRepository {
      Future<AuthData> addComment({required String token, required String postId, required String comment});
      Future<CommentData> getComment({required String token, required String postId, });
      Future<AuthData> deletePost({required String token, required String postId, });
+     Future<AuthData> deleteNotification({required String token, required String notifyId, });
      Future<AuthData> likeBookmark({required String token, required String postId,  required String url});
      Future<BookmarkList> bookmarkList({required String token, });
      Future<DashBoardAnalysis> dashboardAnalysis({required String token, });

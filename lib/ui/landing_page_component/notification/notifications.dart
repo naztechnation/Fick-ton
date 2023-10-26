@@ -101,7 +101,7 @@ bool showother =  false;
                       itemBuilder: (BuildContext context, index) {
                         return GestureDetector(
                           onTap: (){
-                            AppNavigator.pushAndStackPage(context, page:const NotificationsDetails());
+                            AppNavigator.pushAndStackPage(context, page:const NotificationsDetails(title: 'Message', description: 'Content', date: '',));
                           },
                           child: Container(
                             decoration:   BoxDecoration(

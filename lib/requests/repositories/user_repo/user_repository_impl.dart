@@ -148,4 +148,17 @@ class UserRepositoryImpl implements UserRepository {
 
     return NotificationData.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> deleteNotification({required String token, required String notifyId})  async {
+    final map = await Requests().post(AppStrings.deleteNotification,
+    body: {
+        "token": token,
+        "notify_id": notifyId,
+         
+      },
+    );
+
+    return AuthData.fromJson(map);
+  }
 }

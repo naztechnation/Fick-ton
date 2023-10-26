@@ -1,7 +1,7 @@
 class NotificationData {
   int? status;
   String? message;
-  List<Notifications>? data;
+  List<NotificationsInfo>? data;
 
   NotificationData({this.status, this.message, this.data});
 
@@ -9,9 +9,9 @@ class NotificationData {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Notifications>[];
+      data = <NotificationsInfo>[];
       json['data'].forEach((v) {
-        data!.add(new Notifications.fromJson(v));
+        data!.add(new NotificationsInfo.fromJson(v));
       });
     }
   }
@@ -27,16 +27,16 @@ class NotificationData {
   }
 }
 
-class Notifications {
+class NotificationsInfo {
   String? id;
   String? title;
   String? content;
   String? type;
   String? createdAt;
 
-  Notifications({this.id, this.title, this.content, this.type, this.createdAt});
+  NotificationsInfo({this.id, this.title, this.content, this.type, this.createdAt});
 
-  Notifications.fromJson(Map<String, dynamic> json) {
+  NotificationsInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     content = json['content'];

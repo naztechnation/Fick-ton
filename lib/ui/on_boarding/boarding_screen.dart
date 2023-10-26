@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../model/onboard_model/onboarding_contents.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_images.dart';
-import '../../res/app_routes.dart';
+
 import '../../utils/navigator/page_navigator.dart';
 import '../../utils/size_config.dart';
 import '../auth/auth.dart';
@@ -30,6 +30,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     const Color(0xffDAD3C8).withOpacity(0.7),
     const Color(0xffFFE5DE).withOpacity(0.7),
     const Color(0xffDCF6E6).withOpacity(0.7),
+  ];
+
+   List images = [
+    AppImages.bg1,
+    AppImages.bg3,
+    AppImages.bg2,
+   
   ];
 
   AnimatedContainer _buildDots({
@@ -62,10 +69,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: Stack(
           children: [
             Container(
-              decoration: const BoxDecoration(
+              decoration:   BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
-                        AppImages.bg,
+                        images[_currentPage],
                       ),
                       fit: BoxFit.cover)),
             ),

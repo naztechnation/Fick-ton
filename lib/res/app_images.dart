@@ -36,8 +36,9 @@ class AppImages {
   static const profile = '${_baseUrl}account_circle.svg';
   static const profileOutline = '${_baseUrl}account_circle_outline.svg';
   static const dropDown = '${_baseUrl}keyboard_arrow_down.svg';
-  static const bg = '${_baseUrl}bg.jpeg';
-  static const bg2 = '${_baseUrl}bg2.jpeg';
+  static const bg1 = '${_baseUrl}bg1.png';
+  static const bg2 = '${_baseUrl}bg2.png';
+  static const bg3 = '${_baseUrl}bg.jpeg';
   static const house = '${_baseUrl}house.jpeg';
   static const avengers = '${_baseUrl}avengers.jpeg';
   static const regSuccess = '${_baseUrl}reg_success.png';

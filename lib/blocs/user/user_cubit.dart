@@ -303,4 +303,56 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+   Future<void> getNotifications(
+      {required String token, }) async {
+    try {
+      emit(NotificationsLoading());
+
+      final notifications = await userRepository.getNotifications(
+        token: token,
+        
+      );
+
+      emit(NotificationsLoaded(notifications));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> deleteNotifications(
+      {required String token, required notifyId}) async {
+    try {
+      emit(DelNotificationsLoading());
+
+      final notifications = await userRepository.deleteNotification(
+        token: token,
+        notifyId: notifyId
+      );
+
+      emit(DelNotificationsLoaded(notifications));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }
