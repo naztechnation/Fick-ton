@@ -277,4 +277,30 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+   Future<void> dashboardAnalysis(
+      {required String token, }) async {
+    try {
+      emit(AdminAnalysisLoading());
+
+      final analysis = await userRepository.dashboardAnalysis(
+        token: token,
+        
+      );
+
+      emit(AdminAnalysisLoaded(analysis));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

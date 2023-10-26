@@ -12,12 +12,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leadingWidth: 40,
+      leadingWidth: 50,
       elevation: 0,
-      leading: const ImageView.svg(
-        AppImages.logo,
-        width: 20,
-        height: 20,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 12.0),
+        child: const ImageView.asset(
+          AppImages.logo,
+          width: 20,
+          height: 20,
+        ),
       ),
       backgroundColor: Colors.transparent,
       title: Text(

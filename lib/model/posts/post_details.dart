@@ -12,9 +12,9 @@ class PostDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -34,9 +34,10 @@ class Data {
   String? views;
   String? likes;
   String? createdAt;
-  String? updatedAt;
+  Null? updatedAt;
   String? status;
   String? isBooked;
+  String? isLiked;
 
   Data(
       {this.id,
@@ -52,7 +53,8 @@ class Data {
       this.createdAt,
       this.updatedAt,
       this.status,
-      this.isBooked});
+      this.isBooked,
+      this.isLiked});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -69,24 +71,26 @@ class Data {
     updatedAt = json['updated_at'];
     status = json['status'];
     isBooked = json['is_booked'];
+    isLiked = json['is_liked'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['content'] = content;
-    data['thumbnail'] = thumbnail;
-    data['video_link'] = videoLink;
-    data['author'] = author;
-    data['genre'] = genre;
-    data['is_trending'] = isTrending;
-    data['views'] = views;
-    data['likes'] = likes;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    data['status'] = status;
-    data['is_booked'] = isBooked;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['content'] = this.content;
+    data['thumbnail'] = this.thumbnail;
+    data['video_link'] = this.videoLink;
+    data['author'] = this.author;
+    data['genre'] = this.genre;
+    data['is_trending'] = this.isTrending;
+    data['views'] = this.views;
+    data['likes'] = this.likes;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['status'] = this.status;
+    data['is_booked'] = this.isBooked;
+    data['is_liked'] = this.isLiked;
     return data;
   }
 }

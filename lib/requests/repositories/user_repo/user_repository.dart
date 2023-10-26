@@ -5,8 +5,11 @@ import 'package:fikkton/model/auth_model/login.dart';
 import 'package:fikkton/model/posts/bookmark_lists.dart';
 import 'package:fikkton/model/posts/comment_lists.dart';
 import 'package:fikkton/model/posts/post_details.dart';
+import 'package:fikkton/ui/landing_page_component/notification/notifications_details.dart';
 
+import '../../../model/posts/admin_model.dart';
 import '../../../model/posts/get_posts.dart';
+import '../../../model/posts/notification_model.dart';
 
 abstract class UserRepository {
   Future<AuthData> createPost({
@@ -30,13 +33,10 @@ abstract class UserRepository {
      Future<AuthData> deletePost({required String token, required String postId, });
      Future<AuthData> likeBookmark({required String token, required String postId,  required String url});
      Future<BookmarkList> bookmarkList({required String token, });
+     Future<DashBoardAnalysis> dashboardAnalysis({required String token, });
+     Future<NotificationData> getNotifications({required String token, });
      Future<AuthData> createNotification({required String token,required String title,required String content});
 
 
-//     Future<GetReviews> getReviews({required String userId}); 
-//     Future<GalleryAgents> getGallery({required String userId}); 
-//     Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 
-//     Future<PaymentResponse> confirmPayment({required String username, required String agentId, required String purchaseId}); 
-//  Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
 
  }

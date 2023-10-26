@@ -18,7 +18,7 @@ class AppImages {
   static const icon = '${_baseUrl}icon.png';
   static const delete = '${_baseUrl}delete.png';
   static const uploadimage = '${_baseUrl}upload-image.png';
-  static const upload = '${_baseUrl}uploadd.png';
+  static const upload = '${_baseUrl}publish.svg';
   static const galleryAdd = '${_baseUrl}gallery-add.png';
   static const rectangle = '${_baseUrl}rectangle.png';
   static const empty = '${_baseUrl}empty.png';

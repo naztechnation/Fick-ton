@@ -28,9 +28,11 @@ class AppStrings {
   static const  String deletePost = '${_baseUrl}posts/delete';
 
   static const  String createNotificationUrl  = '${_baseUrl}notify/create';
-  static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total?token=';
+  static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total?token=$token';
+  static   String getNotifications(String token) => '${_baseUrl}notify/index?token=$token';
   static   String bookmarkListUrl(String token) => '${_baseUrl}book/index?token=$token';
   static   String getPosts(String token) => '${_baseUrl}posts/index?token=$token';
+  static   String getDashboardAnalysis(String token) => '${_baseUrl}analyses/total?token=$token';
   static   String getDraftedPosts(String token) => '${_baseUrl}posts/draft?token=$token';
   static   String getComments(String token, String post) => '${_baseUrl}comments/show?token=$token&post_id=$post';
   static   String getPostsDetails(String token,String postId) => '${_baseUrl}posts/show?post_id=$postId&token=$token';

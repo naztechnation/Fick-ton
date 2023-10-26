@@ -132,11 +132,10 @@ class DraftItems extends StatelessWidget {
                               Modals.showAlertOptionDialog(context, title: 'Publish Post', message: 'Are you sure you want to Publish this post. This cannot be Undone.', callback: (){onPublishedTapped();});
 
                             },
-                            child: const ImageView.asset(
+                            child: const ImageView.svg(
                             AppImages.upload,
                             width: 20,
                             height: 20,
-                            color: Colors.grey,
                                                   ),
                           ),
                       ],

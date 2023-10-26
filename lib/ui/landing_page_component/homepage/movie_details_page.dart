@@ -3,6 +3,7 @@ import 'package:fikkton/res/app_strings.dart';
 import 'package:fikkton/ui/widgets/text_edit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -308,7 +309,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         },
                         child: Row(
                           children: [
-                            const ImageView.svg(AppImages.thumbUp),
+                            postDetails?.isLiked == '0' ?   Icon(Ionicons.thumbs_up_outline, color: AppColors.lightSecondary,) : Icon(Ionicons.thumbs_up, color: AppColors.lightSecondary,),
                             const SizedBox(
                               width: 10,
                             ),

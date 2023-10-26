@@ -5,6 +5,8 @@ import 'package:fikkton/model/posts/comment_lists.dart';
 import 'package:fikkton/model/posts/get_posts.dart';
 import 'package:fikkton/model/posts/post_details.dart';
 
+import '../../model/posts/admin_model.dart';
+
 // import '../../model/account_models/agents_packages.dart';
 // import '../../model/account_models/confirm_payment.dart';
 // import '../../model/user_models/gallery_data.dart';
@@ -120,6 +122,18 @@ class DeletePostLoaded extends UserStates {
   const DeletePostLoaded(this.deletePost);
   @override
   List<Object> get props => [deletePost];
+}
+
+class AdminAnalysisLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class AdminAnalysisLoaded extends UserStates {
+  final DashBoardAnalysis analysis ;
+  const AdminAnalysisLoaded(this.analysis);
+  @override
+  List<Object> get props => [analysis];
 }
 
 class UserNetworkErr extends UserStates {

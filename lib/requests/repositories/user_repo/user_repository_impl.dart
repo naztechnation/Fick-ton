@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:fikkton/model/auth_model/login.dart';
+import 'package:fikkton/model/posts/admin_model.dart';
 import 'package:fikkton/model/posts/get_posts.dart';
+import 'package:fikkton/model/posts/notification_model.dart';
 
 import '../../../model/posts/bookmark_lists.dart';
 import '../../../model/posts/comment_lists.dart';
@@ -125,5 +127,25 @@ class UserRepositoryImpl implements UserRepository {
     );
 
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<DashBoardAnalysis> dashboardAnalysis({required String token}) async {
+    final map = await Requests().get(
+      AppStrings.getDashboardAnalysis(token)
+       
+    );
+
+    return DashBoardAnalysis.fromJson(map);
+  }
+
+  @override
+  Future<NotificationData> getNotifications({required String token}) async {
+    final map = await Requests().get(
+      AppStrings.getNotifications(token)
+       
+    );
+
+    return NotificationData.fromJson(map);
   }
 }

@@ -1,6 +1,9 @@
 import 'package:fikkton/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../../res/app_images.dart';
+import '../../widgets/image_view.dart';
+
 class AllUsersTile extends StatelessWidget {
   final List<String> items = [
     'john.doe@example.com 0812734667',
@@ -14,6 +17,7 @@ class AllUsersTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: items.length,
+      shrinkWrap:   true,
       itemBuilder: (BuildContext context, int index) {
         return Container(
           decoration: BoxDecoration(
@@ -21,15 +25,22 @@ class AllUsersTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: ListTile(
+            horizontalTitleGap: 0,
             leading: Text('${index + 1}.'),
             title: Text(
               items[index].split(' ')[0],
               style: const TextStyle(
+                fontSize: 18,
                 color: AppColors.lightPrimary,
               ),
             ),
             subtitle: Text(items[index].split(' ')[1]),
-            trailing: const Icon(Icons.more_vert_rounded),
+            trailing: const ImageView.asset(
+                            AppImages.delete,
+                            width: 25,
+                            height: 25,
+                            color: Colors.red,
+                                                  ),
           ),
         );
       },
