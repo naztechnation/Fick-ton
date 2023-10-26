@@ -45,6 +45,7 @@ class Modals {
   static Future<bool?> showAlertOptionDialog(context,
       {required String title,
       required String message,
+      required Function callback,
       String buttonYesText = 'Yes',
       String buttonNoText = 'No'}) async {
     final data = await showDialog<bool>(
@@ -66,7 +67,10 @@ class Modals {
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
 
                 child: Text(buttonYesText, style: const TextStyle(fontSize: 16, )),
-                onPressed: () => Navigator.pop(context, true),
+                onPressed: () {
+                  callback();
+                  Navigator.pop(context, false);
+                },
               )
             ],
           );

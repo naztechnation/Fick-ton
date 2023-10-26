@@ -19,11 +19,14 @@ class AppStrings {
   static const String registerUrl = '${_baseUrl}auth/register';
   static const String verifyCodeUrl = '${_baseUrl}auth/verify_token';
   static const String createPost = '${_baseUrl}posts/create';
+  static const String updatePost = '${_baseUrl}posts/update';
   static const String createComments = '${_baseUrl}comments/create';
   static const String likePost = '${_baseUrl}likes/create';
   static const String unLikePost = '${_baseUrl}likes/delete';
   static const String bookmarkPost = '${_baseUrl}book/create';
   static const String unBookmarkPost = '${_baseUrl}book/delete';
+  static const  String deletePost = '${_baseUrl}posts/delete';
+
   static const  String createNotificationUrl  = '${_baseUrl}notify/create';
   static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total?token=';
   static   String bookmarkListUrl(String token) => '${_baseUrl}book/index?token=$token';

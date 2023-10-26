@@ -89,20 +89,45 @@ class _PublishedPageState extends State<PublishedPage> {
                   description: state.message,
                   onRefresh: () => _userCubit.getPost(url: AppStrings.getPosts(token)),
                 );
+              }if (state is DeletePostLoaded) {
+                if (state.deletePost.status == 1) {
+                  _userCubit.getPost(url: AppStrings.getPosts(token));
+                  Modals.showToast(state.deletePost.message!,
+                      messageType: MessageType.success,);
+                } else {
+                  Modals.showToast(state.deletePost.message!,
+                      messageType: MessageType.error);
+                }
               }
 
-              return (state is PostListsLoading)
+              return (state is PostListsLoading || state is DeletePostLoading)
                   ? const LoadingPage()
-                  : ListView.builder(
+                  : (allPosts.isEmpty) ? const SizedBox(
+                                    height: 390,
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text('No Published Posts')),
+                                  )  : ListView.builder(
             itemCount: allPosts.length,
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, index) {
-              return PublishedItems(posts: allPosts[index],);
+              return PublishedItems(posts: allPosts[index], onTap: (){
+                _deletePost(context, allPosts[index].id!);
+              },);
             });
   }),
     );
   }
+
+   _deletePost(BuildContext ctx, String postId) {
+   
+      ctx.read<UserCubit>().deletePost(
+          postId: postId,
+          token: token);
+      FocusScope.of(ctx).unfocus();
+     
+  }
 }
 
-//draft
+ 

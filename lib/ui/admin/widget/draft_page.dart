@@ -9,13 +9,10 @@ import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
-import '../../../utils/navigator/page_navigator.dart';
-import '../../landing_page_component/homepage/movie_details_page.dart';
 import '../../landing_page_component/homepage/widgets/draft_items.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/loading_page.dart';
 import '../../widgets/modals.dart';
-
 
 class Draft extends StatelessWidget {
   const Draft({Key? key}) : super(key: key);
@@ -30,6 +27,7 @@ class Draft extends StatelessWidget {
     );
   }
 }
+
 class DraftPage extends StatefulWidget {
   const DraftPage({super.key});
 
@@ -38,7 +36,6 @@ class DraftPage extends StatefulWidget {
 }
 
 class _DraftPageState extends State<DraftPage> {
-
   late UserCubit _userCubit;
 
   String token = '';
@@ -48,7 +45,7 @@ class _DraftPageState extends State<DraftPage> {
 
     token = await StorageHandler.getUserToken() ?? '';
 
-    _userCubit.getPost(url:AppStrings.getDraftedPosts(token));
+    _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
   }
 
   List<Posts> draftedPosts = [];
@@ -58,54 +55,79 @@ class _DraftPageState extends State<DraftPage> {
     getPosts();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<UserViewModel>(context, listen: false);
 
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is PostListsLoaded) {
-                if (state.postLists.status == 1) {
-                  
-                  draftedPosts = _userCubit.viewModel.postsList.reversed.toList();
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is PostListsLoaded) {
+              if (state.postLists.status == 1) {
+                draftedPosts = _userCubit.viewModel.postsList.reversed.toList();
 
-                  user.setDraftLength(draftedLength: draftedPosts.length.toString());
-                } else {
-                  Modals.showToast(state.postLists.message!,
-                      messageType: MessageType.error);
-                }
-              } else if (state is UserNetworkErr) {
-                return EmptyWidget(
-                  title: 'Network error',
-                  description: state.message,
-                  onRefresh: () => _userCubit.getPost(url: AppStrings.getDraftedPosts(token)),
-                );
-              } else if (state is UserNetworkErrApiErr) {
-                return EmptyWidget(
-                  title: 'Network error',
-                  description: state.message,
-                  onRefresh: () => _userCubit.getPost(url: AppStrings.getDraftedPosts(token)),
-                );
+                user.setDraftLength(
+                    draftedLength: draftedPosts.length.toString());
+              } else {
+                Modals.showToast(state.postLists.message!,
+                    messageType: MessageType.error);
               }
+            } else if (state is UserNetworkErr) {
+              return EmptyWidget(
+                title: 'Network error',
+                description: state.message,
+                onRefresh: () =>
+                    _userCubit.getPost(url: AppStrings.getDraftedPosts(token)),
+              );
+            } else if (state is UserNetworkErrApiErr) {
+              return EmptyWidget(
+                title: 'Network error',
+                description: state.message,
+                onRefresh: () =>
+                    _userCubit.getPost(url: AppStrings.getDraftedPosts(token)),
+              );
+            }
+            if (state is DeletePostLoaded) {
+              if (state.deletePost.status == 1) {
+                _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
+                Modals.showToast(
+                  state.deletePost.message!,
+                  messageType: MessageType.success,
+                );
+              } else {
+                Modals.showToast(state.deletePost.message!,
+                    messageType: MessageType.error);
+              }
+            }
 
-              return (state is PostListsLoading)
-                  ? const LoadingPage()
-                  : ListView.builder(
-            itemCount: draftedPosts.length,
-            physics: const BouncingScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, index) {
-              return GestureDetector(
-                  onTap: () {
-                    AppNavigator.pushAndStackPage(context,
-                        page:   MovieDetailsScreen(videoLinks: draftedPosts[index].videoLink!, postId: draftedPosts[index].id!,));
-                  },
-                  child: DraftItems(posts: draftedPosts[index],));
-            });
-  }),
+            return (state is PostListsLoading || state is DeletePostLoading)
+                ? const LoadingPage()
+                : (draftedPosts.isEmpty) ? const SizedBox(
+                                    height: 390,
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text('No Drafts')),
+                                  )  : ListView.builder(
+                    itemCount: draftedPosts.length,
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, index) {
+                      return DraftItems(
+                        posts: draftedPosts[index],
+                        onPublishedTapped: () {},
+                        onDeleteTapped: () {
+                          _deletePost(context, draftedPosts[index].id!);
+                        },
+                      );
+                    });
+          }),
     );
+  }
+
+  _deletePost(BuildContext ctx, String postId) {
+    ctx.read<UserCubit>().deletePost(postId: postId, token: token);
+    FocusScope.of(ctx).unfocus();
   }
 }

@@ -16,6 +16,7 @@ class UserCubit extends Cubit<UserStates> {
 
   Future<void> createPost({
     required String title,
+    required String url,
     required String token,
     required String content,
     required File thumbnail,
@@ -30,6 +31,7 @@ class UserCubit extends Cubit<UserStates> {
 
       final agents = await userRepository.createPost(
         title: title,
+        url: url,
         token: token,
         content: content,
         videoLink: videoLink,
@@ -56,17 +58,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> getPost({
-    
-    required String url
-  }) async {
+  Future<void> getPost({required String url}) async {
     try {
       emit(PostListsLoading());
 
-      final posts = await userRepository.getAllPosts(
-        
-        url: url
-      );
+      final posts = await userRepository.getAllPosts(url: url);
 
       await viewModel.setPostLists(posts: posts);
 
@@ -86,10 +82,8 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> getPostDetails({
-    required String token,
-    required String postId
-  }) async {
+  Future<void> getPostDetails(
+      {required String token, required String postId}) async {
     try {
       emit(PostDetailsLoading());
 
@@ -98,7 +92,6 @@ class UserCubit extends Cubit<UserStates> {
         postId: postId,
       );
 
-       
       emit(PostDetailsLoaded(postsDetails));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -173,7 +166,7 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-   Future<void> likeBookMark({
+  Future<void> likeBookMark({
     required String token,
     required String postId,
     required String url,
@@ -183,7 +176,8 @@ class UserCubit extends Cubit<UserStates> {
 
       final comments = await userRepository.likeBookmark(
         token: token,
-        postId: postId, url: url,
+        postId: postId,
+        url: url,
       );
 
       emit(LikeBookmarkLoaded(comments));
@@ -202,17 +196,14 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-
   Future<void> bookmarkList({
     required String token,
-    
   }) async {
     try {
       emit(BookmarkListLoading());
 
       final bookmarkList = await userRepository.bookmarkList(
         token: token,
-        
       );
 
       emit(BookmarkListLoaded(bookmarkList));
@@ -235,7 +226,6 @@ class UserCubit extends Cubit<UserStates> {
     required String title,
     required String token,
     required String content,
-    
   }) async {
     try {
       emit(CreatePostLoading());
@@ -244,7 +234,6 @@ class UserCubit extends Cubit<UserStates> {
         title: title,
         token: token,
         content: content,
-        
       );
 
       emit(CreatePostLoaded(agents));
@@ -263,4 +252,29 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+  Future<void> deletePost(
+      {required String token, required String postId}) async {
+    try {
+      emit(DeletePostLoading());
+
+      final post = await userRepository.deletePost(
+        token: token,
+        postId: postId,
+      );
+
+      emit(DeletePostLoaded(post));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

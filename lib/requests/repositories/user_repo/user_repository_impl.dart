@@ -14,6 +14,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<AuthData> createPost({
     required String title,
+    required String url,
     required String token,
     required String content,
     required File thumbnail,
@@ -24,7 +25,7 @@ class UserRepositoryImpl implements UserRepository {
     required String trending,
   }) async {
     final map = await Requests().post(
-      AppStrings.createPost,
+      url,
       files: {'thumbnail': thumbnail},
       body: {
         "title": title,
@@ -112,5 +113,17 @@ class UserRepositoryImpl implements UserRepository {
 
     return BookmarkList.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> deletePost({required String token, required String postId}) async {
+    final map = await Requests().post(AppStrings.deletePost,
+    body: {
+        "token": token,
+        "post_id": postId,
+         
+      },
+    );
 
+    return AuthData.fromJson(map);
+  }
 }

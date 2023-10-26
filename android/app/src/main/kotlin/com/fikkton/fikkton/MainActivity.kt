@@ -1,4 +1,4 @@
-package com.example.fikkton
+package com.fikkton.fikkton
 
 import io.flutter.embedding.android.FlutterActivity
 

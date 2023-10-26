@@ -11,8 +11,9 @@ import 'navigation_helper.dart';
 
 class PublishedItems extends StatelessWidget {
 
+ final Function onTap;
  final Posts posts;
-  const PublishedItems({super.key, required this.posts});
+  const PublishedItems({super.key, required this.posts, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,7 @@ class PublishedItems extends StatelessWidget {
                         ),
                           GestureDetector(
                             onTap: (){
-                              Modals.showAlertOptionDialog(context, title: 'Delete Post', message: 'Are you sure you want to delete this post. This cannot be Undone.', );
+                              Modals.showAlertOptionDialog(context, title: 'Delete Post', message: 'Are you sure you want to delete this post. This cannot be Undone.', callback: (){onTap();});
                             },
                             child: const ImageView.asset(
                             AppImages.delete,

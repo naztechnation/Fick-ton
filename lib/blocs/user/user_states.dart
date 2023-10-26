@@ -110,6 +110,18 @@ class CommentLoaded extends UserStates {
 }
 
 
+class DeletePostLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class DeletePostLoaded extends UserStates {
+  final AuthData deletePost ;
+  const DeletePostLoaded(this.deletePost);
+  @override
+  List<Object> get props => [deletePost];
+}
+
 class UserNetworkErr extends UserStates {
   final String? message;
   const UserNetworkErr(this.message);

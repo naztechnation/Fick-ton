@@ -19,6 +19,7 @@ import '../../model/posts/post_details.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../widgets/loading_page.dart';
 import '../widgets/modals.dart';
@@ -79,12 +80,8 @@ class _NewPostState extends State<Post> {
     });
     await _userCubit.getPostDetails(token: token, postId: widget.postId);
 
-    
     setState(() {
       isLoading = false;
-      
-              
-            
     });
   }
 
@@ -109,7 +106,7 @@ class _NewPostState extends State<Post> {
     setToken.getToken();
 
     return Scaffold(
-        body:  BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
+      body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
         if (state is CreatePostLoaded) {
           if (state.createPost.status == 1) {
             Modals.showToast(state.createPost.message!,
@@ -117,26 +114,22 @@ class _NewPostState extends State<Post> {
             user.imageURl = null;
             clearFields();
           } else {}
-        }
-       else if (state is PostDetailsLoaded) {
-
+        } else if (state is PostDetailsLoaded) {
           Modals.showToast(state.postDetails.message!,
-                messageType: MessageType.success);
+              messageType: MessageType.success);
           if (state.postDetails.status == 1) {
-            
             titleController.text = state.postDetails.data!.title!;
-              contentController.text = state.postDetails.data!.content!;
-              videoUrlController.text = state.postDetails.data!.videoLink!;
-              genresController.text = state.postDetails.data!.genre!;
-              authorController.text = state.postDetails.data!.author!;
-            isChecked = state.postDetails.data!.isTrending == "0" ? false : true;
-
+            contentController.text = state.postDetails.data!.content!;
+            videoUrlController.text = state.postDetails.data!.videoLink!;
+            genresController.text = state.postDetails.data!.genre!;
+            authorController.text = state.postDetails.data!.author!;
+            isChecked =
+                state.postDetails.data!.isTrending == "0" ? false : true;
           } else {}
         }
       }, builder: (context, state) {
         if (state is PostDetailsLoaded) {
           if (state.postDetails.status == 1) {
-            
           } else {}
         }
 
@@ -377,11 +370,23 @@ class _NewPostState extends State<Post> {
                                         ButtonView(
                                           onPressed: () {
                                             if (user.imageURl != null) {
-                                              _verifyCode(
+                                              if (widget.isUpdate) {
+                                                 _createPost(
                                                   context,
                                                   setToken.token,
                                                   user.imageURl!,
-                                                  '1');
+                                                  '1',
+                                                  AppStrings.updatePost
+                                                );
+                                              } else {
+                                                _createPost(
+                                                  context,
+                                                  setToken.token,
+                                                  user.imageURl!,
+                                                  '1',
+                                                  AppStrings.createPost
+                                                );
+                                              }
                                             } else {
                                               Modals.showToast(
                                                   'please upload image');
@@ -396,11 +401,23 @@ class _NewPostState extends State<Post> {
                                         ButtonView(
                                           onPressed: () {
                                             if (user.imageURl != null) {
-                                              _verifyCode(
+                                              if (widget.isUpdate) {
+                                                 _createPost(
                                                   context,
                                                   setToken.token,
                                                   user.imageURl!,
-                                                  '0');
+                                                  '0',
+                                                  AppStrings.updatePost
+                                                );
+                                              } else {
+                                                _createPost(
+                                                  context,
+                                                  setToken.token,
+                                                  user.imageURl!,
+                                                  '0',
+                                                  AppStrings.createPost
+                                                );
+                                              }
                                             } else {
                                               Modals.showToast(
                                                   'please upload image');
@@ -432,9 +449,11 @@ class _NewPostState extends State<Post> {
     );
   }
 
-  _verifyCode(BuildContext ctx, String token, File thumbnail, String status) {
+  _createPost(BuildContext ctx, String token, File thumbnail, String status,
+      String url) {
     if (_formKey.currentState!.validate()) {
       ctx.read<UserCubit>().createPost(
+            url: url,
             title: titleController.text,
             token: token,
             content: contentController.text,

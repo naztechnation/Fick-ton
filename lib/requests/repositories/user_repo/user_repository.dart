@@ -11,6 +11,7 @@ import '../../../model/posts/get_posts.dart';
 abstract class UserRepository {
   Future<AuthData> createPost({
     required String title,
+    required String url,
     required String token,
     required String content,
     required File thumbnail,
@@ -26,6 +27,7 @@ abstract class UserRepository {
      Future<PostDetails> getPostsDetails({required String token, required String postId});
      Future<AuthData> addComment({required String token, required String postId, required String comment});
      Future<CommentData> getComment({required String token, required String postId, });
+     Future<AuthData> deletePost({required String token, required String postId, });
      Future<AuthData> likeBookmark({required String token, required String postId,  required String url});
      Future<BookmarkList> bookmarkList({required String token, });
      Future<AuthData> createNotification({required String token,required String title,required String content});
