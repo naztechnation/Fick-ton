@@ -46,6 +46,16 @@ class StorageHandler {
     }
   }
 
+   static Future<void> saveOnboardState([String? onBoard]) async {
+    if (onBoard != null)
+      await storage.write(key: 'ONBOARD', value: onBoard);
+  }
+
+  static Future<void> saveIsLoggedIn([String? isLoggedIn]) async {
+    if (isLoggedIn != null)
+      await storage.write(key: 'LOGGEDIN', value: isLoggedIn);
+  }
+
   static Future<String?> getUserEmail() async {
     Map<String, String> value = await storage.readAll();
     String? user;
@@ -113,6 +123,30 @@ class StorageHandler {
       user = data;
     }
     return user;
+  }
+
+  static Future<String> getOnBoardState() async {
+   String? value = await storage.read(key: 'ONBOARD');
+    String? onboard;
+    String? data = value;
+    if (data != null) {
+      onboard = data;
+    }else{
+      onboard = '';
+    }
+    return onboard;
+  }
+
+  static Future<String> getLoggedInState() async {
+   String? value = await storage.read(key: 'LOGGEDIN');
+    String? loggedin;
+    String? data = value;
+    if (data != null) {
+      loggedin = data;
+    }else{
+      loggedin = '';
+    }
+    return loggedin;
   }
 
  

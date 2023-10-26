@@ -1,6 +1,7 @@
 import 'package:fikkton/ui/widgets/button_view.dart';
 import 'package:flutter/material.dart';
 
+import '../../handlers/secure_handler.dart';
 import '../../model/onboard_model/onboarding_contents.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_images.dart';
@@ -159,6 +160,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 borderColor: AppColors.lightSecondary,
                               borderRadius: 30,
                               onPressed: (){
+                                StorageHandler.saveOnboardState('true');
+                                
                                  AppNavigator.pushAndReplacePage(context, page: const LoginScreen());
                                  
                                

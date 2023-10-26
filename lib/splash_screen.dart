@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:fikkton/ui/auth/auth.dart';
 import 'package:flutter/material.dart';
 
+import 'handlers/secure_handler.dart';
 import 'res/app_colors.dart';
 import 'res/app_images.dart';
 import 'res/app_routes.dart';
@@ -21,6 +23,14 @@ class SplashScreenState extends State<SplashScreen>
   late AnimationController animationController;
   late Animation<double> animation;
 
+   String userLoggedIn = '';
+  String isOnBoarding = '';
+
+  getUserDetails() async {
+    userLoggedIn = await StorageHandler.getLoggedInState();
+    isOnBoarding = await StorageHandler.getOnBoardState();
+  }
+
   startTime() async {
     Future.delayed(
         const Duration(
@@ -31,7 +41,17 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   void navigationPage() {
-    AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
+
+    if (isOnBoarding == '') {
+          AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
+
+    // } else if (userLoggedIn != '') {
+    //  
+    // }
+    }else{
+       AppNavigator.pushAndReplacePage(context, page:LoginScreen());
+    }
+    
   }
 
   @override

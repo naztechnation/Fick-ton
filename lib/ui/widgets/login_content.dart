@@ -327,16 +327,18 @@ bool isShowPassword = true;
                                   controller: _passwordController,
                                   validator: Validator.validate,
                                   labelText: 'Password',
+                                  obscureText: isShowPassword,
+
                                    suffixIcon: isShowPassword ? GestureDetector(
                           onTap: (){
                             showPassword();
                           },
-                          child: Icon(Ionicons.eye, color: AppColors.lightPrimary,size: 25,)) :
+                          child: Icon(Ionicons.eye, color: Colors.white,size: 25,)) :
                           GestureDetector(
                              onTap: (){
                             showPassword();
                           },
-                            child: Icon(Ionicons.eye_off, color: AppColors.lightPrimary,size: 25,)),
+                            child: Icon(Ionicons.eye_off, color: Colors.white,size: 25,)),
                                   prefixIcon: const Icon(
                                     Ionicons.lock_closed_outline,
                                     color: Colors.white,
@@ -425,6 +427,7 @@ bool isShowPassword = true;
                                 child: TextEditView(
                                   controller: _passwordController,
                                   validator: Validator.validate,
+                                  obscureText: isShowPassword,
                                   labelText: 'Password',
                                   prefixIcon: const Icon(
                                     Ionicons.lock_closed_outline,
@@ -434,12 +437,12 @@ bool isShowPassword = true;
                           onTap: (){
                             showPassword();
                           },
-                          child: Icon(Ionicons.eye, color: AppColors.lightPrimary,size: 25,)) :
+                          child: Icon(Ionicons.eye, color: Colors.white,size: 25,)) :
                           GestureDetector(
                              onTap: (){
                             showPassword();
                           },
-                            child: Icon(Ionicons.eye_off, color: AppColors.lightPrimary,size: 25,)),
+                            child: Icon(Ionicons.eye_off, color: Colors.white,size: 25,)),
                                   filled: false,
                                   borderColor: Colors.white,
                                   textColor: Colors.white,
