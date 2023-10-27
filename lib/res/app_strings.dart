@@ -19,6 +19,7 @@ class AppStrings {
   static const String registerUrl = '${_baseUrl}auth/register';
   static const String verifyCodeUrl = '${_baseUrl}auth/verify_token';
   static const String createPost = '${_baseUrl}posts/create';
+  static const String forgotPasswordUrl = '${_baseUrl}auth/forgot_password';
   static const String updatePost = '${_baseUrl}posts/update';
   static const String createComments = '${_baseUrl}comments/create';
   static const String likePost = '${_baseUrl}likes/create';
@@ -28,6 +29,8 @@ class AppStrings {
   static const  String deletePost = '${_baseUrl}posts/delete';
   static const  String deleteNotification = '${_baseUrl}notify/delete';
   static const  String changePasswordUrl = '${_baseUrl}users/change_password';
+  static const  String resetPasswordUrl = '${_baseUrl}auth/reset_password';
+  
 
   static const  String createNotificationUrl  = '${_baseUrl}notify/create';
   static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total?token=$token';
