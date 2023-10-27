@@ -8,12 +8,6 @@ import 'package:fikkton/model/posts/post_details.dart';
 import '../../model/posts/admin_model.dart';
 import '../../model/posts/notification_model.dart';
 
-// import '../../model/account_models/agents_packages.dart';
-// import '../../model/account_models/confirm_payment.dart';
-// import '../../model/user_models/gallery_data.dart';
-// import '../../model/user_models/reviews_data.dart';
-// import '../../model/user_models/service_provider_lists.dart';
-// import '../../model/user_models/service_type.dart';
 
 abstract class UserStates extends Equatable {
   const UserStates();
@@ -58,6 +52,7 @@ class LikeBookmarkLoading extends UserStates {
   @override
   List<Object> get props => [];
 }
+
 class LikeBookmarkLoaded extends UserStates {
   final AuthData createPost;
   const LikeBookmarkLoaded(this.createPost);
@@ -69,16 +64,13 @@ class BookmarkListLoading extends UserStates {
   @override
   List<Object> get props => [];
 }
+
 class BookmarkListLoaded extends UserStates {
   final BookmarkList bookmarkList;
   const BookmarkListLoaded(this.bookmarkList);
   @override
   List<Object> get props => [bookmarkList];
 }
-
-
-
-
 
 class PostListsLoaded extends UserStates {
   final GetAllPosts postLists;
@@ -87,14 +79,13 @@ class PostListsLoaded extends UserStates {
   List<Object> get props => [postLists];
 }
 
-
 class PostDetailsLoading extends UserStates {
   @override
   List<Object> get props => [];
 }
 
 class PostDetailsLoaded extends UserStates {
-  final PostDetails postDetails ;
+  final PostDetails postDetails;
   const PostDetailsLoaded(this.postDetails);
   @override
   List<Object> get props => [postDetails];
@@ -106,7 +97,7 @@ class CreateCommentLoading extends UserStates {
 }
 
 class CreateCommentLoaded extends UserStates {
-  final CommentData postComment ;
+  final CommentData postComment;
   const CreateCommentLoaded(this.postComment);
   @override
   List<Object> get props => [postComment];
@@ -118,12 +109,11 @@ class CommentLoading extends UserStates {
 }
 
 class CommentLoaded extends UserStates {
-  final CommentData postComment ;
+  final CommentData postComment;
   const CommentLoaded(this.postComment);
   @override
   List<Object> get props => [postComment];
 }
-
 
 class DeletePostLoading extends UserStates {
   @override
@@ -131,7 +121,7 @@ class DeletePostLoading extends UserStates {
 }
 
 class DeletePostLoaded extends UserStates {
-  final AuthData deletePost ;
+  final AuthData deletePost;
   const DeletePostLoaded(this.deletePost);
   @override
   List<Object> get props => [deletePost];
@@ -143,7 +133,7 @@ class AdminAnalysisLoading extends UserStates {
 }
 
 class AdminAnalysisLoaded extends UserStates {
-  final DashBoardAnalysis analysis ;
+  final DashBoardAnalysis analysis;
   const AdminAnalysisLoaded(this.analysis);
   @override
   List<Object> get props => [analysis];
@@ -155,7 +145,7 @@ class NotificationsLoading extends UserStates {
 }
 
 class NotificationsLoaded extends UserStates {
-  final NotificationData notify ;
+  final NotificationData notify;
   const NotificationsLoaded(this.notify);
   @override
   List<Object> get props => [notify];
@@ -167,7 +157,7 @@ class DelNotificationsLoading extends UserStates {
 }
 
 class DelNotificationsLoaded extends UserStates {
-  final AuthData notify ;
+  final AuthData notify;
   const DelNotificationsLoaded(this.notify);
   @override
   List<Object> get props => [notify];
@@ -186,6 +176,3 @@ class UserNetworkErrApiErr extends UserStates {
   @override
   List<Object> get props => [message!];
 }
-
-
-

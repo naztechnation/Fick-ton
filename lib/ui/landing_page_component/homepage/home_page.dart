@@ -5,6 +5,7 @@ import 'package:fikkton/ui/widgets/loading_page.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
@@ -60,6 +61,7 @@ class _HomeState extends State<Home> {
     _userCubit.getPost(url: AppStrings.getPosts(token));
   }
 
+
   List<Posts> allPosts = [];
   List<Posts> trendingPosts = [];
 
@@ -81,7 +83,7 @@ class _HomeState extends State<Home> {
       required Function onTap,
       required String time}) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         onTap();
       },
       child: Padding(
@@ -122,7 +124,7 @@ class _HomeState extends State<Home> {
                       style: const TextStyle(color: Colors.white),
                     )),
                 Positioned(
-                    bottom: 40,
+                    bottom: 20,
                     right: 0,
                     left: 0,
                     child: Align(
@@ -130,18 +132,20 @@ class _HomeState extends State<Home> {
                       title,
                       style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
                     ))),
-                    
-                  const Positioned(
-                    top: 80,
-                    left: 0,
-                    right: 0,
-                    child: Align(
+                const Positioned(
+                  top: 80,
+                  left: 0,
+                  right: 0,
+                  child: Align(
                       alignment: Alignment.center,
-                      child: ImageView.svg(AppImages.play, height: 35,)),
-                  )
+                      child: ImageView.svg(
+                        AppImages.play,
+                        height: 35,
+                      )),
+                )
               ],
             ),
           ),
@@ -152,6 +156,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final timeFormat = Provider.of<UserViewModel>(context, listen: false);
+
     return Scaffold(
         body: BlocConsumer<UserCubit, UserStates>(
             listener: (context, state) {},
@@ -168,13 +174,15 @@ class _HomeState extends State<Home> {
                 return EmptyWidget(
                   title: 'Network error',
                   description: state.message,
-                  onRefresh: () => _userCubit.getPost(url: AppStrings.getPosts(token)),
+                  onRefresh: () =>
+                      _userCubit.getPost(url: AppStrings.getPosts(token)),
                 );
               } else if (state is UserNetworkErrApiErr) {
                 return EmptyWidget(
                   title: 'Network error',
                   description: state.message,
-                  onRefresh: () => _userCubit.getPost(url: AppStrings.getPosts(token)),
+                  onRefresh: () =>
+                      _userCubit.getPost(url: AppStrings.getPosts(token)),
                 );
               }
 
@@ -210,17 +218,20 @@ class _HomeState extends State<Home> {
                                   ),
                                 ],
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  AppNavigator.pushAndStackPage(context,
-                                      page: const SearchPage());
-                                },
-                                child: const ImageView.svg(
-                                  AppImages.search,
-                                  width: 25,
-                                  height: 25,
+                              if (allPosts.isNotEmpty)
+                                GestureDetector(
+                                  onTap: () {
+                                    AppNavigator.pushAndStackPage(context,
+                                        page: SearchPage(
+                                          postsLists: allPosts,
+                                        ));
+                                  },
+                                  child: const ImageView.svg(
+                                    AppImages.search,
+                                    width: 25,
+                                    height: 25,
+                                  ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -269,19 +280,19 @@ class _HomeState extends State<Home> {
                                         for (var trendingPosts in trendingPosts)
                                           _buildPage(
                                               context: context,
-                                              onTap: (){
+                                              onTap: () {
                                                 AppNavigator.pushAndStackPage(
-                                                  context,
-                                                  page: MovieDetailsScreen(
-                                                    videoLinks: trendingPosts
-                                                        .videoLink!,
-                                                    postId: trendingPosts.id!,
-                                                  ));
+                                                    context,
+                                                    page: MovieDetailsScreen(
+                                                      videoLinks: trendingPosts
+                                                          .videoLink!,
+                                                      postId: trendingPosts.id!,
+                                                    ));
                                               },
                                               image: trendingPosts.thumbnail!,
                                               title: trendingPosts.title!,
                                               genre: trendingPosts.genre!,
-                                              time: trendingPosts.createdAt!),
+                                              time: timeFormat.getCurrentTime(int.parse(trendingPosts.createdAt!)) ),
                                       ],
                                     ),
                                   ),
@@ -293,7 +304,7 @@ class _HomeState extends State<Home> {
                                     children: _buildPageIndicator(),
                                   ),
                                   const SizedBox(
-                                    height: 50,
+                                    height: 20,
                                   ),
                                 ],
                                 Padding(
@@ -323,6 +334,11 @@ class _HomeState extends State<Home> {
                                                     setState(() {
                                                       recent = item;
                                                     });
+
+                                                    _userCubit.getFilteredPost(
+                                                        token: token,
+                                                        genre: genres,
+                                                        filterParams: recent);
                                                   }));
                                         },
                                       ),
@@ -337,6 +353,7 @@ class _HomeState extends State<Home> {
                                               heightFactor: 0.6,
                                               page: filterModalContent(
                                                   filterItems: [
+                                                    'All Types',
                                                     'Movies',
                                                     'TV Series',
                                                     'Drama',
@@ -363,6 +380,7 @@ class _HomeState extends State<Home> {
                                               heightFactor: 1.2,
                                               page: filterModalContent(
                                                   filterItems: [
+                                                    'All Genres',
                                                     'Action',
                                                     'Adventure',
                                                     'Animation',
@@ -380,6 +398,11 @@ class _HomeState extends State<Home> {
                                                     setState(() {
                                                       genres = item;
                                                     });
+
+                                                    _userCubit.getFilteredPost(
+                                                        token: token,
+                                                        genre: genres,
+                                                        filterParams: recent);
                                                   }));
                                         },
                                       ),
@@ -406,7 +429,6 @@ class _HomeState extends State<Home> {
                                           (BuildContext context, index) {
                                         return GestureDetector(
                                             onTap: () {
-
                                               AppNavigator.pushAndStackPage(
                                                   context,
                                                   page: MovieDetailsScreen(
@@ -429,28 +451,9 @@ class _HomeState extends State<Home> {
             }));
   }
 
-  String formatTime(timestamp) {
-    String formattedTime = timestampToHoursAgo(timestamp);
-
-    return formattedTime;
-  }
-
-  String timestampToHoursAgo(int timestamp) {
-    final now = DateTime.now();
-    final time = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-
-    final difference = now.difference(time);
-    final hours = difference.inHours;
-
-    if (hours == 0) {
-      final minutes = difference.inMinutes;
-      return '$minutes minutes ago';
-    } else if (hours == 1) {
-      return '1 hour ago';
-    } else {
-      return '$hours hours ago';
-    }
-  }
+  DateTime minAgo = DateTime.now().subtract(const Duration(milliseconds: 1));
+  DateTime dayAgo = DateTime.now().subtract(const Duration(days: 1));
+  DateTime monthAgo = DateTime.now().subtract(const Duration(days: 31));
 
   List<Widget> _buildPageIndicator() {
     List<Widget> reverseIndicators = [];

@@ -84,6 +84,30 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+   Future<void> getFilteredPost({required String token, required String genre, required String filterParams}) async {
+    try {
+      emit(PostListsLoading());
+
+      final posts = await userRepository.filterPost(token: token, genre: genre, filterParams: filterParams);
+
+      await viewModel.setPostLists(posts: posts);
+
+      emit(PostListsLoaded(posts));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   Future<void> getPostDetails(
       {required String token, required String postId}) async {
     try {

@@ -61,7 +61,7 @@ class _PublishedPageState extends State<PublishedPage> {
   @override
   Widget build(BuildContext context) {
 
-    final user = Provider.of<UserViewModel>(context, listen: false);
+    final user = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(

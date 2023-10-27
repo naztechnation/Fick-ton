@@ -30,12 +30,14 @@ class FilterContainer extends StatelessWidget {
             children: [
               Expanded(
                   flex: 6,
-                  child: Text(
-                    text,
-                    style: const TextStyle(
-                        color: AppColors.lightSecondary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
+                  child: Center(
+                    child: Text(
+                      text,
+                      style: const TextStyle(
+                          color: AppColors.lightSecondary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    ),
                   )),
               const Expanded(flex: 1, child: ImageView.svg(AppImages.dropDown)),
             ],

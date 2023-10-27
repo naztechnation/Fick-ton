@@ -176,4 +176,14 @@ class UserRepositoryImpl implements UserRepository {
 
     return AuthData.fromJson(map);
   }
+  
+  @override
+  Future<GetAllPosts> filterPost({required String token, required String genre, required String filterParams}) async {
+    final map = await Requests().get(
+      AppStrings.filterPost(token, filterParams, genre)
+       
+    );
+
+    return GetAllPosts.fromJson(map);
+  }
 }

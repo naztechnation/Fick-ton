@@ -1,9 +1,10 @@
 import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:provider/provider.dart';
 
 import '../../../../model/posts/get_posts.dart';
+import '../../../../model/view_models/user_view_model.dart';
 
 class MoviesItems extends StatelessWidget {
   final Posts posts;
@@ -11,8 +12,8 @@ class MoviesItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int minutes = (int.parse(posts.createdAt!) / 60000).round();
-    final ago = DateTime.now().subtract(Duration(minutes: minutes));
+    final timeFormat = Provider.of<UserViewModel>(context, listen: false);
+    
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -83,9 +84,7 @@ class MoviesItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      timeago.format(
-                        ago,
-                      ),
+                       timeFormat.getCurrentTime(int.parse(posts.createdAt!)),
                     ),
                     const SizedBox(width: 8.0),
                     Padding(

@@ -28,6 +28,7 @@ abstract class UserRepository {
     });   
 
      Future<GetAllPosts> getAllPosts({ required String url});
+     Future<GetAllPosts> filterPost({ required String token, required String genre, required String filterParams,});
      Future<PostDetails> getPostsDetails({required String token, required String postId});
      Future<CommentData> createComment({required String token, required String postId, required String comment});
      Future<CommentData> getComment({required String token, required String postId, });

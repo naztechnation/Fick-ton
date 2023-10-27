@@ -125,7 +125,7 @@ class _BookMarkState extends State<BookMark> {
                   GestureDetector(
                     onTap: () {
                       AppNavigator.pushAndStackPage(context,
-                          page: const SearchPage());
+                          page:   SearchPage(postsLists: bookmarkList,));
                     },
                     child: const ImageView.svg(
                       AppImages.search,

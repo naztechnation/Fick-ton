@@ -121,13 +121,13 @@ class _LoginContentState extends State<LoginContent> {
   }
 
   Widget forgotPassword() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 110),
-      child: TextButton(
-        onPressed: () {
-          AppNavigator.pushAndStackPage(context,
-              page: const ForgotPasswordScreen());
-        },
+    return TextButton(
+      onPressed: () {
+        AppNavigator.pushAndStackPage(context,
+            page: const ForgotPasswordScreen());
+      },
+      child: Align(
+        alignment: Alignment.center,
         child: const Text(
           'Forgot Password?',
           style: TextStyle(

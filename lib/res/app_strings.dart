@@ -42,4 +42,5 @@ class AppStrings {
   static   String getDraftedPosts(String token) => '${_baseUrl}posts/draft?token=$token';
   static   String getComments(String token, String post) => '${_baseUrl}comments/show?token=$token&post_id=$post';
   static   String getPostsDetails(String token,String postId) => '${_baseUrl}posts/show?post_id=$postId&token=$token';
+  static   String filterPost(String token,String filterParams, String genre) => '${_baseUrl}posts/filter?filter_by=$filterParams&genre=$genre&token=$token';
 }

@@ -65,6 +65,9 @@ bool showother =  false;
 
   @override
   Widget build(BuildContext context) {
+
+    final timeFormat = Provider.of<UserViewModel>(context, listen: false);
+
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
         if (state is NotificationsLoaded) {
@@ -126,17 +129,7 @@ bool showother =  false;
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      AppNavigator.pushAndStackPage(context,
-                          page: const SearchPage());
-                    },
-                    child: const ImageView.svg(
-                      AppImages.search,
-                      width: 25,
-                      height: 25,
-                    ),
-                  ),
+                 
                 ],
               ),
             ),
@@ -231,15 +224,10 @@ bool showother =  false;
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        notifications[index].createdAt!,
+                                      timeFormat.getCurrentTime(int.parse(notifications[index].createdAt!))  ,
                                       ),
-                                      SizedBox(width: 15.0),
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 12.0),
-                                        child: Text(
-                                          notifications[index].createdAt!,
-                                        ),
-                                      ),
+                                     
+                                       
                                     ],
                                   ),
                                 ],

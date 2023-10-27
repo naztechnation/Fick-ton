@@ -4,6 +4,7 @@ import 'package:fikkton/model/posts/get_posts.dart' as get_posts;
 import 'package:fikkton/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -121,6 +122,58 @@ class UserViewModel extends BaseViewModel {
           );
         });
   }
+
+
+  String getCurrentTime(int timestampInSeconds)   {
+     
+    DateTime date =
+        DateTime.fromMillisecondsSinceEpoch(timestampInSeconds * 1000);
+
+      String time = formatTimeAgo(date);
+    
+
+        setViewState(ViewState.success);
+
+
+    return time;
+  }
+
+ String formatTimeAgo(DateTime inputDate) {
+   
+    DateTime now = DateTime.now();
+  Duration difference = now.difference(inputDate);
+
+  if (difference.inDays >= 3) {
+    return DateFormat.yMMMd().format(inputDate);
+  } else if (difference.inDays >= 1) {
+    if (difference.inDays == 1) {
+      return 'Yesterday';
+    } else {
+      return '${difference.inDays} days ago';
+    }
+  } else if (difference.inHours >= 1) {
+    if (difference.inHours == 1) {
+      return '1 hour ago';
+    } else {
+      return '${difference.inHours} hours ago';
+    }
+  } else if (difference.inMinutes >= 1) {
+    if (difference.inMinutes == 1) {
+      return '1 minute ago';
+    } else {
+      return '${difference.inMinutes} minutes ago';
+    }
+  } else {
+    return 'Just now'; 
+  }
+}
+
+
+
+
+
+
+
 
   File? get imgURl => imageURl;
 
