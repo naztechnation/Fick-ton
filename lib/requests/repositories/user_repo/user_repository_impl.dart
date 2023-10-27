@@ -60,7 +60,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<AuthData> addComment(
+  Future<CommentData> createComment(
       {required String token,
       required String postId,
       required String comment}) async {
@@ -73,7 +73,7 @@ class UserRepositoryImpl implements UserRepository {
       },
     );
 
-    return AuthData.fromJson(map);
+    return CommentData.fromJson(map);
   }
 
   @override

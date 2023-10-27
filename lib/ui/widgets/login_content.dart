@@ -36,6 +36,8 @@ class _LoginContentState extends State<LoginContent> {
   final _phoneController = TextEditingController();
 
   bool isShowPassword = true;
+
+
   showPassword() {
     setState(() {
       isShowPassword = !isShowPassword;

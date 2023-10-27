@@ -23,6 +23,7 @@ class AppStrings {
   static const String updatePost = '${_baseUrl}posts/update';
   static const String createComments = '${_baseUrl}comments/create';
   static const String likePost = '${_baseUrl}likes/create';
+  static const String deleteLike = '${_baseUrl}likes/delete';
   static const String unLikePost = '${_baseUrl}likes/delete';
   static const String bookmarkPost = '${_baseUrl}book/create';
   static const String unBookmarkPost = '${_baseUrl}book/delete';

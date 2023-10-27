@@ -44,8 +44,6 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late UserCubit _userCubit;
 
- 
-
   DashBoardAnalysis? analysis;
 
   String token = '';
@@ -124,6 +122,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       ],
                     ),
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Expanded(
                     child: SingleChildScrollView(
@@ -264,13 +265,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      height: 320,
-                                      child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: AdminDashboardGraph(analysis: analysis)),
-                                    ),
+                                    if (analysis != null) ...[
+                                      Container(
+                                        padding: const EdgeInsets.all(10),
+                                        height: 320,
+                                        child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: AdminDashboardGraph(
+                                                analysis: analysis)),
+                                      ),
+                                    ] else ...[
+                                      const Text("No values available"),
+                                    ]
                                   ],
                                 ),
                               ),

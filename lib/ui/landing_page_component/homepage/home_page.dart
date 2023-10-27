@@ -78,66 +78,72 @@ class _HomeState extends State<Home> {
       required String title,
       required String genre,
       required BuildContext context,
+      required Function onTap,
       required String time}) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20.0),
-        child: Container(
-          decoration: const BoxDecoration(),
-          child: Stack(
-            children: [
-              ImageView.network(
-                image,
-                fit: BoxFit.cover,
-                width: MediaQuery.sizeOf(context).width,
-                placeholder: AppImages.logo,
-              ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  color: Colors.black38,
+    return GestureDetector(
+      onTap: (){
+        onTap();
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Container(
+            decoration: const BoxDecoration(),
+            child: Stack(
+              children: [
+                ImageView.network(
+                  image,
+                  fit: BoxFit.cover,
+                  width: MediaQuery.sizeOf(context).width,
+                  placeholder: AppImages.logo,
                 ),
-              ),
-              Positioned(
-                  top: 20,
-                  left: 20,
-                  child: Text(
-                    genre.toUpperCase(),
-                    style: const TextStyle(color: Colors.white),
-                  )),
-              Positioned(
-                  top: 20,
-                  right: 20,
-                  child: Text(
-                    time,
-                    style: const TextStyle(color: Colors.white),
-                  )),
-              Positioned(
-                  bottom: 40,
-                  right: 0,
-                  left: 0,
-                  child: Align(
-                      child: Text(
-                    title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800),
-                  ))),
-                  
-                const Positioned(
-                  top: 80,
+                Positioned(
+                  top: 0,
                   left: 0,
                   right: 0,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: ImageView.svg(AppImages.play, height: 35,)),
-                )
-            ],
+                  bottom: 0,
+                  child: Container(
+                    color: Colors.black38,
+                  ),
+                ),
+                Positioned(
+                    top: 20,
+                    left: 20,
+                    child: Text(
+                      genre.toUpperCase(),
+                      style: const TextStyle(color: Colors.white),
+                    )),
+                Positioned(
+                    top: 20,
+                    right: 20,
+                    child: Text(
+                      time,
+                      style: const TextStyle(color: Colors.white),
+                    )),
+                Positioned(
+                    bottom: 40,
+                    right: 0,
+                    left: 0,
+                    child: Align(
+                        child: Text(
+                      title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800),
+                    ))),
+                    
+                  const Positioned(
+                    top: 80,
+                    left: 0,
+                    right: 0,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: ImageView.svg(AppImages.play, height: 35,)),
+                  )
+              ],
+            ),
           ),
         ),
       ),
@@ -263,6 +269,15 @@ class _HomeState extends State<Home> {
                                         for (var trendingPosts in trendingPosts)
                                           _buildPage(
                                               context: context,
+                                              onTap: (){
+                                                AppNavigator.pushAndStackPage(
+                                                  context,
+                                                  page: MovieDetailsScreen(
+                                                    videoLinks: trendingPosts
+                                                        .videoLink!,
+                                                    postId: trendingPosts.id!,
+                                                  ));
+                                              },
                                               image: trendingPosts.thumbnail!,
                                               title: trendingPosts.title!,
                                               genre: trendingPosts.genre!,

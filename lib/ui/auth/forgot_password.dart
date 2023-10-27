@@ -31,6 +31,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final setToken = Provider.of<AccountViewModel>(context, listen: false);
+
     return Scaffold(
         body: BlocProvider<AccountCubit>(
       lazy: false,
@@ -43,6 +45,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             if (state.userData.status == 1) {
               Modals.showToast(state.userData.message ?? '',
                   messageType: MessageType.success);
+                setToken.setToken(state.userData.token!);
+
               AppNavigator.pushAndReplacePage(context,
                   page: OtpScreen(
                     email: _emailController.text.trim(),

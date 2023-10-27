@@ -22,7 +22,8 @@ import 'auth.dart';
 class ResetPasswordScreen extends StatefulWidget {
   final String email;
   final String token;
-  const ResetPasswordScreen({super.key, required this.email, required this.token});
+  const ResetPasswordScreen(
+      {super.key, required this.email, required this.token});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -36,7 +37,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   void initState() {
-
     _emailController.text = widget.email;
     super.initState();
   }
@@ -44,19 +44,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider<AccountCubit>(
+        body: BlocProvider<AccountCubit>(
       lazy: false,
       create: (_) => AccountCubit(
           accountRepository: AccountRepositoryImpl(),
           viewModel: Provider.of<AccountViewModel>(context, listen: false)),
       child: BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
-          if (state is AccountLoaded) {
+          if (state is ResetPasswordLoaded) {
             if (state.userData.status == 1) {
               Modals.showDialogModal(context, page: successWidget());
-                          navigateToNextPage(context);
-                          SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-                              overlays: SystemUiOverlay.values);
+              navigateToNextPage(context);
+              SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                  overlays: SystemUiOverlay.values);
             } else {
               Modals.showToast(state.userData.message!,
                   messageType: MessageType.error);
@@ -177,10 +177,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           horizontal: 16, vertical: 16),
                       child: ButtonView(
                         color: Colors.white,
+                        processing: state is ResetPasswordLoading,
                         borderColor: Colors.white,
                         borderRadius: 30,
                         onPressed: () {
-                         resetPassword(context);
+                          resetPassword(context);
                         },
                         child: const Text(
                           'Continue',
@@ -199,11 +200,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     ));
   }
 
-   resetPassword(BuildContext ctx,) {
+  resetPassword(
+    BuildContext ctx,
+  ) {
     if (_formKey.currentState!.validate()) {
-      ctx
-          .read<AccountCubit>()
-          .resetPassword(token: widget.token, password: _passwordController.text);
+      ctx.read<AccountCubit>().resetPassword(
+          token: widget.token, password: _passwordController.text.trim());
       FocusScope.of(ctx).unfocus();
     }
   }

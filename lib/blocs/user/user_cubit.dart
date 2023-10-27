@@ -118,7 +118,7 @@ class UserCubit extends Cubit<UserStates> {
     try {
       emit(CreateCommentLoading());
 
-      final comments = await userRepository.addComment(
+      final comments = await userRepository.createComment(
         token: token,
         postId: postId,
         comment: comment,

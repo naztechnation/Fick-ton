@@ -106,7 +106,7 @@ class CreateCommentLoading extends UserStates {
 }
 
 class CreateCommentLoaded extends UserStates {
-  final AuthData postComment ;
+  final CommentData postComment ;
   const CreateCommentLoaded(this.postComment);
   @override
   List<Object> get props => [postComment];

@@ -29,7 +29,7 @@ abstract class UserRepository {
 
      Future<GetAllPosts> getAllPosts({ required String url});
      Future<PostDetails> getPostsDetails({required String token, required String postId});
-     Future<AuthData> addComment({required String token, required String postId, required String comment});
+     Future<CommentData> createComment({required String token, required String postId, required String comment});
      Future<CommentData> getComment({required String token, required String postId, });
      Future<AuthData> deletePost({required String token, required String postId, });
      Future<AuthData> deleteNotification({required String token, required String notifyId, });

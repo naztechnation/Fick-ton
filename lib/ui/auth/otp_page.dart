@@ -250,6 +250,8 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   _verifyCode(BuildContext ctx, String token) {
+
+    print(_pinController.text);
     if (_formKey.currentState!.validate()) {
       ctx
           .read<AccountCubit>()

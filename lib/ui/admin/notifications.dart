@@ -67,7 +67,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             notifications = state.notify.data ?? [];
             setState(() {});
           } else {}
-        }if (state is DelNotificationsLoaded) {
+        }
+        if (state is DelNotificationsLoaded) {
           if (state.notify.status == 1) {
             Modals.showToast(state.notify.message ?? '');
             _userCubit.getNotifications(token: token);
@@ -90,7 +91,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           return const LoadingPage();
         }
 
-        return (state is NotificationsLoading || state is DelNotificationsLoading)
+        return (state is NotificationsLoading ||
+                state is DelNotificationsLoading)
             ? const LoadingPage()
             : SafeArea(
                 child: Padding(
@@ -132,9 +134,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      NotificationTile(notifications: notifications, onDeleteTapped: (notifyId){
-                        deleteNotification(context, notifyId);
-                      },),
+                      NotificationTile(
+                        notifications: notifications,
+                        onDeleteTapped: (notifyId) {
+                          deleteNotification(context, notifyId);
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -143,15 +148,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-     deleteNotification(BuildContext ctx,String notifyId, ) {
-    
-      ctx.read<UserCubit>().deleteNotifications(
-          notifyId: notifyId,
-          token: token);
-      FocusScope.of(ctx).unfocus();
-     
+  deleteNotification(
+    BuildContext ctx,
+    String notifyId,
+  ) {
+    ctx.read<UserCubit>().deleteNotifications(notifyId: notifyId, token: token);
+    FocusScope.of(ctx).unfocus();
   }
 }
-
-
-
