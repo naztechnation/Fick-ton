@@ -416,6 +416,8 @@ class _NewPostState extends State<Post> {
                                                   AppStrings.updatePost,
                                                   postId
                                                 );
+
+                                                // Modals.showToast(postId);
                                               } else {
                                                 _createPost(
                                                   context,

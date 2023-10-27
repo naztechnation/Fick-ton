@@ -39,7 +39,7 @@ class UserRepositoryImpl implements UserRepository {
         "author": author,
         "status": status,
         "trending": trending,
-        "post_id": trending,
+        "post_id": postId,
       },
     );
     return AuthData.fromJson(map);

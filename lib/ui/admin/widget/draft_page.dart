@@ -60,14 +60,14 @@ class _DraftPageState extends State<DraftPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: false);
+    final user = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(
           listener: (context, state) {
             if (state is CreatePostLoaded) {
           if (state.createPost.status == 1) {
-            Modals.showToast(state.createPost.message!,
+            Modals.showToast(state.createPost.message?? '',
                 messageType: MessageType.success);
                 _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
            
@@ -111,7 +111,7 @@ class _DraftPageState extends State<DraftPage> {
               if (state.deletePost.status == 1) {
                 _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
                 Modals.showToast(
-                  state.deletePost.message!,
+                  state.deletePost.message?? '',
                   messageType: MessageType.success,
                 );
               } else {
@@ -134,10 +134,13 @@ class _DraftPageState extends State<DraftPage> {
                     itemBuilder: (BuildContext context, index) {
                       return DraftItems(
                         posts: draftedPosts[index],
-                        onPublishedTapped: () {
+                        onPublishedTapped: () async{
+                         await  user.fileFromImageUrl(draftedPosts[index].thumbnail?? '');
+                          
                           _publishDraft(context, token, user.imageURl!,
                           '1',AppStrings.updatePost,
-                          draftedPosts[index].id!,draftedPosts[index].title!,
+                          draftedPosts[index].id!,
+                          draftedPosts[index].title!,
                           draftedPosts[index].content!, 
                           draftedPosts[index].videoLink!,
                           draftedPosts[index].genre!, 
