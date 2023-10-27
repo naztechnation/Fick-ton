@@ -1,34 +1,57 @@
 class GetAllPosts {
   int? status;
   String? message;
-  List<Posts>? data;
+  PostData? data;
 
   GetAllPosts({this.status, this.message, this.data});
 
   GetAllPosts.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <Posts>[];
-      json['data'].forEach((v) {
-        data!.add(Posts.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? new PostData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
+class PostData {
+  List<Posts>? posts;
+  List<String>? genres;
+  List<String>? filterBy;
+
+  PostData({this.posts, this.genres, this.filterBy});
+
+  PostData.fromJson(Map<String, dynamic> json) {
+    if (json['posts'] != null) {
+      posts = <Posts>[];
+      json['posts'].forEach((v) {
+        posts!.add(new Posts.fromJson(v));
+      });
+    }
+    genres = json['genres'].cast<String>();
+    filterBy = json['filter_by'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.posts != null) {
+      data['posts'] = this.posts!.map((v) => v.toJson()).toList();
+    }
+    data['genres'] = this.genres;
+    data['filter_by'] = this.filterBy;
+    return data;
+  }
+}
+
 class Posts {
-  
   String? id;
   String? title;
   String? content;
@@ -37,6 +60,8 @@ class Posts {
   String? author;
   String? genre;
   String? isTrending;
+  String? views;
+  String? likes;
   String? createdAt;
   String? updatedAt;
   String? status;
@@ -51,6 +76,8 @@ class Posts {
       this.author,
       this.genre,
       this.isTrending,
+      this.views,
+      this.likes,
       this.createdAt,
       this.updatedAt,
       this.status,
@@ -65,6 +92,8 @@ class Posts {
     author = json['author'];
     genre = json['genre'];
     isTrending = json['is_trending'];
+    views = json['views'];
+    likes = json['likes'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     status = json['status'];
@@ -72,19 +101,21 @@ class Posts {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['content'] = content;
-    data['thumbnail'] = thumbnail;
-    data['video_link'] = videoLink;
-    data['author'] = author;
-    data['genre'] = genre;
-    data['is_trending'] = isTrending;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    data['status'] = status;
-    data['is_booked'] = isBooked;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['content'] = this.content;
+    data['thumbnail'] = this.thumbnail;
+    data['video_link'] = this.videoLink;
+    data['author'] = this.author;
+    data['genre'] = this.genre;
+    data['is_trending'] = this.isTrending;
+    data['views'] = this.views;
+    data['likes'] = this.likes;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['status'] = this.status;
+    data['is_booked'] = this.isBooked;
     return data;
   }
 }

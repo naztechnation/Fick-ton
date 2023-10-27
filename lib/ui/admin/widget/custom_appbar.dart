@@ -34,9 +34,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(
             Icons.search,
             color: Colors.black,
+            size: 35,
           ),
           onPressed: () {},
         ),
+        const SizedBox(width: 20,)
       ],
     );
   }

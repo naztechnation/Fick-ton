@@ -20,6 +20,7 @@ import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
+import '../landing_page_component/homepage/widgets/filter_modal.dart';
 import '../widgets/loading_page.dart';
 import '../widgets/modals.dart';
 import '../widgets/progress_indicator.dart';
@@ -87,6 +88,12 @@ class _NewPostState extends State<Post> {
     });
   }
 
+  List<String> filterByList = [];
+  List<String> genresList = [];
+
+  String recent = 'Recent';
+  String genres = 'All Genres';
+
   final videoUrlController = TextEditingController();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
@@ -103,7 +110,7 @@ class _NewPostState extends State<Post> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: false);
+    final user = Provider.of<UserViewModel>(context, listen: true);
     final setToken = Provider.of<AccountViewModel>(context, listen: false);
     setToken.getToken();
 
@@ -289,7 +296,7 @@ class _NewPostState extends State<Post> {
                                 height: 5,
                               ),
                               TextEditView(
-                                onChanged: (value) {},
+                               
                                 validator: Validator.validate,
                                 hintText: 'Enter Author',
                                 borderRadius: 16,
@@ -309,10 +316,28 @@ class _NewPostState extends State<Post> {
                                 height: 5,
                               ),
                               TextEditView(
-                                onChanged: (value) {},
+                                 onTap: ( ) {
+                                  Modals.showBottomSheetModal(context,
+                                              isDissmissible: true,
+                                              heightFactor: 1,
+                                              page: filterModalContent(
+                                                  filterItems: user.overallPosts?.data?.genres ?? [],
+                                                  title: 'Select Genre',
+                                                  context: context,
+                                                  onPressed: (item) {
+                                                    Navigator.pop(context);
+
+                                                    setState(() {
+                                                      genres = item;
+                                                      genresController.text = genres;
+                                                    });
+                                                  }));
+                                },
                                 validator: Validator.validate,
                                 hintText: 'Enter Genres',
                                 borderRadius: 16,
+                                readOnly: true,
+                                suffixIcon: Icon(Icons.arrow_drop_down, size: 35, color: AppColors.lightSecondary,),
                                 controller: genresController,
                                 isDense: true,
                                 fillColor: Colors.grey.shade200,

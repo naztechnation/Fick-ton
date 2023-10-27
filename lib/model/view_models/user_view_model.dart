@@ -19,10 +19,13 @@ class UserViewModel extends BaseViewModel {
   String _draftLength = "0";
   String _publishedLength = "0";
 
+   get_posts.GetAllPosts? _overallPosts;
+
   List<get_posts.Posts> _postsList = [];
 
   Future<void> setPostLists({required get_posts.GetAllPosts posts}) async {
-    _postsList = posts.data ?? [];
+    _postsList = posts.data!.posts ?? [];
+    _overallPosts = posts;
     setViewState(ViewState.success);
   }
 
@@ -180,6 +183,8 @@ class UserViewModel extends BaseViewModel {
   List<get_posts.Posts> get postsList => _postsList;
   String get draftedLength => _draftLength;
   String get publishedLength => _publishedLength;
+
+  get_posts.GetAllPosts?  get overallPosts => _overallPosts;
 
   List<get_posts.Posts> get posts =>
       _postsList.where((p) => p.isTrending == '1').toList();

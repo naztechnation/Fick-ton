@@ -64,6 +64,8 @@ class _HomeState extends State<Home> {
 
   List<Posts> allPosts = [];
   List<Posts> trendingPosts = [];
+  List<String> filterByList = [];
+  List<String> genresList = [];
 
   String recent = 'Recent';
   String types = 'All Types';
@@ -166,6 +168,8 @@ class _HomeState extends State<Home> {
                 if (state.postLists.status == 1) {
                   trendingPosts = _userCubit.viewModel.posts.reversed.toList();
                   allPosts = _userCubit.viewModel.postsList.reversed.toList();
+                  filterByList = state.postLists.data!.filterBy ??  [];
+                  genresList = state.postLists.data!.genres ??  [];
                 } else {
                   Modals.showToast(state.postLists.message!,
                       messageType: MessageType.error);
@@ -320,13 +324,7 @@ class _HomeState extends State<Home> {
                                               isDissmissible: true,
                                               heightFactor: 0.8,
                                               page: filterModalContent(
-                                                  filterItems: [
-                                                    'Recent',
-                                                    'Popular',
-                                                    'Oldest',
-                                                    'A - Z',
-                                                    'Z - A'
-                                                  ],
+                                                  filterItems: filterByList,
                                                   title: 'Filter by',
                                                   context: context,
                                                   onPressed: (item) {
@@ -377,19 +375,10 @@ class _HomeState extends State<Home> {
                                         onPressed: () {
                                           Modals.showBottomSheetModal(context,
                                               isDissmissible: true,
-                                              heightFactor: 1.2,
+                                              isScrollControlled: true,
+                                              heightFactor: 4,
                                               page: filterModalContent(
-                                                  filterItems: [
-                                                    'All Genres',
-                                                    'Action',
-                                                    'Adventure',
-                                                    'Animation',
-                                                    'Comedy',
-                                                    'Crime',
-                                                    'Documentary',
-                                                    'Family',
-                                                    'Romance'
-                                                  ],
+                                                  filterItems: genresList,
                                                   title: 'Filter by Genres',
                                                   context: context,
                                                   onPressed: (item) {

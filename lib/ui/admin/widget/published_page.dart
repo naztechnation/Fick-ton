@@ -29,6 +29,7 @@ class Published extends StatelessWidget {
     );
   }
 }
+
 class PublishedPage extends StatefulWidget {
   const PublishedPage({super.key});
 
@@ -37,7 +38,6 @@ class PublishedPage extends StatefulWidget {
 }
 
 class _PublishedPageState extends State<PublishedPage> {
-
   late UserCubit _userCubit;
 
   String token = '';
@@ -57,77 +57,80 @@ class _PublishedPageState extends State<PublishedPage> {
     getPosts();
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is PostListsLoaded) {
-                if (state.postLists.status == 1) {
-                  
-                  allPosts = _userCubit.viewModel.postsList.reversed.toList();
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is PostListsLoaded) {
+              if (state.postLists.status == 1) {
+                allPosts = _userCubit.viewModel.postsList.reversed.toList();
 
-                  user.setPublishedLength(publishedLength: allPosts.length.toString());
-                } else {
-                  Modals.showToast(state.postLists.message!,
-                      messageType: MessageType.error);
-                }
-              } else if (state is UserNetworkErr) {
-                return EmptyWidget(
-                  title: 'Network error',
-                  description: state.message,
-                  onRefresh: () => _userCubit.getPost(url: AppStrings.getPosts(token)),
-                );
-              } else if (state is UserNetworkErrApiErr) {
-                return EmptyWidget(
-                  title: 'Network error',
-                  description: state.message,
-                  onRefresh: () => _userCubit.getPost(url: AppStrings.getPosts(token)),
-                );
-              }if (state is DeletePostLoaded) {
-                if (state.deletePost.status == 1) {
-                  _userCubit.getPost(url: AppStrings.getPosts(token));
-                  Modals.showToast(state.deletePost.message!,
-                      messageType: MessageType.success,);
-                } else {
-                  Modals.showToast(state.deletePost.message!,
-                      messageType: MessageType.error);
-                }
+                user.setPublishedLength(
+                    publishedLength: allPosts.length.toString());
+              } else {
+                Modals.showToast(state.postLists.message!,
+                    messageType: MessageType.error);
               }
+            } else if (state is UserNetworkErr) {
+              return EmptyWidget(
+                title: 'Network error',
+                description: state.message,
+                onRefresh: () =>
+                    _userCubit.getPost(url: AppStrings.getPosts(token)),
+              );
+            } else if (state is UserNetworkErrApiErr) {
+              return EmptyWidget(
+                title: 'Network error',
+                description: state.message,
+                onRefresh: () =>
+                    _userCubit.getPost(url: AppStrings.getPosts(token)),
+              );
+            }
+            if (state is DeletePostLoaded) {
+              if (state.deletePost.status == 1) {
+                _userCubit.getPost(url: AppStrings.getPosts(token));
+                Modals.showToast(
+                  state.deletePost.message!,
+                  messageType: MessageType.success,
+                );
+              } else {
+                Modals.showToast(state.deletePost.message!,
+                    messageType: MessageType.error);
+              }
+            }
 
-              return (state is PostListsLoading || state is DeletePostLoading)
-                  ? const LoadingPage()
-                  : (allPosts.isEmpty) ? const SizedBox(
-                                    height: 390,
-                                    child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text('No Published Posts')),
-                                  )  : ListView.builder(
-            itemCount: allPosts.length,
-            physics: const BouncingScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, index) {
-              return PublishedItems(posts: allPosts[index], onTap: (){
-                _deletePost(context, allPosts[index].id!);
-              },);
-            });
-  }),
+            return (state is PostListsLoading || state is DeletePostLoading)
+                ? const LoadingPage()
+                : (allPosts.isEmpty)
+                    ? const SizedBox(
+                        height: 390,
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text('No Published Posts')),
+                      )
+                    : ListView.builder(
+                        itemCount: allPosts.length,
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, index) {
+                          return PublishedItems(
+                            posts: allPosts[index],
+                            onTap: () {
+                              _deletePost(context, allPosts[index].id!);
+                            },
+                          );
+                        });
+          }),
     );
   }
 
-   _deletePost(BuildContext ctx, String postId) {
-   
-      ctx.read<UserCubit>().deletePost(
-          postId: postId,
-          token: token);
-      FocusScope.of(ctx).unfocus();
-     
+  _deletePost(BuildContext ctx, String postId) {
+    ctx.read<UserCubit>().deletePost(postId: postId, token: token);
+    FocusScope.of(ctx).unfocus();
   }
 }
-
- 

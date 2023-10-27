@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 
 import '../../../model/posts/get_posts.dart';
 import '../../../model/view_models/user_view_model.dart';
+import '../../../utils/navigator/page_navigator.dart';
 import '../../widgets/text_edit_view.dart';
+import 'movie_details_page.dart';
 
 class SearchPage extends StatefulWidget {
 
@@ -135,30 +137,41 @@ class _SearchPageState extends State<SearchPage> {
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, index) {
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 24),
-                            child:   Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    postsList[index].title!,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400),
+                          return GestureDetector(
+                            onTap: (){
+                              AppNavigator.pushAndStackPage(
+                                                    context,
+                                                    page: MovieDetailsScreen(
+                                                      videoLinks: postsList[index]
+                                                          .videoLink!,
+                                                      postId: postsList[index].id!,
+                                                    ));
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 24),
+                              child:   Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      postsList[index].title!,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 8.0),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 12.0),
-                                  child: Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 25,
+                                  SizedBox(width: 8.0),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 12.0),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 25,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         }),

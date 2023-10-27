@@ -1,8 +1,10 @@
 import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../model/posts/get_posts.dart';
+import '../../../../model/view_models/user_view_model.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../admin/new_post.dart';
 import '../../../widgets/modals.dart';
@@ -17,6 +19,9 @@ class PublishedItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final timeFormat = Provider.of<UserViewModel>(context, listen: true);
+
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -87,7 +92,7 @@ class PublishedItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      posts.createdAt ?? "",
+                    timeFormat.getCurrentTime(int.parse(posts.createdAt!)),
                     ),
                     const SizedBox(width: 8.0),
                       Row(
