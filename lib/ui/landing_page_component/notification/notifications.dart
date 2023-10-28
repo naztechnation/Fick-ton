@@ -205,7 +205,7 @@ bool showother =  false;
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    notifications[index].title!,
+                                    notifications[index].title!.toUpperCase(),
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16,

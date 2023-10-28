@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:fikkton/ui/auth/auth.dart';
+import 'package:fikkton/ui/auth/otp_page.dart';
 import 'package:flutter/material.dart';
 
 import 'handlers/secure_handler.dart';

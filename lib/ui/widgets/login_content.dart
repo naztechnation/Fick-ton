@@ -161,14 +161,15 @@ class _LoginContentState extends State<LoginContent> {
                 StorageHandler.saveUserEmail(_emailController.text);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
+                    FirebaseMessaging messaging = FirebaseMessaging.instance;
+                messaging.subscribeToTopic('subscribed_users');
                 AppNavigator.pushAndReplacePage(context,
                     page: OtpScreen(
                       email: _emailController.text.trim(),
                       isForgotPassword: false,
                     ));
 
-                FirebaseMessaging messaging = FirebaseMessaging.instance;
-                messaging.subscribeToTopic('subscribed_users');
+                
                 clearTextViews();
               } else {
                 Modals.showToast(state.userData.message ?? '',

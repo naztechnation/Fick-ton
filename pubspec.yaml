@@ -31,6 +31,7 @@ dependencies:
   timeago: ^3.5.0
   firebase_messaging: ^14.7.2
   firebase_core: ^2.20.0
+  flutter_local_notifications: ^16.1.0
 
 dev_dependencies:
   flutter_test:
@@ -53,4 +54,11 @@ flutter:
 
   assets:
     - assets/images/
+
+  fonts:
+    - family: Urbanist
+      fonts:
+        - asset: assets/fonts/Urbanist-Light.ttf
+        - asset: assets/fonts/Urbanist-Medium.ttf
+         
   

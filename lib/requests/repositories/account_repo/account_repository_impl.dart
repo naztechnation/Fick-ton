@@ -17,6 +17,7 @@ class AccountRepositoryImpl implements AccountRepository {
       "password": password,
       "gender": gender,
       "phone": phone,
+      "subscribed_users": 'subscribed_users',
       
     });
     return AuthData.fromJson(map);

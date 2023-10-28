@@ -157,6 +157,37 @@ class _BookMarkState extends State<BookMark> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+
+                    if(bookmarkList.isEmpty)...[
+                   SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.7,
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                            alignment: Alignment.center,
+                            child: ImageView.asset(AppImages.empty, height: 160,)),
+                        SizedBox(height: 40.0),
+                        Text(
+                          "Empty",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 18),
+                        ),
+                        SizedBox(height: 30.0),
+                        Text(
+                          "You don’t have any bookmarks at this time",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ]else...[
                     ListView.builder(
                         itemCount: bookmarkList.length,
                         physics: const NeverScrollableScrollPhysics(),
@@ -179,7 +210,7 @@ class _BookMarkState extends State<BookMark> {
                       height: 30,
                     ),
                   ],
-                ),
+          ]),
               ),
             ),
           ],

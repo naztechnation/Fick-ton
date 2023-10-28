@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../model/view_models/user_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
 import '../../widgets/image_view.dart';
@@ -14,6 +17,9 @@ class NotificationsDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final timeFormat = Provider.of<UserViewModel>(context, listen: false);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -65,7 +71,7 @@ class NotificationsDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          title,
+                          title.toUpperCase(),
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
@@ -83,14 +89,12 @@ class NotificationsDetails extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                             date,
-                            ),
-                            SizedBox(width: 15.0),
+                             
                             Padding(
                               padding: EdgeInsets.only(right: 12.0),
                               child: Text(
-                                date,
+                                      timeFormat.getCurrentTime(int.parse(date))  ,
+                                
                               ),
                             ),
                           ],

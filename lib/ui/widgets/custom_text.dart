@@ -23,7 +23,7 @@ class CustomText extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.maxLines = 1,
     this.underline = false,
-    this.fontFamily = AppStrings.montserrat
+    this.fontFamily = AppStrings.urbanist
   }) : super(key: key);
 
   @override

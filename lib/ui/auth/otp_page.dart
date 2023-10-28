@@ -3,6 +3,7 @@ import 'package:fikkton/ui/auth/auth.dart';
 import 'package:fikkton/ui/auth/reset_password.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import '../../blocs/accounts/account.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_colors.dart';
+import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/validator.dart';
 import '../widgets/button_view.dart';
@@ -19,6 +21,7 @@ import '../widgets/pin_code_view.dart';
 
 class OtpScreen extends StatefulWidget {
   final bool isForgotPassword;
+  
   final String email;
   const OtpScreen(
       {super.key, required this.email, required this.isForgotPassword});
@@ -31,7 +34,9 @@ class _OtpScreenState extends State<OtpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool isCountdownComplete = false;
-  int countdown = 60;
+  int countdown = 180;
+
+  bool isResetPassword = false;
 
   final _pinController = TextEditingController();
 
@@ -46,6 +51,7 @@ class _OtpScreenState extends State<OtpScreen> {
     final getToken = Provider.of<AccountViewModel>(context, listen: true);
 
     getToken.getToken();
+    
 
     return Scaffold(
         body: BlocProvider<AccountCubit>(
@@ -65,6 +71,12 @@ class _OtpScreenState extends State<OtpScreen> {
                       email: widget.email,
                       token: state.userData.token!,
                     ));
+              }else if (isResetPassword){
+                 Modals.showToast(state.userData.message!,
+                    messageType: MessageType.success);
+                     getToken.setToken(state.userData.token!);
+                     startCountdown();
+
               } else {
                 AppNavigator.pushAndReplacePage(context,
                     page: const LoginScreen());
@@ -158,57 +170,60 @@ class _OtpScreenState extends State<OtpScreen> {
                           validator: Validator.validate),
                     ),
                   ),
-                  // Align(
-                  //   alignment: Alignment.center,
-                  //   child: InkWell(
-                  //     onTap: () {},
-                  //     child: Text.rich(
-                  //         TextSpan(
-                  //             text: (!isCountdownComplete) ? 'Send Code again' : '',
-                  //             style: const TextStyle(
-                  //                 fontSize: 16,
-                  //                 color: AppColors.lightSecondary,
-                  //                 fontWeight: FontWeight.w400,
-                  //                 fontFamily: AppStrings.montserrat,
-                  //                 height: 2),
-                  //             children: [
-                  //               if (!isCountdownComplete)
-                  //                 TextSpan(
-                  //                     text: ' in $countdown seconds',
-                  //                     style: const TextStyle(
-                  //                       fontSize: 14,
-                  //                       color: AppColors.lightSecondary,
-                  //                 fontFamily: AppStrings.montserrat,
+                  Align(
+                    alignment: Alignment.center,
+                    child: InkWell(
+                      onTap: () {},
+                      child: Text.rich(
+                          TextSpan(
+                              text: (!isCountdownComplete) ? 'Send Code again' : '',
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  color: AppColors.lightSecondary,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: AppStrings.urbanist,
+                                  height: 2),
+                              children: [
+                                if (!isCountdownComplete)
+                                  TextSpan(
+                                      text: ' in $countdown seconds',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                  fontFamily: AppStrings.urbanist,
 
-                  //                       fontWeight: FontWeight.w500,
-                  //                     )),
-                  //                 const TextSpan(
-                  //                         text: '',
-                  //                         style: TextStyle(
-                  //                           fontSize: 14,
-                  //                           color: Colors.black,
-                  //                 fontFamily: AppStrings.montserrat,
+                                        fontWeight: FontWeight.w500,
+                                      )),
+                                  const TextSpan(
+                                          text: '',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                  fontFamily: AppStrings.urbanist,
 
-                  //                           fontWeight: FontWeight.w500,
-                  //                         )),
+                                            fontWeight: FontWeight.w500,
+                                          )),
 
-                  //                   if (isCountdownComplete)   TextSpan(
-                  //                         recognizer: TapGestureRecognizer()
-                  //                           ..onTap = () {
-
-                  //                           },
-                  //                         text: '  Resend  ',
-                  //                         style: const TextStyle(
-                  //                             fontSize: 18,
-                  //                             color: AppColors.lightSecondary,
-                  //                             fontWeight: FontWeight.w700,
-                  //                             fontFamily: AppStrings.interSans,
-                  //                             height: 2),
-                  //                       )
-                  //             ]),
-                  //         textAlign: TextAlign.start),
-                  //   ),
-                  // ),
+                                     if (isCountdownComplete) 
+                                      TextSpan(
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              forgotPassword(context);
+                                            },
+                                          text: (state is AccountProcessing) ? '':'Resend',
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              
+                                              color: AppColors.lightSecondary,
+                                              decoration: TextDecoration.underline,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: AppStrings.interSans,
+                                              height: 2),
+                                        )
+                              ]),
+                          textAlign: TextAlign.start),
+                    ),
+                  ),
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -216,7 +231,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     child: ButtonView(
                       color: Colors.white,
                       borderColor: Colors.white,
-                      processing: state is AccountLoading,
+                      processing: state is AccountLoading || state is AccountProcessing,
                       borderRadius: 30,
                       onPressed: () {
                         _verifyCode(context, getToken.token);
@@ -238,7 +253,8 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   Future<void> startCountdown() async {
-    for (int i = 60; i >= 0; i--) {
+    
+    for (int i = 180; i >= 0; i--) {
       await Future.delayed(const Duration(seconds: 1));
       setState(() {
         countdown = i;
@@ -249,13 +265,16 @@ class _OtpScreenState extends State<OtpScreen> {
     });
   }
 
-  _verifyCode(BuildContext ctx, String token) {
+  _verifyCode(BuildContext ctx, String token) async{
 
-    print(_pinController.text);
     if (_formKey.currentState!.validate()) {
-      ctx
+     await ctx
           .read<AccountCubit>()
           .verifyCode(code: _pinController.text, token: token);
+
+           setState(() {
+            isResetPassword = false;
+          });
       FocusScope.of(ctx).unfocus();
     }
   }
@@ -264,5 +283,19 @@ class _OtpScreenState extends State<OtpScreen> {
     input = input.replaceRange(3, 6, '****');
 
     return input;
+  }
+
+  forgotPassword(BuildContext ctx) async{
+   
+    await  ctx.read<AccountCubit>().forgotPassword(
+            email: widget.email, 
+          );
+          
+
+          setState(() {
+            isResetPassword = true;
+          });
+      FocusScope.of(ctx).unfocus();
+    
   }
 }
