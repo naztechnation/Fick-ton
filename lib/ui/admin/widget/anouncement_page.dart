@@ -1,3 +1,5 @@
+
+
 import 'dart:io';
 
 import 'package:fikkton/blocs/user/user.dart';
@@ -16,8 +18,8 @@ import '../../widgets/empty_widget.dart';
 import '../../widgets/loading_page.dart';
 import '../../widgets/modals.dart';
 
-class Draft extends StatelessWidget {
-  const Draft({Key? key}) : super(key: key);
+class Announcements extends StatelessWidget {
+  const Announcements({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +27,19 @@ class Draft extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: const DraftPage(),
+      child: const AnnouncementsPage(),
     );
   }
 }
 
-class DraftPage extends StatefulWidget {
-  const DraftPage({super.key});
+class AnnouncementsPage extends StatefulWidget {
+  const AnnouncementsPage({super.key});
 
   @override
-  State<DraftPage> createState() => _DraftPageState();
+  State<AnnouncementsPage> createState() => _AnnouncementsState();
 }
 
-class _DraftPageState extends State<DraftPage> {
+class _AnnouncementsState extends State<AnnouncementsPage> {
   late UserCubit _userCubit;
 
   String token = '';

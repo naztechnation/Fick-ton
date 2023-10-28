@@ -84,6 +84,18 @@ class PostDetailsLoading extends UserStates {
   List<Object> get props => [];
 }
 
+class CreateAnnouncementLoaded extends UserStates {
+  final AuthData authData;
+  const CreateAnnouncementLoaded(this.authData);
+  @override
+  List<Object> get props => [authData];
+}
+
+class CreateAnnouncementLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
 class PostDetailsLoaded extends UserStates {
   final PostDetails postDetails;
   const PostDetailsLoaded(this.postDetails);

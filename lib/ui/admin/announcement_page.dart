@@ -7,23 +7,24 @@ import '../../res/app_images.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../landing_page_component/homepage/search_page.dart';
 import '../widgets/image_view.dart';
-import 'widget/draft_page.dart';
-import 'widget/published_page.dart';
+import 'create_anouncement.dart';
+import 'create_message.dart';
 
-class Posts extends StatefulWidget {
-  const Posts({super.key});
+
+class AnnouncementsPage extends StatefulWidget {
+  const AnnouncementsPage({super.key});
 
   @override
-  State<Posts> createState() => _PostsState();
+  State<AnnouncementsPage> createState() => _AnnouncementsPageState();
 }
 
-class _PostsState extends State<Posts> {
+class _AnnouncementsPageState extends State<AnnouncementsPage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserViewModel>(context, listen: true);
 
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           leadingWidth: 50,
@@ -43,20 +44,17 @@ class _PostsState extends State<Posts> {
                 fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
           ),
           bottom: TabBar(
-            isScrollable: true,
             labelColor: Colors.black,
             indicatorColor: AppColors.lightPrimary,
             tabs: [
               Tab(
-                text: 'Published(${user.publishedLength})',
+                text: 'Create Notifications',
               ),
               
               Tab(
-                text: 'Announcements(${user.draftedLength})',
+                text: 'Create Announcements(${user.draftedLength})',
               ),
-              Tab(
-                text: 'Draft(${user.draftedLength})',
-              ),
+              
             ],
           ),
           actions: [
@@ -82,9 +80,9 @@ class _PostsState extends State<Posts> {
         ),
         body: const TabBarView(
           children: [
-            Published(),
-            Draft(),
-            Draft(),
+            createMessage(),
+            CreateAnnouncement(),
+             
           ],
         ),
       ),

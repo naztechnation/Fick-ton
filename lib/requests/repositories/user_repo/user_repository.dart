@@ -40,6 +40,7 @@ abstract class UserRepository {
      Future<NotificationData> getNotifications({required String token, });
      Future<AuthData> changePassword({required String token, required String password,});
      Future<AuthData> createNotification({required String token,required String title,required String content});
+     Future<AuthData> createAnnouncement({required String token,required String videoLink,required String content,  File? thumbnail});
 
 
 

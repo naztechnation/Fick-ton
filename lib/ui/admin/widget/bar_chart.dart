@@ -72,7 +72,7 @@ class AdminDashboardGraphState extends State<AdminDashboardGraph> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 3.5,
+      aspectRatio: 2.0,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
         child: Column(
@@ -180,20 +180,20 @@ class AdminDashboardGraphState extends State<AdminDashboardGraph> {
       fontSize: 12,
     );
     String text;
-    if (value == 10) {
+    if (value == 5) {
+      text = '5';
+    } else if (value == 10) {
       text = '10';
     } else if (value == 20) {
-      text = '20';
+      text = '15';
     } else if (value == 30) {
-      text = '30';
+      text = '20';
     } else if (value == 40) {
-      text = '40';
-    } else if (value == 50) {
-      text = '50';
+      text = '25';
+    }else if (value == 50) {
+      text = '30';
     }else if (value == 60) {
-      text = '60';
-    }else if (value == 70) {
-      text = '70';
+      text = '35';
     } else {
       return Container();
     }

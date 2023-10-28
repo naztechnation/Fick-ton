@@ -20,14 +20,14 @@ import '../../res/enum.dart';
 import '../widgets/modals.dart';
 import '../widgets/progress_indicator.dart';
 
-class Announce extends StatefulWidget {
-  const Announce({super.key});
+class createMessage extends StatefulWidget {
+  const createMessage({super.key});
 
   @override
-  State<Announce> createState() => _AnnounceState();
+  State<createMessage> createState() => _createMessageState();
 }
 
-class _AnnounceState extends State<Announce> {
+class _createMessageState extends State<createMessage> {
   bool isChecked = false;
 
   int isTrending = 0;
@@ -179,9 +179,7 @@ class _AnnounceState extends State<Announce> {
                                   ButtonView(
                                     onPressed: () {
 
-                                      // print(titleController.text);
-                                      // print(contentController.text);
-                                      // print(setToken.token);
+                                       
                                       _verifyCode(
                                         context,
                                         setToken.token,

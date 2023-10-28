@@ -186,4 +186,20 @@ class UserRepositoryImpl implements UserRepository {
 
     return GetAllPosts.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> createAnnouncement({required String token, required String videoLink, required String content,   File? thumbnail}) async {
+    final map = await Requests().post(AppStrings.createAnnouncementUrl,
+      files: {'thumbnail': thumbnail ?? File('')},
+    body: {
+        "token": token,
+        "content": content,
+        "video_link": content,
+       
+         
+      },
+    );
+
+    return AuthData.fromJson(map);
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:fikkton/ui/admin/announce.dart';
 import 'package:fikkton/ui/admin/posts_page.dart';
 import 'package:fikkton/ui/landing_page_component/homepage/widgets/navigation_helper.dart';
 import 'package:fikkton/ui/admin/new_post.dart';
@@ -9,6 +8,7 @@ import '../../res/app_images.dart';
 import '../widgets/custom_button_nav.dart/custom_button_nav.dart';
 import 'dashboard.dart';
 import 'notifications.dart';
+import 'widget/anouncement_page.dart';
 
 class AdminMainPage extends StatefulWidget {
   const AdminMainPage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
   final List<Widget> _pages = [
     const Dashboard(),
     const Posts(),
-    const Announce(),
+    const AnnouncementsPage(),
    const Notifications(),
   ];
 
