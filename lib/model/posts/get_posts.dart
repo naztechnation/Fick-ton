@@ -26,6 +26,7 @@ class PostData {
   List<Posts>? posts;
   List<String>? genres;
   List<String>? filterBy;
+  List<Pinned>? pinned;
 
   PostData({this.posts, this.genres, this.filterBy});
 
@@ -38,6 +39,12 @@ class PostData {
     }
     genres = json['genres'].cast<String>();
     filterBy = json['filter_by'].cast<String>();
+    if (json['pinned'] != null) {
+      pinned = <Pinned>[];
+      json['pinned'].forEach((v) {
+        pinned!.add(new Pinned.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -47,10 +54,58 @@ class PostData {
     }
     data['genres'] = this.genres;
     data['filter_by'] = this.filterBy;
+    if (this.pinned != null) {
+      data['pinned'] = this.pinned!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+   
+  }
+
+class Pinned {
+  String? id;
+  String? content;
+  String? thumbnail;
+  String? videoLink;
+  String? author;
+  String? status;
+  String? createdAt;
+  String? updatedAt;
+
+  Pinned(
+      {this.id,
+      this.content,
+      this.thumbnail,
+      this.videoLink,
+      this.author,
+      this.status,
+      this.createdAt,
+      this.updatedAt});
+
+  Pinned.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    content = json['content'];
+    thumbnail = json['thumbnail'];
+    videoLink = json['video_link'];
+    author = json['author'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['content'] = this.content;
+    data['thumbnail'] = this.thumbnail;
+    data['video_link'] = this.videoLink;
+    data['author'] = this.author;
+    data['status'] = this.status;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }
-
 class Posts {
   String? id;
   String? title;

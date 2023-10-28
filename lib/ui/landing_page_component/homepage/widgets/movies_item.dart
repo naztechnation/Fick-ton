@@ -1,3 +1,4 @@
+import 'package:fikkton/extentions/custom_string_extension.dart';
 import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
@@ -69,13 +70,13 @@ class MoviesItems extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  posts.genre!,
+                  posts.genre?.capitalizeFirstOfEach ?? '',
                   style: const TextStyle(
                       fontWeight: FontWeight.w400, fontSize: 14),
                 ),
                 const SizedBox(height: 12.0),
                 Text(
-                  posts.title!,
+                  posts.title?.capitalizeFirstOfEach ?? '',
                   style: const TextStyle(
                       fontWeight: FontWeight.w700, fontSize: 16),
                 ),

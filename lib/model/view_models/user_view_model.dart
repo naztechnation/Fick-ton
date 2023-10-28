@@ -5,7 +5,6 @@ import 'package:fikkton/res/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
@@ -18,6 +17,7 @@ class UserViewModel extends BaseViewModel {
   File? imageURl;
   String _draftLength = "0";
   String _publishedLength = "0";
+  int _activeTab  = 0;
 
    get_posts.GetAllPosts? _overallPosts;
 
@@ -36,6 +36,11 @@ class UserViewModel extends BaseViewModel {
 
   Future<void> setDraftLength({required String draftedLength}) async {
     _draftLength = draftedLength;
+    setViewState(ViewState.success);
+  }
+
+   Future<void> setTabIndex({required int tabIndex}) async {
+    _activeTab = tabIndex;
     setViewState(ViewState.success);
   }
 
@@ -182,6 +187,7 @@ class UserViewModel extends BaseViewModel {
 
   List<get_posts.Posts> get postsList => _postsList;
   String get draftedLength => _draftLength;
+  int get activeTab => _activeTab;
   String get publishedLength => _publishedLength;
 
   get_posts.GetAllPosts?  get overallPosts => _overallPosts;

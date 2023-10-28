@@ -1,3 +1,4 @@
+import 'package:fikkton/model/onboard_model/onboarding_contents.dart';
 import 'package:fikkton/ui/landing_page_component/homepage/movie_details_page.dart';
 import 'package:fikkton/ui/landing_page_component/homepage/search_page.dart';
 import 'package:fikkton/res/app_colors.dart';
@@ -17,8 +18,10 @@ import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
 import '../../widgets/empty_widget.dart';
+import '../../widgets/home_tab.dart';
 import '../../widgets/modals.dart';
 
+import 'anouncement_details.dart';
 import 'widgets/filter_container.dart';
 import '../../widgets/image_view.dart';
 import 'widgets/filter_modal.dart';
@@ -66,6 +69,7 @@ class _HomeState extends State<Home> {
   List<Posts> trendingPosts = [];
   List<String> filterByList = [];
   List<String> genresList = [];
+  List<Pinned> pinned = [];
 
   String recent = 'Recent';
   String types = 'All Types';
@@ -156,9 +160,91 @@ class _HomeState extends State<Home> {
     );
   }
 
+  static Widget _buildPage2(
+      {required String image,
+       
+      required BuildContext context,
+      required Function onTap,
+      required String content,
+      required String time,
+      
+      }) {
+    return GestureDetector(
+      onTap: () {
+        onTap();
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Container(
+            decoration: const BoxDecoration(color: AppColors.lightSecondary),
+            child: Stack(
+              children: [
+              if(image != '')  Hero(
+                tag: image,
+                child: ImageView.network(
+                    image,
+                    fit: BoxFit.cover,
+                    width: MediaQuery.sizeOf(context).width,
+                    placeholder: AppImages.logo,
+                  ),
+              ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    color: Colors.black38,
+                  ),
+                ),
+                 
+                
+                Positioned(
+                    top: 30,
+                    right: 0,
+                    left: 0,
+                    child: Align(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                                              content,
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.justify,
+                                              
+                                              style: const TextStyle(
+                            color: Colors.white,
+                            wordSpacing: 4,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
+                                            ),
+                        ))),
+                
+                Positioned(
+                    bottom: 20,
+                    right: 20,
+                     
+                    child: Align(
+                        child: Text(
+                      time,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500),
+                    ))),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final timeFormat = Provider.of<UserViewModel>(context, listen: false);
+    final timeFormat = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
         body: BlocConsumer<UserCubit, UserStates>(
@@ -168,8 +254,9 @@ class _HomeState extends State<Home> {
                 if (state.postLists.status == 1) {
                   trendingPosts = _userCubit.viewModel.posts.reversed.toList();
                   allPosts = _userCubit.viewModel.postsList.reversed.toList();
-                  filterByList = state.postLists.data!.filterBy ??  [];
-                  genresList = state.postLists.data!.genres ??  [];
+                  filterByList = state.postLists.data?.filterBy ??  [];
+                  genresList = state.postLists.data?.genres ??  [];
+                  pinned = state.postLists.data?.pinned ??  [];
                 } else {
                   Modals.showToast(state.postLists.message!,
                       messageType: MessageType.error);
@@ -248,22 +335,73 @@ class _HomeState extends State<Home> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                const Padding(
+                                  Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        'Trending',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w400),
-                                      )),
+                                  child: CustomTab(list1: trendingPosts,list2: pinned,),
                                 ),
                                 const SizedBox(
                                   height: 26,
                                 ),
-                                if (trendingPosts.isEmpty) ...[
+
+                                if(timeFormat.activeTab == 0)...[
+                                  if (pinned.isEmpty) ...[
+                                 
+                                ] else ...[
+                                  SizedBox(
+                                    height: 190,
+                                    child: PageView(
+                                      controller: _pageController,
+                                      onPageChanged: (int page) {
+                                        setState(() {
+                                          _currentPage = page;
+                                        });
+                                      },
+                                      children: <Widget>[
+                                        for (var pin in pinned)
+                                          _buildPage2(
+                                              context: context,
+                                              onTap: () {
+
+                                                if(pin.videoLink != null && pin.videoLink !=""){
+                                                  AppNavigator.pushAndStackPage(
+                                                    context,
+                                                    page: MovieDetailsScreen(
+                                                      videoLinks: pin
+                                                          .videoLink!,
+                                                      postId: pin.id!,
+                                                    ));
+                                                }else{
+                                                  AppNavigator.pushAndStackPage(
+                                                    context,
+                                                    page: DetailsPage(
+                                                      pinned: pin,
+                                                    ));
+                                                }
+                                                
+                                              },
+                                              image: pin.thumbnail ?? '',
+                                               
+                                              content: pin.content ?? '',
+                                              time: timeFormat.getCurrentTime(int.parse(pin.createdAt!)) ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: _buildPageIndicator(pinned.length),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                                ],
+                                
+                               if(timeFormat.activeTab == 1)...[
+                                 if (trendingPosts.isEmpty) ...[
                                   const SizedBox(
                                     height: 190,
                                     child: Align(
@@ -305,12 +443,13 @@ class _HomeState extends State<Home> {
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: _buildPageIndicator(),
+                                    children: _buildPageIndicator(trendingPosts.length),
                                   ),
                                   const SizedBox(
                                     height: 20,
                                   ),
                                 ],
+                               ],
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0),
@@ -444,9 +583,9 @@ class _HomeState extends State<Home> {
   DateTime dayAgo = DateTime.now().subtract(const Duration(days: 1));
   DateTime monthAgo = DateTime.now().subtract(const Duration(days: 31));
 
-  List<Widget> _buildPageIndicator() {
+  List<Widget> _buildPageIndicator(int length) {
     List<Widget> reverseIndicators = [];
-    for (int i = trendingPosts.length - 1; i >= 0; i--) {
+    for (int i = length - 1; i >= 0; i--) {
       reverseIndicators.add(
         Container(
           width: 8.0,
@@ -454,7 +593,7 @@ class _HomeState extends State<Home> {
           margin: const EdgeInsets.symmetric(horizontal: 8.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _currentPage == (trendingPosts.length - 1 - i)
+            color: _currentPage == (length - 1 - i)
                 ? AppColors.lightSecondary
                 : Colors.grey,
           ),
