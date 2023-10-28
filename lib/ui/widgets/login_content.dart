@@ -1,6 +1,7 @@
 import 'package:fikkton/ui/auth/forgot_password.dart';
 import 'package:fikkton/ui/landing_page_component/main_page.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -36,7 +37,6 @@ class _LoginContentState extends State<LoginContent> {
   final _phoneController = TextEditingController();
 
   bool isShowPassword = true;
-
 
   showPassword() {
     setState(() {
@@ -162,7 +162,13 @@ class _LoginContentState extends State<LoginContent> {
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
                 AppNavigator.pushAndReplacePage(context,
-                    page: OtpScreen(email: _emailController.text.trim(), isForgotPassword: false,));
+                    page: OtpScreen(
+                      email: _emailController.text.trim(),
+                      isForgotPassword: false,
+                    ));
+
+                FirebaseMessaging messaging = FirebaseMessaging.instance;
+                messaging.subscribeToTopic('subscribed_users');
                 clearTextViews();
               } else {
                 Modals.showToast(state.userData.message ?? '',
