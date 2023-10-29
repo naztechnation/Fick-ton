@@ -64,7 +64,6 @@ class _HomeState extends State<Home> {
     _userCubit.getPost(url: AppStrings.getPosts(token));
   }
 
-
   List<Posts> allPosts = [];
   List<Posts> trendingPosts = [];
   List<String> filterByList = [];
@@ -160,15 +159,13 @@ class _HomeState extends State<Home> {
     );
   }
 
-  static Widget _buildPage2(
-      {required String image,
-       
-      required BuildContext context,
-      required Function onTap,
-      required String content,
-      required String time,
-      
-      }) {
+  static Widget _buildPage2({
+    required String image,
+    required BuildContext context,
+    required Function onTap,
+    required String content,
+    required String time,
+  }) {
     return GestureDetector(
       onTap: () {
         onTap();
@@ -181,15 +178,16 @@ class _HomeState extends State<Home> {
             decoration: const BoxDecoration(color: AppColors.lightSecondary),
             child: Stack(
               children: [
-              if(image != '')  Hero(
-                tag: image,
-                child: ImageView.network(
-                    image,
-                    fit: BoxFit.cover,
-                    width: MediaQuery.sizeOf(context).width,
-                    placeholder: AppImages.logo1,
+                if (image != '')
+                  Hero(
+                    tag: image,
+                    child: ImageView.network(
+                      image,
+                      fit: BoxFit.cover,
+                      width: MediaQuery.sizeOf(context).width,
+                      placeholder: AppImages.logo1,
+                    ),
                   ),
-              ),
                 Positioned(
                   top: 0,
                   left: 0,
@@ -199,33 +197,28 @@ class _HomeState extends State<Home> {
                     color: Colors.black38,
                   ),
                 ),
-                 
-                
                 Positioned(
                     top: 30,
                     right: 0,
                     left: 0,
                     child: Align(
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                                              content,
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.justify,
-                                              
-                                              style: const TextStyle(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        content,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
                             color: Colors.white,
                             wordSpacing: 4,
                             fontSize: 15,
                             fontWeight: FontWeight.w500),
-                                            ),
-                        ))),
-                
+                      ),
+                    ))),
                 Positioned(
                     bottom: 20,
                     right: 20,
-                     
                     child: Align(
                         child: Text(
                       time,
@@ -254,9 +247,10 @@ class _HomeState extends State<Home> {
                 if (state.postLists.status == 1) {
                   trendingPosts = _userCubit.viewModel.posts.reversed.toList();
                   allPosts = _userCubit.viewModel.postsList.reversed.toList();
-                  filterByList = state.postLists.data?.filterBy ??  [];
-                  genresList = state.postLists.data?.genres ??  [];
-                  pinned = state.postLists.data?.pinned?.reversed.toList() ??  [];
+                  filterByList = state.postLists.data?.filterBy ?? [];
+                  genresList = state.postLists.data?.genres ?? [];
+                  pinned =
+                      state.postLists.data?.pinned?.reversed.toList() ?? [];
                 } else {
                   Modals.showToast(state.postLists.message!,
                       messageType: MessageType.error);
@@ -335,127 +329,135 @@ class _HomeState extends State<Home> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                  Padding(
+                                Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: CustomTab(list1: trendingPosts,list2: pinned,),
+                                  child: CustomTab(
+                                    list1: trendingPosts,
+                                    list2: pinned,
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 26,
                                 ),
+                                if (timeFormat.activeTab == 0) ...[
+                                  if (pinned.isEmpty)
+                                    ...[]
+                                  else ...[
+                                    SizedBox(
+                                      height: 190,
+                                      child: PageView(
+                                        controller: _pageController,
+                                        onPageChanged: (int page) {
+                                          setState(() {
+                                            _currentPage = page;
+                                          });
+                                        },
+                                        children: <Widget>[
+                                          for (var pin in pinned)
+                                            _buildPage2(
+                                                context: context,
+                                                onTap: () {
+                                                  // if(pin.videoLink != null && pin.videoLink !=""){
+                                                  //   AppNavigator.pushAndStackPage(
+                                                  //     context,
+                                                  //     page: MovieDetailsScreen(
+                                                  //       videoLinks: pin
+                                                  //           .videoLink!,
+                                                  //       postId: pin.id!,
+                                                  //     ));
+                                                  // }else{
+                                                  //   AppNavigator.pushAndStackPage(
+                                                  //     context,
+                                                  //     page: DetailsPage(
+                                                  //       pinned: pin,
+                                                  //     ));
+                                                  // }
 
-                                if(timeFormat.activeTab == 0)...[
-                                  if (pinned.isEmpty) ...[
-                                 
-                                ] else ...[
-                                  SizedBox(
-                                    height: 190,
-                                    child: PageView(
-                                      controller: _pageController,
-                                      onPageChanged: (int page) {
-                                        setState(() {
-                                          _currentPage = page;
-                                        });
-                                      },
-                                      children: <Widget>[
-                                        for (var pin in pinned)
-                                          _buildPage2(
-                                              context: context,
-                                              onTap: () {
-
-                                                // if(pin.videoLink != null && pin.videoLink !=""){
-                                                //   AppNavigator.pushAndStackPage(
-                                                //     context,
-                                                //     page: MovieDetailsScreen(
-                                                //       videoLinks: pin
-                                                //           .videoLink!,
-                                                //       postId: pin.id!,
-                                                //     ));
-                                                // }else{
-                                                //   AppNavigator.pushAndStackPage(
-                                                //     context,
-                                                //     page: DetailsPage(
-                                                //       pinned: pin,
-                                                //     ));
-                                                // }
-
-                                                 AppNavigator.pushAndStackPage(
-                                                    context,
-                                                    page: DetailsPage(
-                                                      pinned: pin,
-                                                    ));
-                                                
-                                              },
-                                              image: pin.thumbnail ?? '',
-                                               
-                                              content: pin.content ?? '',
-                                              time: timeFormat.getCurrentTime(int.parse(pin.createdAt!)) ),
-                                      ],
+                                                  AppNavigator.pushAndStackPage(
+                                                      context,
+                                                      page: DetailsPage(
+                                                        pinned: pin,
+                                                      ));
+                                                },
+                                                image: pin.thumbnail ?? '',
+                                                content: pin.content ?? '',
+                                                time: timeFormat.getCurrentTime(
+                                                    int.parse(pin.createdAt!))),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: _buildPageIndicator(pinned.length),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                ],
-                                ],
-                                
-                               if(timeFormat.activeTab == 1)...[
-                                 if (trendingPosts.isEmpty) ...[
-                                  const SizedBox(
-                                    height: 190,
-                                    child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text('No trending posts')),
-                                  )
-                                ] else ...[
-                                  SizedBox(
-                                    height: 190,
-                                    child: PageView(
-                                      controller: _pageController,
-                                      onPageChanged: (int page) {
-                                        setState(() {
-                                          _currentPage = page;
-                                        });
-                                      },
-                                      children: <Widget>[
-                                        for (var trendingPosts in trendingPosts)
-                                          _buildPage(
-                                              context: context,
-                                              onTap: () {
-                                                AppNavigator.pushAndStackPage(
-                                                    context,
-                                                    page: MovieDetailsScreen(
-                                                      videoLinks: trendingPosts
-                                                          .videoLink!,
-                                                      postId: trendingPosts.id!,
-                                                    ));
-                                              },
-                                              image: trendingPosts.thumbnail!,
-                                              title: trendingPosts.title!,
-                                              genre: trendingPosts.genre!,
-                                              time: timeFormat.getCurrentTime(int.parse(trendingPosts.createdAt!)) ),
-                                      ],
+                                    const SizedBox(
+                                      height: 15,
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: _buildPageIndicator(trendingPosts.length),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children:
+                                          _buildPageIndicator(pinned.length),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
                                 ],
-                               ],
+                                if (timeFormat.activeTab == 1) ...[
+                                  if (trendingPosts.isEmpty) ...[
+                                    const SizedBox(
+                                      height: 190,
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text('No trending posts')),
+                                    )
+                                  ] else ...[
+                                    SizedBox(
+                                      height: 190,
+                                      child: PageView(
+                                        controller: _pageController,
+                                        onPageChanged: (int page) {
+                                          setState(() {
+                                            _currentPage = page;
+                                          });
+                                        },
+                                        children: <Widget>[
+                                          for (var trendingPosts
+                                              in trendingPosts)
+                                            _buildPage(
+                                                context: context,
+                                                onTap: () {
+                                                  AppNavigator.pushAndStackPage(
+                                                      context,
+                                                      page: MovieDetailsScreen(
+                                                        videoLinks:
+                                                            trendingPosts
+                                                                .videoLink!,
+                                                        postId:
+                                                            trendingPosts.id!,
+                                                      ));
+                                                },
+                                                image: trendingPosts.thumbnail!,
+                                                title: trendingPosts.title!,
+                                                genre: trendingPosts.genre!,
+                                                time: timeFormat.getCurrentTime(
+                                                    int.parse(trendingPosts
+                                                        .createdAt!))),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: _buildPageIndicator(
+                                          trendingPosts.length),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ],
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0),
@@ -509,6 +511,11 @@ class _HomeState extends State<Home> {
                                                     setState(() {
                                                       types = item;
                                                     });
+
+                                                    _userCubit.getFilteredPost(
+                                                        token: token,
+                                                        genre: genres,
+                                                        filterParams: recent);
                                                   }));
                                         },
                                       ),
@@ -520,8 +527,7 @@ class _HomeState extends State<Home> {
                                         onPressed: () {
                                           Modals.showBottomSheetModal(context,
                                               isDissmissible: true,
-                                              isScrollControlled: true,
-                                              heightFactor: 4,
+                                              heightFactor: 1,
                                               page: filterModalContent(
                                                   filterItems: genresList,
                                                   title: 'Filter by Genres',
@@ -547,11 +553,21 @@ class _HomeState extends State<Home> {
                                   height: 20,
                                 ),
                                 if (allPosts.isEmpty) ...[
-                                  const SizedBox(
+                                 
+                                  Container(
                                     height: 390,
-                                    child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text('No posts')),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                         Align(
+                                                              alignment: Alignment.center,
+                                                              child: ImageView.asset(AppImages.empty, height: 120,)),
+                                                          SizedBox(height: 40.0),
+                                        Align(
+                                            alignment: Alignment.center,
+                                            child: Text('No posts available')),
+                                      ],
+                                    ),
                                   )
                                 ] else ...[
                                   ListView.builder(

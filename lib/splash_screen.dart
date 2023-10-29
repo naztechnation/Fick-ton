@@ -7,6 +7,7 @@ import 'handlers/secure_handler.dart';
 import 'res/app_colors.dart';
 import 'res/app_images.dart';
 import 'res/app_routes.dart';
+import 'ui/landing_page_component/main_page.dart';
 import 'ui/widgets/image_view.dart';
 import 'utils/navigator/page_navigator.dart';
 
@@ -24,11 +25,11 @@ class SplashScreenState extends State<SplashScreen>
   late AnimationController animationController;
   late Animation<double> animation;
 
-   String userLoggedIn = '';
+   bool userLoggedIn = false;
   String isOnBoarding = '';
 
   getUserDetails() async {
-    userLoggedIn = await StorageHandler.getLoggedInState();
+    userLoggedIn = await StorageHandler.isLoggedIn();
     isOnBoarding = await StorageHandler.getOnBoardState();
   }
 
@@ -46,14 +47,17 @@ class SplashScreenState extends State<SplashScreen>
     if (isOnBoarding == '') {
           AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
 
-    // } else if (userLoggedIn != '') {
-    //  
-    // }
+    } else if (userLoggedIn) {
+      AppNavigator.pushAndReplacePage(context,
+                      page: const LandingPage());
+     
     }else{
+      StorageHandler.logout();
        AppNavigator.pushAndReplacePage(context, page:LoginScreen());
     }
-    
   }
+    
+  
 
   @override
   void initState() {

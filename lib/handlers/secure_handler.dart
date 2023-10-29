@@ -2,7 +2,29 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class StorageHandler {
+  static const String lastLoginTimeKey = 'lastLoginTime';
+
   static FlutterSecureStorage storage = const FlutterSecureStorage();
+
+
+  static Future<bool> isLoggedIn() async {
+    final lastLoginTime = await storage.read(key: lastLoginTimeKey);
+    if (lastLoginTime == null) return false;
+
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+    final twoDaysInMilliseconds = 2 * 24 * 60 * 60 * 1000; 
+
+    return (currentTime - int.parse(lastLoginTime)) < twoDaysInMilliseconds;
+  }
+
+    static Future<void> login() async {
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+    await storage.write(key: lastLoginTimeKey, value: currentTime.toString());
+  }
+
+  static Future<void> logout() async {
+    await storage.delete(key: lastLoginTimeKey);
+  }
 
   static Future<void> saveUserDetails([String? userData]) async {
     if (userData != null) {

@@ -188,7 +188,7 @@ class _LoginContentState extends State<LoginContent> {
                   Modals.showToast(
                     state.user.message ?? '',
                   );
-
+                  StorageHandler.login();
                   AppNavigator.pushAndReplacePage(context,
                       page: const LandingPage());
                 } else {
@@ -520,8 +520,8 @@ class _LoginContentState extends State<LoginContent> {
                               children: [
                                 TextSpan(
                                   text: isLogin
-                                      ? 'Don\'t an account? '
-                                      : 'Already have have an account? ',
+                                      ? 'Don\'t have an account?  '
+                                      : 'Already have an account?  ',
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
