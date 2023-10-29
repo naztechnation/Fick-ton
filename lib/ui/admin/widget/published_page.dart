@@ -130,7 +130,7 @@ class _PublishedPageState extends State<PublishedPage> {
   }
 
   _deletePost(BuildContext ctx, String postId) {
-    ctx.read<UserCubit>().deletePost(postId: postId, token: token);
+    ctx.read<UserCubit>().deletePost(postId: postId, token: token, url: AppStrings.deletePost);
     FocusScope.of(ctx).unfocus();
   }
 }

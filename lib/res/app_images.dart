@@ -2,6 +2,7 @@ class AppImages {
   static const String _baseUrl = 'assets/images/';
 
   static const logo = '${_baseUrl}logo.png';
+  static const logo1 = '${_baseUrl}logo1.png';
   static const dashboard = '${_baseUrl}dashboard.svg';
   static const dashboardOutline = '${_baseUrl}dashboard_outline.svg';
   static const article = '${_baseUrl}article.svg';

@@ -123,8 +123,8 @@ class _DraftPageState extends State<DraftPage> {
                 state is CreatePostLoading)
             ? const LoadingPage()
             : (draftedPosts.isEmpty)
-                ? const SizedBox(
-                    height: 390,
+                ?   SizedBox(
+                    height: MediaQuery.sizeOf(context).height,
                     child: Align(
                         alignment: Alignment.center, child: Text('No Drafts')),
                   )
@@ -163,7 +163,7 @@ class _DraftPageState extends State<DraftPage> {
   }
 
   _deletePost(BuildContext ctx, String postId) {
-    ctx.read<UserCubit>().deletePost(postId: postId, token: token);
+    ctx.read<UserCubit>().deletePost(postId: postId, token: token, url: AppStrings.deletePost);
     FocusScope.of(ctx).unfocus();
   }
 

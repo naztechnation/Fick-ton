@@ -32,9 +32,9 @@ abstract class UserRepository {
      Future<PostDetails> getPostsDetails({required String token, required String postId});
      Future<CommentData> createComment({required String token, required String postId, required String comment});
      Future<CommentData> getComment({required String token, required String postId, });
-     Future<AuthData> deletePost({required String token, required String postId, });
+     Future<AuthData> deletePost({required String token, required String postId,required String url,  String? pin});
      Future<AuthData> deleteNotification({required String token, required String notifyId, });
-     Future<AuthData> likeBookmark({required String token, required String postId,  required String url});
+     Future<AuthData> likeBookmark({required String token, required String postId,  required String url,   });
      Future<BookmarkList> bookmarkList({required String token, });
      Future<DashBoardAnalysis> dashboardAnalysis({required String token, });
      Future<NotificationData> getNotifications({required String token, });

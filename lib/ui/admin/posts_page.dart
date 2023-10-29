@@ -7,6 +7,7 @@ import '../../res/app_images.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../landing_page_component/homepage/search_page.dart';
 import '../widgets/image_view.dart';
+import 'widget/anouncement_tab.dart';
 import 'widget/draft_page.dart';
 import 'widget/published_page.dart';
 
@@ -52,7 +53,7 @@ class _PostsState extends State<Posts> {
               ),
               
               Tab(
-                text: 'Announcements(${user.draftedLength})',
+                text: 'Announcements(${user.pinnedList.length})',
               ),
               Tab(
                 text: 'Draft(${user.draftedLength})',
@@ -83,7 +84,7 @@ class _PostsState extends State<Posts> {
         body: const TabBarView(
           children: [
             Published(),
-            Draft(),
+            Announcements(),
             Draft(),
           ],
         ),

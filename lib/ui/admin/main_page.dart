@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_images.dart';
 import '../widgets/custom_button_nav.dart/custom_button_nav.dart';
+import 'announcement_page.dart';
 import 'dashboard.dart';
 import 'notifications.dart';
-import 'widget/anouncement_page.dart';
+import 'widget/anouncement_tab.dart';
 
 class AdminMainPage extends StatefulWidget {
   const AdminMainPage({Key? key}) : super(key: key);

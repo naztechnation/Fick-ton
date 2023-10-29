@@ -28,6 +28,7 @@ class AppStrings {
   static const String bookmarkPost = '${_baseUrl}book/create';
   static const String unBookmarkPost = '${_baseUrl}book/delete';
   static const  String deletePost = '${_baseUrl}posts/delete';
+  static const  String deletePinned = '${_baseUrl}pin/delete';
   static const  String deleteNotification = '${_baseUrl}notify/delete';
   static const  String changePasswordUrl = '${_baseUrl}users/change_password';
   static const  String resetPasswordUrl = '${_baseUrl}auth/reset_password';

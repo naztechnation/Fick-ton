@@ -58,6 +58,7 @@ class _AnnounceState extends State<CreateAnnouncement> {
                   messageType: MessageType.success);
               
               clearFields();
+              user.clearImage();
             } else {
               Modals.showToast(state.createPost.message!,
                   messageType: MessageType.error);
@@ -72,151 +73,113 @@ class _AnnounceState extends State<CreateAnnouncement> {
             }
           }
         },
-        builder: (context, state) => Column(
-          children: [
-            SafeArea(
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               SafeArea(
               child: SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.03,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Align(
-                          alignment: Alignment.topLeft,
-                          child: ImageView.svg(
-                            AppImages.arrowBack,
-                            color: Colors.black,
+        Expanded(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                            "Add Cover Image",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w400),
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      const ImageView.asset(
-                        AppImages.logo,
-                        width: 40,
-                        height: 40,
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      const Text(
-                        'Fik-kton',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                                "Add Cover Image",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          CoverImageContainer(),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    const Text(
+                      "Video link",
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TextEditView(
+                      borderRadius: 16,
+                      controller: videoLinkController,
+                      isDense: true,
+                      fillColor: Colors.grey.shade200,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                      
+                    const Text(
+                      "Content",
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TextEditView(
+                      maxLines: 10,
+                      hintText: 'Start writing your content here...',
+                      validator: Validator.validate,
+                      borderRadius: 16,
+                      controller: contentController,
+                      isDense: true,
+                      fillColor: Colors.grey.shade200,
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    (state is CreatePostLoading)
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: ProgressIndicators.circularProgressBar(
+                                context))
+                        : Column(
+                            children: [
+                              ButtonView(
+                                onPressed: () {
+
+                                   
+                                  createAnnouncement(
+                                    context,
+                                    setToken.token,
+                                    user.imageURl
+                                  );
+                                },
+                                color: AppColors.lightSecondary,
+                                child: const Text('Send'),
                               ),
                               const SizedBox(
                                 height: 15,
                               ),
-                              CoverImageContainer(),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        const Text(
-                          "Video link",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        TextEditView(
-                          borderRadius: 16,
-                          controller: videoLinkController,
-                          isDense: true,
-                          fillColor: Colors.grey.shade200,
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                          
-                        const Text(
-                          "Content",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        TextEditView(
-                          maxLines: 10,
-                          hintText: 'Start writing your content here...',
-                          validator: Validator.validate,
-                          borderRadius: 16,
-                          controller: contentController,
-                          isDense: true,
-                          fillColor: Colors.grey.shade200,
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        (state is CreatePostLoading)
-                            ? Align(
-                                alignment: Alignment.center,
-                                child: ProgressIndicators.circularProgressBar(
-                                    context))
-                            : Column(
-                                children: [
-                                  ButtonView(
-                                    onPressed: () {
-
-                                       
-                                      createAnnouncement(
-                                        context,
-                                        setToken.token,
-                                        user.imageURl
-                                      );
-                                    },
-                                    color: AppColors.lightSecondary,
-                                    child: const Text('Send'),
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                ],
-                              ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                      ],
+                            ],
+                          ),
+                    const SizedBox(
+                      height: 25,
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
+          ),
+        ),
           ],
         ),
-      ),
-    ));
+      ))));
   }
 
   createAnnouncement(BuildContext ctx, String token,File? thumbnail) {

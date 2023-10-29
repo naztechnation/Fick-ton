@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
                   image,
                   fit: BoxFit.cover,
                   width: MediaQuery.sizeOf(context).width,
-                  placeholder: AppImages.logo,
+                  placeholder: AppImages.logo1,
                 ),
                 Positioned(
                   top: 0,
@@ -187,7 +187,7 @@ class _HomeState extends State<Home> {
                     image,
                     fit: BoxFit.cover,
                     width: MediaQuery.sizeOf(context).width,
-                    placeholder: AppImages.logo,
+                    placeholder: AppImages.logo1,
                   ),
               ),
                 Positioned(
@@ -256,7 +256,7 @@ class _HomeState extends State<Home> {
                   allPosts = _userCubit.viewModel.postsList.reversed.toList();
                   filterByList = state.postLists.data?.filterBy ??  [];
                   genresList = state.postLists.data?.genres ??  [];
-                  pinned = state.postLists.data?.pinned ??  [];
+                  pinned = state.postLists.data?.pinned?.reversed.toList() ??  [];
                 } else {
                   Modals.showToast(state.postLists.message!,
                       messageType: MessageType.error);
@@ -363,21 +363,27 @@ class _HomeState extends State<Home> {
                                               context: context,
                                               onTap: () {
 
-                                                if(pin.videoLink != null && pin.videoLink !=""){
-                                                  AppNavigator.pushAndStackPage(
-                                                    context,
-                                                    page: MovieDetailsScreen(
-                                                      videoLinks: pin
-                                                          .videoLink!,
-                                                      postId: pin.id!,
-                                                    ));
-                                                }else{
-                                                  AppNavigator.pushAndStackPage(
+                                                // if(pin.videoLink != null && pin.videoLink !=""){
+                                                //   AppNavigator.pushAndStackPage(
+                                                //     context,
+                                                //     page: MovieDetailsScreen(
+                                                //       videoLinks: pin
+                                                //           .videoLink!,
+                                                //       postId: pin.id!,
+                                                //     ));
+                                                // }else{
+                                                //   AppNavigator.pushAndStackPage(
+                                                //     context,
+                                                //     page: DetailsPage(
+                                                //       pinned: pin,
+                                                //     ));
+                                                // }
+
+                                                 AppNavigator.pushAndStackPage(
                                                     context,
                                                     page: DetailsPage(
                                                       pinned: pin,
                                                     ));
-                                                }
                                                 
                                               },
                                               image: pin.thumbnail ?? '',

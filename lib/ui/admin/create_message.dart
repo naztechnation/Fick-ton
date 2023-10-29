@@ -39,7 +39,7 @@ class _createMessageState extends State<createMessage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: false);
+   // final user = Provider.of<UserViewModel>(context, listen: false);
     final setToken = Provider.of<AccountViewModel>(context, listen: false);
     setToken.getToken();
 
@@ -78,46 +78,7 @@ class _createMessageState extends State<createMessage> {
                 height: MediaQuery.sizeOf(context).height * 0.03,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Align(
-                          alignment: Alignment.topLeft,
-                          child: ImageView.svg(
-                            AppImages.arrowBack,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      const ImageView.asset(
-                        AppImages.logo,
-                        width: 40,
-                        height: 40,
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      const Text(
-                        'Fik-kton',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+           
             Expanded(
               child: Padding(
                 padding:

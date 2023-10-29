@@ -9,19 +9,20 @@ import '../landing_page_component/homepage/search_page.dart';
 import '../widgets/image_view.dart';
 import 'create_anouncement.dart';
 import 'create_message.dart';
+ 
 
 
 class AnnouncementsPage extends StatefulWidget {
   const AnnouncementsPage({super.key});
 
   @override
-  State<AnnouncementsPage> createState() => _AnnouncementsPageState();
+  State<AnnouncementsPage> createState() => _AnnouncementsState();
 }
 
-class _AnnouncementsPageState extends State<AnnouncementsPage> {
+class _AnnouncementsState extends State<AnnouncementsPage> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: true);
+    final user = Provider.of<UserViewModel>(context, listen: false);
 
     return DefaultTabController(
       length: 2,
@@ -52,7 +53,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
               ),
               
               Tab(
-                text: 'Create Announcements(${user.draftedLength})',
+                text: 'Create Announcements',
               ),
               
             ],

@@ -308,13 +308,15 @@ Future<void> createAnnouncement({
     }
   }
   Future<void> deletePost(
-      {required String token, required String postId}) async {
+      {required String token, required String postId, required String url,String? pin}) async {
     try {
       emit(DeletePostLoading());
 
       final post = await userRepository.deletePost(
         token: token,
         postId: postId,
+        url: url,
+        pin: pin
       );
 
       emit(DeletePostLoaded(post));

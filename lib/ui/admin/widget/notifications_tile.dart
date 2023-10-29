@@ -1,3 +1,4 @@
+import 'package:fikkton/extentions/custom_string_extension.dart';
 import 'package:fikkton/res/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,7 @@ class NotificationTile extends StatelessWidget {
             
           },
           child: Container(
+            margin: EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
               color: Colors.grey.shade100,
               borderRadius: BorderRadius.circular(10),
@@ -43,10 +45,13 @@ class NotificationTile extends StatelessWidget {
                 ));
                 },
                 child: Text(
-                  notifications[index].title ?? '',
+                  notifications[index].title.toString().capitalizeFirstOfEach ?? '',
                   textAlign: TextAlign.justify,
+                  maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 18,
+                    fontWeight: FontWeight.w700,
                     color: AppColors.lightPrimary,
                   ),
                 ),
