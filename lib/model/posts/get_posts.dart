@@ -26,6 +26,7 @@ class PostData {
   List<Posts>? posts;
   List<String>? genres;
   List<String>? filterBy;
+   List<String>? type;
   List<Pinned>? pinned;
 
   PostData({this.posts, this.genres, this.filterBy});
@@ -39,6 +40,7 @@ class PostData {
     }
     genres = json['genres'].cast<String>();
     filterBy = json['filter_by'].cast<String>();
+    type = json['type'].cast<String>();
     if (json['pinned'] != null) {
       pinned = <Pinned>[];
       json['pinned'].forEach((v) {
@@ -54,6 +56,7 @@ class PostData {
     }
     data['genres'] = this.genres;
     data['filter_by'] = this.filterBy;
+    data['type'] = this.type;
     if (this.pinned != null) {
       data['pinned'] = this.pinned!.map((v) => v.toJson()).toList();
     }

@@ -84,11 +84,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-   Future<void> getFilteredPost({required String token, required String genre, required String filterParams}) async {
+   Future<void> getFilteredPost({required String token, required String genre, required String filterParams,required String type}) async {
     try {
       emit(PostListsLoading());
 
-      final posts = await userRepository.filterPost(token: token, genre: genre, filterParams: filterParams);
+      final posts = await userRepository.filterPost(token: token, genre: genre, filterParams: filterParams, type: type);
 
       await viewModel.setPostLists(posts: posts);
 

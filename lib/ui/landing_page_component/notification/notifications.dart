@@ -142,7 +142,7 @@ bool showother =  false;
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Notifications',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                         ),
                       ),
              ),
@@ -188,6 +188,7 @@ bool showother =  false;
                   ListView.builder(
                       itemCount: notifications.length,
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, index) {
                         return GestureDetector(
                           onTap: (){

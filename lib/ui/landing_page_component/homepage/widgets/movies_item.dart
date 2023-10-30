@@ -39,7 +39,7 @@ class MoviesItems extends StatelessWidget {
                         child: ImageView.network(
                           posts.thumbnail,
                           height: 120,
-                          placeholder: AppImages.logo,
+                          placeholder: AppImages.logo1,
                           fit: BoxFit.cover,
                         ))),
               ),

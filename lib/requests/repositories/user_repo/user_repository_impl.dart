@@ -119,7 +119,7 @@ class UserRepositoryImpl implements UserRepository {
   }
   
   @override
-  Future<AuthData> deletePost({required String token, required String postId, required String url,  String? pin = "post_id"}) async {
+  Future<AuthData> deletePost({required String token, required String postId, required String url,  String? pin = "post_id", }) async {
     final map = await Requests().post(url,
     body: {
         "token": token,
@@ -178,9 +178,9 @@ class UserRepositoryImpl implements UserRepository {
   }
   
   @override
-  Future<GetAllPosts> filterPost({required String token, required String genre, required String filterParams}) async {
+  Future<GetAllPosts> filterPost({required String token, required String genre, required String filterParams, required String type}) async {
     final map = await Requests().get(
-      AppStrings.filterPost(token, filterParams, genre)
+      AppStrings.filterPost(token, filterParams, genre, type)
        
     );
 

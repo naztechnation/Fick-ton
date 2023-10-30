@@ -1,3 +1,4 @@
+import 'package:fikkton/extentions/custom_string_extension.dart';
 import 'package:fikkton/model/posts/comment_lists.dart';
 import 'package:fikkton/res/app_strings.dart';
 import 'package:fikkton/ui/widgets/text_edit_view.dart';
@@ -104,6 +105,8 @@ class _MovieDetailsState extends State<MovieDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final timeFormat = Provider.of<UserViewModel>(context, listen: true);
+
     return BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
       if (state is PostDetailsLoaded) {
         if (state.postDetails.status == 1) {
@@ -121,11 +124,9 @@ class _MovieDetailsState extends State<MovieDetails> {
           Modals.showToast(state.postComment.message!);
           commentController.text = '';
           _userCubit.getComment(token: token, postId: widget.postId);
-          
         } else {}
       }
       if (state is CreateCommentLoading) {
-        
       } else {}
       if (state is LikeBookmarkLoaded) {
         if (state.createPost.status == 1) {
@@ -163,7 +164,7 @@ class _MovieDetailsState extends State<MovieDetails> {
         return const LoadingPage();
       }
 
-      return Scaffold(
+      return (state is PostDetailsLoading) ?   Scaffold(body: const LoadingPage()) :Scaffold(
           body: Scaffold(
               resizeToAvoidBottomInset: false,
               body: Padding(
@@ -234,7 +235,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      postDetails?.genre ?? '',
+                                      postDetails?.genre.toString().capitalizeFirstOfEach ?? '',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 14,
@@ -265,7 +266,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 ),
                                 const SizedBox(height: 12.0),
                                 Text(
-                                  postDetails?.title ?? '',
+                                  postDetails?.title.toString().capitalizeFirstOfEach ?? '',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 16),
@@ -275,16 +276,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      postDetails?.createdAt ?? '',
+                                     timeFormat.getCurrentTime(int.parse(postDetails?.createdAt ?? '0')),
                                     ),
-                                    const SizedBox(width: 15.0),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 12.0),
-                                      child: Text(
-                                        postDetails?.createdAt ?? '',
-                                      ),
-                                    ),
+                                    
                                   ],
                                 ),
                                 const SizedBox(

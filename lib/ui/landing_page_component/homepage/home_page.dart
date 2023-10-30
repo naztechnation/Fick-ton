@@ -68,6 +68,7 @@ class _HomeState extends State<Home> {
   List<Posts> trendingPosts = [];
   List<String> filterByList = [];
   List<String> genresList = [];
+  List<String> typeList = [];
   List<Pinned> pinned = [];
 
   String recent = 'Recent';
@@ -249,6 +250,7 @@ class _HomeState extends State<Home> {
                   allPosts = _userCubit.viewModel.postsList.reversed.toList();
                   filterByList = state.postLists.data?.filterBy ?? [];
                   genresList = state.postLists.data?.genres ?? [];
+                  typeList = state.postLists.data?.type ?? [];
                   pinned =
                       state.postLists.data?.pinned?.reversed.toList() ?? [];
                 } else {
@@ -358,22 +360,6 @@ class _HomeState extends State<Home> {
                                             _buildPage2(
                                                 context: context,
                                                 onTap: () {
-                                                  // if(pin.videoLink != null && pin.videoLink !=""){
-                                                  //   AppNavigator.pushAndStackPage(
-                                                  //     context,
-                                                  //     page: MovieDetailsScreen(
-                                                  //       videoLinks: pin
-                                                  //           .videoLink!,
-                                                  //       postId: pin.id!,
-                                                  //     ));
-                                                  // }else{
-                                                  //   AppNavigator.pushAndStackPage(
-                                                  //     context,
-                                                  //     page: DetailsPage(
-                                                  //       pinned: pin,
-                                                  //     ));
-                                                  // }
-
                                                   AppNavigator.pushAndStackPage(
                                                       context,
                                                       page: DetailsPage(
@@ -483,6 +469,7 @@ class _HomeState extends State<Home> {
                                                     _userCubit.getFilteredPost(
                                                         token: token,
                                                         genre: genres,
+                                                        type: types,
                                                         filterParams: recent);
                                                   }));
                                         },
@@ -497,12 +484,7 @@ class _HomeState extends State<Home> {
                                               isDissmissible: true,
                                               heightFactor: 0.6,
                                               page: filterModalContent(
-                                                  filterItems: [
-                                                    'All Types',
-                                                    'Movies',
-                                                    'TV Series',
-                                                    'Drama',
-                                                  ],
+                                                  filterItems: typeList,
                                                   title: 'Filter by Type',
                                                   context: context,
                                                   onPressed: (item) {
@@ -515,6 +497,7 @@ class _HomeState extends State<Home> {
                                                     _userCubit.getFilteredPost(
                                                         token: token,
                                                         genre: genres,
+                                                        type: types,
                                                         filterParams: recent);
                                                   }));
                                         },
@@ -542,6 +525,7 @@ class _HomeState extends State<Home> {
                                                     _userCubit.getFilteredPost(
                                                         token: token,
                                                         genre: genres,
+                                                        type: types,
                                                         filterParams: recent);
                                                   }));
                                         },
@@ -553,16 +537,19 @@ class _HomeState extends State<Home> {
                                   height: 20,
                                 ),
                                 if (allPosts.isEmpty) ...[
-                                 
                                   Container(
                                     height: 390,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                         Align(
-                                                              alignment: Alignment.center,
-                                                              child: ImageView.asset(AppImages.empty, height: 120,)),
-                                                          SizedBox(height: 40.0),
+                                        Align(
+                                            alignment: Alignment.center,
+                                            child: ImageView.asset(
+                                              AppImages.empty,
+                                              height: 120,
+                                            )),
+                                        SizedBox(height: 40.0),
                                         Align(
                                             alignment: Alignment.center,
                                             child: Text('No posts available')),
@@ -612,7 +599,7 @@ class _HomeState extends State<Home> {
         Container(
           width: 8.0,
           height: 8.0,
-          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+          margin: const EdgeInsets.symmetric(horizontal: 10.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: _currentPage == (length - 1 - i)

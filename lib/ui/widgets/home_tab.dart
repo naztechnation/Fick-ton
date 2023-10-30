@@ -37,7 +37,7 @@ class _CustomTabState extends State<CustomTab> {
 
     return Row(
           children: [
-         if(list1.isNotEmpty)   GestureDetector(
+         if(list2.isNotEmpty)   GestureDetector(
               onTap: () {
                 switchTab(0);
 
@@ -53,11 +53,11 @@ class _CustomTabState extends State<CustomTab> {
                 child: Text('Announcements', style: TextStyle(color: activeTabIndex == 0 ?  Colors.white  :AppColors.lightSecondary),),
               ),
             ),
-          if(list1.isNotEmpty)  SizedBox(width: 12,),
-           if(list2.isNotEmpty) GestureDetector(
+          if(list2.isNotEmpty)  SizedBox(width: 12,),
+           if(list1.isNotEmpty) GestureDetector(
               onTap: () {
-                switchTab(1);
-                account.setTabIndex(tabIndex: 1);
+                switchTab(list2.isNotEmpty ?1:0);
+                account.setTabIndex(tabIndex: list2.isNotEmpty ?1:0);
 
               },
               child: AnimatedContainer(
@@ -66,9 +66,9 @@ class _CustomTabState extends State<CustomTab> {
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: activeTabIndex == 1 ? AppColors.lightSecondary : Colors.white,
+                  color: (list2.isNotEmpty ? activeTabIndex == 1 : activeTabIndex == 0) ? AppColors.lightSecondary : Colors.white,
                 ),
-                child: Text('Trends', style: TextStyle(color: activeTabIndex == 1 ?  Colors.white  :AppColors.lightSecondary),),
+                child: Text('Trends', style: TextStyle(color: (list2.isNotEmpty ? activeTabIndex == 1 : activeTabIndex == 0) ?  Colors.white  :AppColors.lightSecondary),),
               ),
             ),
           ],
