@@ -68,7 +68,7 @@ class _PublishedPageState extends State<PublishedPage> {
           builder: (context, state) {
             if (state is PostListsLoaded) {
               if (state.postLists.status == 1) {
-                allPosts = _userCubit.viewModel.postsList.reversed.toList();
+                allPosts = _userCubit.viewModel.postsList;
 
                 user.setPublishedLength(
                     publishedLength: allPosts.length.toString());
@@ -130,7 +130,7 @@ class _PublishedPageState extends State<PublishedPage> {
   }
 
   _deletePost(BuildContext ctx, String postId) {
-    ctx.read<UserCubit>().deletePost(postId: postId, token: token, url: AppStrings.deletePost);
+    ctx.read<UserCubit>().deletePost(postId: postId, token: token, url: AppStrings.deletePost, pin: '');
     FocusScope.of(ctx).unfocus();
   }
 }

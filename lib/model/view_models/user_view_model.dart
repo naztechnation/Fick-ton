@@ -23,11 +23,18 @@ class UserViewModel extends BaseViewModel {
    List<get_posts.Pinned> _pinnedPosts = [];
 
   List<get_posts.Posts> _postsList = [];
+  List<get_posts.Posts> _draftPostsList = [];
 
   Future<void> setPostLists({required get_posts.GetAllPosts posts}) async {
     _postsList = posts.data?.posts ?? [];
     _overallPosts = posts;
     _pinnedPosts = posts.data?.pinned ?? [];
+    setViewState(ViewState.success);
+  }
+
+   Future<void> setDraftPostLists({required get_posts.GetAllPosts posts}) async {
+    _draftPostsList = posts.data?.posts ?? [];
+     setDraftLength(draftedLength: _draftPostsList.length.toString());
     setViewState(ViewState.success);
   }
 
@@ -193,6 +200,7 @@ class UserViewModel extends BaseViewModel {
   File? get imgURl => imageURl;
 
   List<get_posts.Posts> get postsList => _postsList;
+  List<get_posts.Posts> get draftList => _draftPostsList;
   List<get_posts.Pinned> get pinnedList => _pinnedPosts;
   String get draftedLength => _draftLength;
   int get activeTab => _activeTab;

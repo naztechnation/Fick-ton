@@ -47,7 +47,7 @@ class _DraftPageState extends State<DraftPage> {
 
     token = await StorageHandler.getUserToken() ?? '';
 
-    _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
+    _userCubit.getDraftPost(url: AppStrings.getDraftedPosts(token));
   }
 
   List<Posts> draftedPosts = [];
@@ -68,18 +68,23 @@ class _DraftPageState extends State<DraftPage> {
           if (state.createPost.status == 1) {
             Modals.showToast(state.createPost.message ?? '',
                 messageType: MessageType.success);
-            _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
+                        _userCubit.getDraftPost(url: AppStrings.getDraftedPosts(token));
+
           } else {
             draftedPosts = [];
           }
         }
       }, builder: (context, state) {
-        if (state is PostListsLoaded) {
+        if (state is DraftLoaded) {
           if (state.postLists.status == 1) {
-            draftedPosts = _userCubit.viewModel.postsList.reversed.toList();
+            draftedPosts = _userCubit.viewModel.draftList;
 
             user.setDraftLength(draftedLength: draftedPosts.length.toString());
           } else {
+            if(state.postLists.message == 'No content available'){
+              draftedPosts = [];
+              user.setDraftLength(draftedLength: '0');
+            }
             Modals.showToast(state.postLists.message!,
                 messageType: MessageType.error);
           }
@@ -112,18 +117,20 @@ class _DraftPageState extends State<DraftPage> {
               state.deletePost.message ?? '',
               messageType: MessageType.success,
             );
+
+            _userCubit.getDraftPost(url: AppStrings.getDraftedPosts(token));
           } else {
             Modals.showToast(state.deletePost.message!,
                 messageType: MessageType.error);
           }
         }
 
-        return (state is PostListsLoading ||
+        return (state is DraftLoading ||
                 state is DeletePostLoading ||
                 state is CreatePostLoading)
             ? const LoadingPage()
             : (draftedPosts.isEmpty)
-                ?   SizedBox(
+                ? SizedBox(
                     height: MediaQuery.sizeOf(context).height,
                     child: Align(
                         alignment: Alignment.center, child: Text('No Drafts')),
@@ -142,7 +149,7 @@ class _DraftPageState extends State<DraftPage> {
                           _publishDraft(
                               context,
                               token,
-                              user.imageURl!,
+                              user.imageURl ?? File(''),
                               '1',
                               AppStrings.updatePost,
                               draftedPosts[index].id ?? '',
@@ -154,7 +161,7 @@ class _DraftPageState extends State<DraftPage> {
                               draftedPosts[index].isTrending.toString());
                         },
                         onDeleteTapped: () {
-                          _deletePost(context, draftedPosts[index].id!);
+                          _deletePost(context, draftedPosts[index].id ?? '');
                         },
                       );
                     });
@@ -163,7 +170,8 @@ class _DraftPageState extends State<DraftPage> {
   }
 
   _deletePost(BuildContext ctx, String postId) {
-    ctx.read<UserCubit>().deletePost(postId: postId, token: token, url: AppStrings.deletePost);
+    ctx.read<UserCubit>().deletePost(
+        postId: postId, token: token, url: AppStrings.deletePost, pin: '');
     FocusScope.of(ctx).unfocus();
   }
 

@@ -134,11 +134,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      NotificationTile(
-                        notifications: notifications,
-                        onDeleteTapped: (notifyId) {
-                          deleteNotification(context, notifyId);
-                        },
+                      Expanded(
+                        child: NotificationTile(
+                          notifications: notifications,
+                          onDeleteTapped: (notifyId) {
+                            deleteNotification(context, notifyId);
+                          },
+                        ),
                       ),
                     ],
                   ),

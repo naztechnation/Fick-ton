@@ -84,6 +84,30 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+   Future<void> getDraftPost({required String url}) async {
+    try {
+      emit(DraftLoading());
+
+      final posts = await userRepository.getAllPosts(url: url);
+
+      await viewModel.setDraftPostLists(posts: posts);
+
+      emit(DraftLoaded(posts));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
    Future<void> getFilteredPost({required String token, required String genre, required String filterParams,required String type}) async {
     try {
       emit(PostListsLoading());
@@ -308,7 +332,7 @@ Future<void> createAnnouncement({
     }
   }
   Future<void> deletePost(
-      {required String token, required String postId, required String url,String? pin}) async {
+      {required String token, required String postId, required String url,required String pin}) async {
     try {
       emit(DeletePostLoading());
 
@@ -316,7 +340,35 @@ Future<void> createAnnouncement({
         token: token,
         postId: postId,
         url: url,
-        pin: pin
+         
+      );
+
+      emit(DeletePostLoaded(post));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> deletePinPost(
+      {required String token, required String postId, required String url, }) async {
+    try {
+      emit(DeletePostLoading());
+
+      final post = await userRepository.deletePinPost(
+        token: token,
+        postId: postId,
+        url: url,
+         
       );
 
       emit(DeletePostLoaded(post));

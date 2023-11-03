@@ -287,41 +287,41 @@ class _NewPostState extends State<Post> {
                               const SizedBox(
                                 height: 25,
                               ),
-                              const Text(
-                                "Types",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              TextEditView(
-                                 onTap: ( ) {
-                                  Modals.showBottomSheetModal(context,
-                                              isDissmissible: true,
-                                              heightFactor: 0.7,
-                                              page: filterModalContent(
-                                                  filterItems: user.overallPosts?.data?.type ?? [],
-                                                  title: 'Select Type',
-                                                  context: context,
-                                                  onPressed: (item) {
-                                                    Navigator.pop(context);
+                              // const Text(
+                              //   "Types",
+                              //   style: TextStyle(
+                              //       fontSize: 16, fontWeight: FontWeight.w400),
+                              // ),
+                              // const SizedBox(
+                              //   height: 5,
+                              // ),
+                              // TextEditView(
+                              //    onTap: ( ) {
+                              //     Modals.showBottomSheetModal(context,
+                              //                 isDissmissible: true,
+                              //                 heightFactor: 0.7,
+                              //                 page: filterModalContent(
+                              //                     filterItems: user.overallPosts?.data?.type ?? [],
+                              //                     title: 'Select Type',
+                              //                     context: context,
+                              //                     onPressed: (item) {
+                              //                       Navigator.pop(context);
 
-                                                    setState(() {
-                                                      genres = item;
-                                                      authorController.text = genres;
-                                                    });
-                                                  }));
-                                },
-                                validator: Validator.validate,
-                                 readOnly: true,
-                                suffixIcon: Icon(Icons.arrow_drop_down, size: 35, color: AppColors.lightSecondary,),
-                                hintText: 'Select Types',
-                                borderRadius: 16,
-                                controller: authorController,
-                                isDense: true,
-                                fillColor: Colors.grey.shade200,
-                              ),
+                              //                       setState(() {
+                              //                         genres = item;
+                              //                         authorController.text = genres;
+                              //                       });
+                              //                     }));
+                              //   },
+                              //   validator: Validator.validate,
+                              //    readOnly: true,
+                              //   suffixIcon: Icon(Icons.arrow_drop_down, size: 35, color: AppColors.lightSecondary,),
+                              //   hintText: 'Select Types',
+                              //   borderRadius: 16,
+                              //   controller: authorController,
+                              //   isDense: true,
+                              //   fillColor: Colors.grey.shade200,
+                              // ),
                               const SizedBox(
                                 height: 25,
                               ),

@@ -34,7 +34,7 @@ class Data {
   String? views;
   String? likes;
   String? createdAt;
-  Null? updatedAt;
+  String? updatedAt;
   String? status;
   String? isBooked;
   String? isLiked;

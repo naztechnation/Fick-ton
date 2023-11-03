@@ -119,11 +119,24 @@ class UserRepositoryImpl implements UserRepository {
   }
   
   @override
-  Future<AuthData> deletePost({required String token, required String postId, required String url,  String? pin = "post_id", }) async {
+  Future<AuthData> deletePost({required String token, required String postId, required String url,  }) async {
     final map = await Requests().post(url,
     body: {
         "token": token,
-        pin: postId,
+        "post_id": postId,
+         
+      },
+    );
+
+    return AuthData.fromJson(map);
+  }
+
+    @override
+  Future<AuthData> deletePinPost({required String token, required String postId, required String url,   }) async {
+    final map = await Requests().post(url,
+    body: {
+        "token": token,
+        "pin_id": postId,
          
       },
     );

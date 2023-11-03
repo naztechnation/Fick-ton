@@ -72,6 +72,18 @@ class BookmarkListLoaded extends UserStates {
   List<Object> get props => [bookmarkList];
 }
 
+class DraftLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class DraftLoaded extends UserStates {
+  final GetAllPosts postLists;
+  const DraftLoaded(this.postLists);
+  @override
+  List<Object> get props => [postLists];
+}
+
 class PostListsLoaded extends UserStates {
   final GetAllPosts postLists;
   const PostListsLoaded(this.postLists);

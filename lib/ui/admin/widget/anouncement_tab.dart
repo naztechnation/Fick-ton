@@ -71,7 +71,7 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
           if (state.postLists.status == 1) {
             Modals.showToast(state.postLists.message ?? '',
                 messageType: MessageType.success);
-                              pinned = state.postLists.data?.pinned?.reversed.toList() ??  [];
+                              pinned = state.postLists.data?.pinned ??  [];
 
           } else {
            Modals.showToast(state.postLists.message ?? '',  messageType: MessageType.success);
@@ -137,7 +137,7 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
   }
 
   _deletePost(BuildContext ctx, String postId) {
-    ctx.read<UserCubit>().deletePost(postId: postId, token: token, url: AppStrings.deletePinned, pin: 'pin_id');
+    ctx.read<UserCubit>().deletePinPost(postId: postId, token: token, url: AppStrings.deletePinned,);
     FocusScope.of(ctx).unfocus();
   }
 
