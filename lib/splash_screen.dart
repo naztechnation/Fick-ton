@@ -96,18 +96,7 @@ class SplashScreenState extends State<SplashScreen>
             height: MediaQuery.sizeOf(context).height,
             width: MediaQuery.sizeOf(context).width,
           ),
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
-                  child: Text(
-                    'developed by naztech',
-                    style: TextStyle(color: AppColors.cardColor),
-                  ))
-            ],
-          ),
+          
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
