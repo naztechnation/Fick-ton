@@ -81,7 +81,7 @@ class NotificationsDetails extends StatelessWidget {
                         Text(
                           description,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                          maxLines: 12,
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 14),
                         ),
