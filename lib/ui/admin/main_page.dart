@@ -8,8 +8,7 @@ import '../../res/app_images.dart';
 import '../widgets/custom_button_nav.dart/custom_button_nav.dart';
 import 'announcement_page.dart';
 import 'dashboard.dart';
-import 'notifications.dart';
-import 'widget/anouncement_tab.dart';
+import 'notifications.dart'; 
 
 class AdminMainPage extends StatefulWidget {
   const AdminMainPage({Key? key}) : super(key: key);

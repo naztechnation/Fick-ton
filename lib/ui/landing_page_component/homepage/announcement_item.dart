@@ -74,7 +74,9 @@ class AnnounceItems extends StatelessWidget {
               children: [
                 const SizedBox(height: 16.0),
                 Text(
-                      pin.content ?? '',
+                      pin.content?.replaceAll('&amp;amp;', '')
+      .replaceAll('&amp;quot;', '"')
+      .replaceAll('\n', '') ?? '',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -82,7 +84,7 @@ class AnnounceItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      timeFormat.getCurrentTime(int.parse(pin.createdAt!)),
+                      timeFormat.getCurrentTime(int.parse(pin.updatedAt ?? '0')),
                     ),
                     const SizedBox(width: 8.0),
                     GestureDetector(

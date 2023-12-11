@@ -85,13 +85,13 @@ class _DraftPageState extends State<DraftPage> {
               draftedPosts = [];
               user.setDraftLength(draftedLength: '0');
             }
-            Modals.showToast(state.postLists.message!,
+            Modals.showToast(state.postLists.message ?? '',
                 messageType: MessageType.error);
           }
         }
         if (state is CreatePostLoaded) {
           if (state.createPost.status == 1) {
-            Modals.showToast(state.createPost.message!,
+            Modals.showToast(state.createPost.message ?? '',
                 messageType: MessageType.success);
             _userCubit.getPost(url: AppStrings.getDraftedPosts(token));
           } else {}
@@ -120,7 +120,7 @@ class _DraftPageState extends State<DraftPage> {
 
             _userCubit.getDraftPost(url: AppStrings.getDraftedPosts(token));
           } else {
-            Modals.showToast(state.deletePost.message!,
+            Modals.showToast(state.deletePost.message ?? '',
                 messageType: MessageType.error);
           }
         }

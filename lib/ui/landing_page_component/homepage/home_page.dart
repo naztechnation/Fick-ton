@@ -134,12 +134,15 @@ class _HomeState extends State<Home> {
                     right: 0,
                     left: 0,
                     child: Align(
-                        child: Text(
-                      title,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500),
+                        child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ))),
                 const Positioned(
                   top: 80,
@@ -251,10 +254,9 @@ class _HomeState extends State<Home> {
                   filterByList = state.postLists.data?.filterBy ?? [];
                   genresList = state.postLists.data?.genres ?? [];
                   typeList = state.postLists.data?.type ?? [];
-                  pinned =
-                      state.postLists.data?.pinned ?? [];
+                  pinned = state.postLists.data?.pinned ?? [];
                 } else {
-                  Modals.showToast(state.postLists.message!,
+                  Modals.showToast(state.postLists.message ?? '',
                       messageType: MessageType.error);
                 }
               } else if (state is UserNetworkErr) {
@@ -276,11 +278,11 @@ class _HomeState extends State<Home> {
               return (state is PostListsLoading)
                   ? const LoadingPage()
                   : RefreshIndicator.adaptive(
-                    color: AppColors.lightPrimary,
-                    onRefresh: ()async{
-                      _userCubit.getPost(url: AppStrings.getPosts(token));
-                    },
-                    child: Column(
+                      color: AppColors.lightPrimary,
+                      onRefresh: () async {
+                        _userCubit.getPost(url: AppStrings.getPosts(token));
+                      },
+                      child: Column(
                         children: [
                           SafeArea(
                             child: SizedBox(
@@ -288,7 +290,8 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -365,28 +368,40 @@ class _HomeState extends State<Home> {
                                               _buildPage2(
                                                   context: context,
                                                   onTap: () {
-                                                    AppNavigator.pushAndStackPage(
-                                                        context,
-                                                        page: DetailsPage(
-                                                          pinned: pin,
-                                                        ));
+                                                    AppNavigator
+                                                        .pushAndStackPage(
+                                                            context,
+                                                            page: DetailsPage(
+                                                              pinned: pin,
+                                                            ));
                                                   },
                                                   image: pin.thumbnail ?? '',
-                                                  content: pin.content ?? '',
-                                                  time: timeFormat.getCurrentTime(
-                                                      int.parse(pin.createdAt!))),
+                                                  content: pin.content
+                                                          .toString()
+                                                          .replaceAll(
+                                                              '&amp;amp;', '')
+                                                          .replaceAll(
+                                                              '&amp;quot;', '"')
+                                                          .replaceAll(
+                                                              '\n', '') ??
+                                                      '',
+                                                  time: timeFormat
+                                                      .getCurrentTime(int.parse(
+                                                          pin.updatedAt ??
+                                                              '0'))),
                                           ],
                                         ),
                                       ),
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                    if(pinned.length<15)  Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children:
-                                            _buildPageIndicator(pinned.length),
-                                      ),
+                                      if (pinned.length < 15)
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: _buildPageIndicator(
+                                              pinned.length),
+                                        ),
                                       const SizedBox(
                                         height: 20,
                                       ),
@@ -418,32 +433,48 @@ class _HomeState extends State<Home> {
                                                   onTap: () {
                                                     AppNavigator.pushAndStackPage(
                                                         context,
-                                                        page: MovieDetailsScreen(
-                                                          videoLinks:
-                                                              trendingPosts
-                                                                  .videoLink!,
-                                                          postId:
-                                                              trendingPosts.id!,
+                                                        page:
+                                                            MovieDetailsScreen(
+                                                          videoLinks: trendingPosts
+                                                                  .videoLink ??
+                                                              '',
+                                                          postId: trendingPosts
+                                                                  .id ??
+                                                              '',
                                                         ));
                                                   },
-                                                  image: trendingPosts.thumbnail!,
-                                                  title: trendingPosts.title!,
-                                                  genre: trendingPosts.genre!,
-                                                  time: timeFormat.getCurrentTime(
-                                                      int.parse(trendingPosts
-                                                          .createdAt!))),
+                                                  image:
+                                                      trendingPosts.thumbnail ??
+                                                          '',
+                                                  title: trendingPosts.title
+                                                          .toString()
+                                                          .replaceAll(
+                                                              '&amp;amp;', '')
+                                                          .replaceAll(
+                                                              '&amp;quot;', '"')
+                                                          .replaceAll(
+                                                              '\n', '') ??
+                                                      '',
+                                                  genre:
+                                                      trendingPosts.genre ?? '',
+                                                  time: timeFormat
+                                                      .getCurrentTime(int.parse(
+                                                          trendingPosts
+                                                                  .updatedAt ??
+                                                              '0'))),
                                           ],
                                         ),
                                       ),
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                    if(trendingPosts.length<15)  Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: _buildPageIndicator(
-                                            trendingPosts.length),
-                                      ),
+                                      if (trendingPosts.length < 15)
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: _buildPageIndicator(
+                                              trendingPosts.length),
+                                        ),
                                       const SizedBox(
                                         height: 20,
                                       ),
@@ -453,7 +484,8 @@ class _HomeState extends State<Home> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 12.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         FilterContainer(
                                           text: recent,
@@ -470,12 +502,14 @@ class _HomeState extends State<Home> {
                                                       setState(() {
                                                         recent = item;
                                                       });
-                  
-                                                      _userCubit.getFilteredPost(
-                                                          token: token,
-                                                          genre: genres,
-                                                          type: types,
-                                                          filterParams: recent);
+
+                                                      _userCubit
+                                                          .getFilteredPost(
+                                                              token: token,
+                                                              genre: genres,
+                                                              type: types,
+                                                              filterParams:
+                                                                  recent);
                                                     }));
                                           },
                                         ),
@@ -494,11 +528,11 @@ class _HomeState extends State<Home> {
                                         //             context: context,
                                         //             onPressed: (item) {
                                         //               Navigator.pop(context);
-                  
+
                                         //               setState(() {
                                         //                 types = item;
                                         //               });
-                  
+
                                         //               _userCubit.getFilteredPost(
                                         //                   token: token,
                                         //                   genre: genres,
@@ -522,16 +556,18 @@ class _HomeState extends State<Home> {
                                                     context: context,
                                                     onPressed: (item) {
                                                       Navigator.pop(context);
-                  
+
                                                       setState(() {
                                                         genres = item;
                                                       });
-                  
-                                                      _userCubit.getFilteredPost(
-                                                          token: token,
-                                                          genre: genres,
-                                                          type: types,
-                                                          filterParams: recent);
+
+                                                      _userCubit
+                                                          .getFilteredPost(
+                                                              token: token,
+                                                              genre: genres,
+                                                              type: types,
+                                                              filterParams:
+                                                                  recent);
                                                     }));
                                           },
                                         ),
@@ -557,7 +593,8 @@ class _HomeState extends State<Home> {
                                           SizedBox(height: 40.0),
                                           Align(
                                               alignment: Alignment.center,
-                                              child: Text('No posts available')),
+                                              child:
+                                                  Text('No posts available')),
                                         ],
                                       ),
                                     )
@@ -574,9 +611,13 @@ class _HomeState extends State<Home> {
                                                 AppNavigator.pushAndStackPage(
                                                     context,
                                                     page: MovieDetailsScreen(
-                                                      videoLinks: allPosts[index]
-                                                          .videoLink!,
-                                                      postId: allPosts[index].id!,
+                                                      videoLinks:
+                                                          allPosts[index]
+                                                                  .videoLink ??
+                                                              '',
+                                                      postId:
+                                                          allPosts[index].id ??
+                                                              '',
                                                     ));
                                               },
                                               child: MoviesItems(
@@ -590,7 +631,7 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                  );
+                    );
             }));
   }
 

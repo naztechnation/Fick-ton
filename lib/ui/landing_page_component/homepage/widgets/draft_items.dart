@@ -39,7 +39,7 @@ class DraftItems extends StatelessWidget {
           GestureDetector(
              onTap: (){
                AppNavigator.pushAndStackPage(context,
-                        page:   MovieDetailsScreen(videoLinks: posts.videoLink!, postId: posts.id!,));
+                        page:   MovieDetailsScreen(videoLinks: posts.videoLink ?? '', postId: posts.id ?? '',));
             },
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
@@ -103,7 +103,7 @@ class DraftItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      timeFormat.getCurrentTime(int.parse(posts.createdAt!)),
+                      timeFormat.getCurrentTime(int.parse(posts.updatedAt ?? '')),
                     ),
                     const SizedBox(width: 8.0),
                       Row(
@@ -111,7 +111,7 @@ class DraftItems extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: (){
-                            NavigationHelper.navigateToPage(context, NewPost(isUpdate: true, postId: posts.id!,));
+                            NavigationHelper.navigateToPage(context, NewPost(isUpdate: true, postId: posts.id ?? '',));
 
                           },
                           child: const ImageView.svg(

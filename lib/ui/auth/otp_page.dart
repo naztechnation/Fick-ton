@@ -69,31 +69,31 @@ class _OtpScreenState extends State<OtpScreen> {
                 AppNavigator.pushAndReplacePage(context,
                     page: ResetPasswordScreen(
                       email: widget.email,
-                      token: state.userData.token!,
+                      token: state.userData.token ?? '',
                     ));
               }else if (isResetPassword){
-                 Modals.showToast(state.userData.message!,
+                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
-                     getToken.setToken(state.userData.token!);
+                     getToken.setToken(state.userData.token ?? '');
                      startCountdown();
 
               } else {
                 AppNavigator.pushAndReplacePage(context,
                     page: const LoginScreen());
-                Modals.showToast(state.userData.message!,
+                Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
               }
             } else {
-              Modals.showToast(state.userData.message!,
+              Modals.showToast(state.userData.message ?? '',
                   messageType: MessageType.error);
             }
           } else if (state is AccountApiErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '', messageType: MessageType.error);
             }
           } else if (state is AccountNetworkErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '', messageType: MessageType.error);
             }
           }
         },

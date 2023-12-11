@@ -63,8 +63,7 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: true);
-
+     
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
         if (state is PostListsLoaded) {
@@ -84,7 +83,7 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
               messageType: MessageType.success,
             );
           } else {
-            Modals.showToast(state.deletePost.message!,
+            Modals.showToast(state.deletePost.message ?? '',
                 messageType: MessageType.error);
           }
         }
@@ -128,7 +127,7 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
                         
                         
                         onDeleteTapped: () {
-                          _deletePost(context, pinned[index].id!);
+                          _deletePost(context, pinned[index].id ?? '');
                         },
                       );
                     });

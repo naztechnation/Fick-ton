@@ -118,26 +118,26 @@ class _NewPostState extends State<Post> {
       body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
         if (state is CreatePostLoaded) {
           if (state.createPost.status == 1) {
-            Modals.showToast(state.createPost.message!,
+            Modals.showToast(state.createPost.message ?? '',
                 messageType: MessageType.success);
             user.imageURl = null;
             clearFields();
           } else {}
         } else if (state is PostDetailsLoaded) {
-          Modals.showToast(state.postDetails.message!,
+          Modals.showToast(state.postDetails.message ?? '',
               messageType: MessageType.success);
           if (state.postDetails.status == 1) {
-            titleController.text = state.postDetails.data!.title!;
-            contentController.text = state.postDetails.data!.content!;
-            videoUrlController.text = state.postDetails.data!.videoLink!;
-            genresController.text = state.postDetails.data!.genre!;
-            authorController.text = state.postDetails.data!.author!;
-            postId = state.postDetails.data!.id!;
+            titleController.text = state.postDetails.data?.title ?? '';
+            contentController.text = state.postDetails.data?.content ?? '';
+            videoUrlController.text = state.postDetails.data?.videoLink ?? '';
+            genresController.text = state.postDetails.data?.genre ?? '';
+            authorController.text = state.postDetails.data?.author ?? '';
+            postId = state.postDetails.data?.id ?? '';
             isChecked =
-                state.postDetails.data!.isTrending == "0" ? false : true;
-                isTrending = int.parse(state.postDetails.data!.isTrending!); 
+                state.postDetails.data?.isTrending == "0" ? false : true;
+                isTrending = int.parse(state.postDetails.data?.isTrending ?? ''); 
 
-                user.fileFromImageUrl(state.postDetails.data!.thumbnail!);
+                user.fileFromImageUrl(state.postDetails.data?.thumbnail ?? '');
           } else {}
         }
       }, builder: (context, state) {
@@ -429,7 +429,7 @@ class _NewPostState extends State<Post> {
                                                  _createPost(
                                                   context,
                                                   setToken.token,
-                                                  user.imageURl!,
+                                                  user.imageURl ?? File(''),
                                                   '1',
                                                   AppStrings.updatePost,
                                                   postId
@@ -440,7 +440,7 @@ class _NewPostState extends State<Post> {
                                                 _createPost(
                                                   context,
                                                   setToken.token,
-                                                  user.imageURl!,
+                                                  user.imageURl ?? File(''),
                                                   '1',
                                                   AppStrings.createPost,
                                                   postId
@@ -464,7 +464,7 @@ class _NewPostState extends State<Post> {
                                                  _createPost(
                                                   context,
                                                   setToken.token,
-                                                  user.imageURl!,
+                                                  user.imageURl ?? File(''),
                                                   '0',
                                                   AppStrings.updatePost,
                                                   postId
@@ -473,7 +473,7 @@ class _NewPostState extends State<Post> {
                                                 _createPost(
                                                   context,
                                                   setToken.token,
-                                                  user.imageURl!,
+                                                  user.imageURl ?? File(''),
                                                   '0',
                                                   AppStrings.createPost,
                                                   postId

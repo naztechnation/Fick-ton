@@ -198,8 +198,8 @@ class _BookMarkState extends State<BookMark> {
                                 AppNavigator.pushAndStackPage(context,
                                     page: MovieDetailsScreen(
                                       videoLinks:
-                                          bookmarkList[index].videoLink!,
-                                      postId: bookmarkList[index].id!,
+                                          bookmarkList[index].videoLink ?? '',
+                                      postId: bookmarkList[index].id ?? '',
                                     ));
                               },
                               child: MoviesItems(

@@ -42,7 +42,7 @@ class _CoverImageContainerState extends State<CoverImageContainer> {
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.file(
-                  File(user.imageURl!.path),
+                  File(user.imageURl?.path ?? ''),
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,

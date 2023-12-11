@@ -17,10 +17,10 @@ class UserViewModel extends BaseViewModel {
   File? imageURl;
   String _draftLength = "0";
   String _publishedLength = "0";
-  int _activeTab  = 0;
+  int _activeTab = 0;
 
-   get_posts.GetAllPosts? _overallPosts ;
-   List<get_posts.Pinned> _pinnedPosts = [];
+  get_posts.GetAllPosts? _overallPosts;
+  List<get_posts.Pinned> _pinnedPosts = [];
 
   List<get_posts.Posts> _postsList = [];
   List<get_posts.Posts> _draftPostsList = [];
@@ -32,9 +32,9 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-   Future<void> setDraftPostLists({required get_posts.GetAllPosts posts}) async {
+  Future<void> setDraftPostLists({required get_posts.GetAllPosts posts}) async {
     _draftPostsList = posts.data?.posts ?? [];
-     setDraftLength(draftedLength: _draftPostsList.length.toString());
+    setDraftLength(draftedLength: _draftPostsList.length.toString());
     setViewState(ViewState.success);
   }
 
@@ -48,7 +48,7 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-   Future<void> setTabIndex({required int tabIndex}) async {
+  Future<void> setTabIndex({required int tabIndex}) async {
     _activeTab = tabIndex;
     setViewState(ViewState.success);
   }
@@ -58,16 +58,18 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  Future<File> fileFromImageUrl(String imageUrl, ) async {
+  Future<File> fileFromImageUrl(
+    String imageUrl,
+  ) async {
     String img = imageUrl;
     final response = await http.get(Uri.parse(img));
 
     final documentDirectory = await getApplicationDocumentsDirectory();
 
     final String imageName = imageUrl.split('/').last;
-        final file = File('${documentDirectory.path}/$imageName');
+    final file = File('${documentDirectory.path}/$imageName');
 
-        await file.writeAsBytes(response.bodyBytes);
+    await file.writeAsBytes(response.bodyBytes);
 
     imageURl = file;
     setViewState(ViewState.success);
@@ -145,57 +147,48 @@ class UserViewModel extends BaseViewModel {
         });
   }
 
-
-  String getCurrentTime(int timestampInSeconds)   {
-     
+  String getCurrentTime(int timestampInSeconds) {
+    if (timestampInSeconds == '0') {
+      return '';
+    }
     DateTime date =
         DateTime.fromMillisecondsSinceEpoch(timestampInSeconds * 1000);
 
-      String time = formatTimeAgo(date);
-    
+    String time = formatTimeAgo(date);
 
-        setViewState(ViewState.success);
-
+    setViewState(ViewState.success);
 
     return time;
   }
 
- String formatTimeAgo(DateTime inputDate) {
-   
+  String formatTimeAgo(DateTime inputDate) {
     DateTime now = DateTime.now();
-  Duration difference = now.difference(inputDate);
+    Duration difference = now.difference(inputDate);
 
-  if (difference.inDays >= 3) {
-    return DateFormat.yMMMd().format(inputDate);
-  } else if (difference.inDays >= 1) {
-    if (difference.inDays == 1) {
-      return 'Yesterday';
+    if (difference.inDays >= 3) {
+      return DateFormat.yMMMd().format(inputDate);
+    } else if (difference.inDays >= 1) {
+      if (difference.inDays == 1) {
+        return 'Yesterday';
+      } else {
+        return '${difference.inDays} days ago';
+      }
+    } else if (difference.inHours >= 1) {
+      if (difference.inHours == 1) {
+        return '1 hour ago';
+      } else {
+        return '${difference.inHours} hours ago';
+      }
+    } else if (difference.inMinutes >= 1) {
+      if (difference.inMinutes == 1) {
+        return '1 minute ago';
+      } else {
+        return '${difference.inMinutes} minutes ago';
+      }
     } else {
-      return '${difference.inDays} days ago';
+      return 'Just now';
     }
-  } else if (difference.inHours >= 1) {
-    if (difference.inHours == 1) {
-      return '1 hour ago';
-    } else {
-      return '${difference.inHours} hours ago';
-    }
-  } else if (difference.inMinutes >= 1) {
-    if (difference.inMinutes == 1) {
-      return '1 minute ago';
-    } else {
-      return '${difference.inMinutes} minutes ago';
-    }
-  } else {
-    return 'Just now'; 
   }
-}
-
-
-
-
-
-
-
 
   File? get imgURl => imageURl;
 
@@ -206,7 +199,7 @@ class UserViewModel extends BaseViewModel {
   int get activeTab => _activeTab;
   String get publishedLength => _publishedLength;
 
-  get_posts.GetAllPosts?  get overallPosts => _overallPosts;
+  get_posts.GetAllPosts? get overallPosts => _overallPosts;
 
   List<get_posts.Posts> get posts =>
       _postsList.where((p) => p.isTrending == '1').toList();

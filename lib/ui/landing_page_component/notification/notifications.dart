@@ -192,7 +192,7 @@ bool showother =  false;
                       itemBuilder: (BuildContext context, index) {
                         return GestureDetector(
                           onTap: (){
-                            AppNavigator.pushAndStackPage(context, page:  NotificationsDetails(title: notifications[index].title!, description: notifications[index].content!, date:notifications[index].createdAt!,));
+                            AppNavigator.pushAndStackPage(context, page:  NotificationsDetails(title: notifications[index].title ?? '', description: notifications[index].content ?? '', date:notifications[index].createdAt ?? '',));
                           },
                           child: Container(
                             decoration:   BoxDecoration(
@@ -206,7 +206,7 @@ bool showother =  false;
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    notifications[index].title!.toUpperCase(),
+                                    notifications[index].title.toString().toUpperCase(),
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16,
@@ -214,7 +214,7 @@ bool showother =  false;
                                   ),
                                   SizedBox(height: 12.0),
                                   Text(
-                                    notifications[index].content!,
+                                    notifications[index].content ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     style: TextStyle(
@@ -225,7 +225,7 @@ bool showother =  false;
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                      timeFormat.getCurrentTime(int.parse(notifications[index].createdAt!))  ,
+                                      timeFormat.getCurrentTime(int.parse(notifications[index].createdAt ?? ''))  ,
                                       ),
                                      
                                        

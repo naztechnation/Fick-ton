@@ -73,7 +73,7 @@ class _PublishedPageState extends State<PublishedPage> {
                 user.setPublishedLength(
                     publishedLength: allPosts.length.toString());
               } else {
-                Modals.showToast(state.postLists.message!,
+                Modals.showToast(state.postLists.message ?? '',
                     messageType: MessageType.error);
               }
             } else if (state is UserNetworkErr) {
@@ -95,11 +95,11 @@ class _PublishedPageState extends State<PublishedPage> {
               if (state.deletePost.status == 1) {
                 _userCubit.getPost(url: AppStrings.getPosts(token));
                 Modals.showToast(
-                  state.deletePost.message!,
+                  state.deletePost.message ?? '',
                   messageType: MessageType.success,
                 );
               } else {
-                Modals.showToast(state.deletePost.message!,
+                Modals.showToast(state.deletePost.message ?? '',
                     messageType: MessageType.error);
               }
             }
@@ -121,7 +121,7 @@ class _PublishedPageState extends State<PublishedPage> {
                           return PublishedItems(
                             posts: allPosts[index],
                             onTap: () {
-                              _deletePost(context, allPosts[index].id!);
+                              _deletePost(context, allPosts[index].id ?? '');
                             },
                           );
                         });

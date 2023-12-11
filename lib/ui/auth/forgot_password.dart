@@ -45,7 +45,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             if (state.userData.status == 1) {
               Modals.showToast(state.userData.message ?? '',
                   messageType: MessageType.success);
-                setToken.setToken(state.userData.token!);
+                setToken.setToken(state.userData.token ?? '');
 
               AppNavigator.pushAndReplacePage(context,
                   page: OtpScreen(
@@ -58,11 +58,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             }
           } else if (state is AccountApiErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '', messageType: MessageType.error);
             }
           } else if (state is AccountNetworkErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '', messageType: MessageType.error);
             }
           }
         },

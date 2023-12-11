@@ -102,7 +102,7 @@ class DetailsPage extends StatelessWidget {
                           alignment: Alignment.bottomRight,
                           child: Text(
                               timeFormat
-                                  .getCurrentTime(int.parse(pinned.createdAt!)),
+                                  .getCurrentTime(int.parse(pinned.updatedAt ?? '0')),
                               style: TextStyle(fontSize: 14)),
                         ),
                       ],

@@ -101,7 +101,7 @@ class _ProfileState extends State<Profile> {
       body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
         if (state is ChangePasswordLoaded) {
           if (state.data.status == 1) {
-            Modals.showToast(state.data.message!,
+            Modals.showToast(state.data.message ?? '',
                 messageType: MessageType.error);
             StorageHandler.saveUserPassword(passwordController.text);
             getEmail();

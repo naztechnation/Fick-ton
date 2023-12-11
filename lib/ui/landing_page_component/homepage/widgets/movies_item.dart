@@ -76,7 +76,9 @@ class MoviesItems extends StatelessWidget {
                 ),
                 const SizedBox(height: 12.0),
                 Text(
-                  posts.title?.capitalizeFirstOfEach ?? '',
+                  posts.title?.capitalizeFirstOfEach.toString().replaceAll('&amp;amp;', '')
+      .replaceAll('&amp;quot;', '"')
+      .replaceAll('\n', '') ?? ''  ,
                   style: const TextStyle(
                       fontWeight: FontWeight.w700, fontSize: 16),
                 ),
@@ -85,7 +87,7 @@ class MoviesItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                       timeFormat.getCurrentTime(int.parse(posts.createdAt!)),
+                       timeFormat.getCurrentTime(int.parse(posts.updatedAt ?? '0')),
                     ),
                     const SizedBox(width: 8.0),
                     Padding(

@@ -38,7 +38,8 @@ class PublishedItems extends StatelessWidget {
           GestureDetector(
             onTap: (){
                AppNavigator.pushAndStackPage(context,
-                        page:   MovieDetailsScreen(videoLinks: posts.videoLink!, postId: posts.id!,));
+                        page:   MovieDetailsScreen(videoLinks: posts.videoLink ?? '0'
+                        , postId: posts.id ?? '0',));
             },
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
@@ -93,14 +94,14 @@ class PublishedItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                    timeFormat.getCurrentTime(int.parse(posts.createdAt!)),
+                    timeFormat.getCurrentTime(int.parse(posts.updatedAt ?? '0')),
                     ),
                     const SizedBox(width: 8.0),
                       Row(
                       children: [
                         GestureDetector(
                           onTap: (){
-                            NavigationHelper.navigateToPage(context, NewPost(isUpdate: true, postId: posts.id!,));
+                            NavigationHelper.navigateToPage(context, NewPost(isUpdate: true, postId: posts.id ?? '',));
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(right: 12.0),

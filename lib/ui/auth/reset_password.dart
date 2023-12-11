@@ -58,16 +58,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
                   overlays: SystemUiOverlay.values);
             } else {
-              Modals.showToast(state.userData.message!,
+              Modals.showToast(state.userData.message ?? '',
                   messageType: MessageType.error);
             }
           } else if (state is AccountApiErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '', messageType: MessageType.error);
             }
           } else if (state is AccountNetworkErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '', messageType: MessageType.error);
             }
           }
         },

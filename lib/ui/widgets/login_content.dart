@@ -179,12 +179,12 @@ class _LoginContentState extends State<LoginContent> {
             if (state is AccountUpdated) {
               if (state.user.status == 1) {
                 if (state.user.data!.status! == '1') {
-                  setToken.setToken(state.user.token!);
+                  setToken.setToken(state.user.token ?? '');
                   StorageHandler.saveUserEmail(_emailController.text);
                   StorageHandler.saveUserPassword(_passwordController.text);
-                  StorageHandler.saveUserGender(state.user.data!.gender!);
-                  StorageHandler.saveUserPhone(state.user.data!.phone!);
-                  StorageHandler.saveUserAdmin(state.user.data!.isAdmin!);
+                  StorageHandler.saveUserGender(state.user.data?.gender ?? '');
+                  StorageHandler.saveUserPhone(state.user.data?.phone ?? '');
+                  StorageHandler.saveUserAdmin(state.user.data?.isAdmin ?? '');
                   Modals.showToast(
                     state.user.message ?? '',
                   );
@@ -201,12 +201,12 @@ class _LoginContentState extends State<LoginContent> {
               }
             } else if (state is AccountApiErr) {
               if (state.message != null) {
-                Modals.showToast(state.message!,
+                Modals.showToast(state.message ?? '',
                     messageType: MessageType.error);
               }
             } else if (state is AccountNetworkErr) {
               if (state.message != null) {
-                Modals.showToast(state.message!,
+                Modals.showToast(state.message ?? '',
                     messageType: MessageType.error);
               }
             }

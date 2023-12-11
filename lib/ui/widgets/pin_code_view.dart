@@ -29,7 +29,7 @@ class PinCodeView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if(label!=null)...[
-          Text(label!,
+          Text(label ?? '',
               style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600
