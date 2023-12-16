@@ -76,9 +76,10 @@ class MoviesItems extends StatelessWidget {
                 ),
                 const SizedBox(height: 12.0),
                 Text(
-                  posts.title?.capitalizeFirstOfEach.toString().replaceAll('&amp;amp;', '')
+                  posts.title?.capitalizeFirstOfEach.
+                  toString().replaceAll('&amp;amp;', '')
       .replaceAll('&amp;quot;', '"')
-      .replaceAll('\n', '') ?? ''  ,
+      .replaceAll('\n', '').replaceAll('&amp;', ',') ?? ''  ,
                   style: const TextStyle(
                       fontWeight: FontWeight.w700, fontSize: 16),
                 ),

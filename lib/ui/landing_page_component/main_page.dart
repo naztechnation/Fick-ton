@@ -32,7 +32,7 @@ class _LandingPageState extends State<LandingPage> {
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(topLeft: Radius.circular(16))),
-        height: 70,
+        //height: 70,
         child: BottomNavigationBar(
           elevation: 12,
           items: <BottomNavigationBarItem>[

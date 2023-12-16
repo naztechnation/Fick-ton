@@ -1,4 +1,3 @@
-import 'package:fikkton/model/onboard_model/onboarding_contents.dart';
 import 'package:fikkton/ui/landing_page_component/homepage/movie_details_page.dart';
 import 'package:fikkton/ui/landing_page_component/homepage/search_page.dart';
 import 'package:fikkton/res/app_colors.dart';
@@ -6,7 +5,6 @@ import 'package:fikkton/ui/widgets/loading_page.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
