@@ -11,7 +11,7 @@ class AppStrings {
 
 
   /// Base
-  static const String _baseUrl = 'https://test.fikkton.com.ng/api/';
+  static const String _baseUrl = 'https://fikkton.com.ng/api/';
   
 
   /// User Endpoints

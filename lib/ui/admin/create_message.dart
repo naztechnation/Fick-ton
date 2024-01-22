@@ -1,5 +1,4 @@
 
-
 import 'package:fikkton/res/app_colors.dart';
 import 'package:fikkton/ui/widgets/button_view.dart';
 import 'package:fikkton/ui/widgets/text_edit_view.dart';
