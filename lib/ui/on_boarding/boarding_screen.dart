@@ -165,7 +165,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                  AppNavigator.pushAndReplacePage(context, page: const LoginScreen());
                                  
                                
-                            }, child: const Text("Start"),),
+                            }, child: const Text("Start",
+                                      style: TextStyle(color: Colors.white),
+
+
+                            ),),
                           )
                           : Padding(
                               padding: const EdgeInsets.symmetric(horizontal:16, vertical: 10),
@@ -179,7 +183,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       const Duration(milliseconds: 200),
                                   curve: Curves.easeIn,
                                 );
-                              }, child: const Text("NEXT"),),
+                              }, child: const Text("NEXT",
+                                      style: TextStyle(color: Colors.white),
+                              
+                              ),),
                             ),
                             if(_currentPage + 1 != contents.length)  TextButton(
                                     onPressed: () {

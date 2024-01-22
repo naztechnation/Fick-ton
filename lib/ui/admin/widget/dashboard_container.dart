@@ -45,7 +45,7 @@ class dashBoardContainer extends StatelessWidget {
                   title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 14,
                     color: txtColor,
                     fontWeight: FontWeight.w400,
                   ),
@@ -55,8 +55,8 @@ class dashBoardContainer extends StatelessWidget {
               if (imageUrl != '')
                 ImageView.svg(
                   imageUrl,
-                  width: 30,
-                  height: 20,
+                  width: 15,
+                  height: 15,
                   color: txtColor,
                 ),
             ],

@@ -173,7 +173,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   description: Text(
                                     analysis?.data?.posts ?? '',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   imageUrl: AppImages.news,
@@ -191,7 +191,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   description: Text(
                                     analysis?.data?.users ?? '',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   imageUrl: AppImages.group,
@@ -202,7 +202,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   description: Text(
                                     analysis?.data?.views ?? '',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   imageUrl: AppImages.visibility,

@@ -1,5 +1,6 @@
 
-import '../../res/app_strings.dart';
+
+import 'package:fikkton/handlers/secure_handler.dart';
 
 Future<Map<String, String>> rawDataHeader([String? token]) async {
   final accessToken = token;
@@ -10,8 +11,14 @@ Future<Map<String, String>> rawDataHeader([String? token]) async {
 }
 
 Future<Map<String, String>> formDataHeader([String? token]) async {
+
+ final accessToken = await StorageHandler.getUserToken();
    
-  return {
-    'Authorization': '',
+  return 
+  
+  
+  {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
   };
 }

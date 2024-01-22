@@ -2,14 +2,12 @@ import 'dart:io';
 
 import 'package:fikkton/res/app_colors.dart';
 import 'package:fikkton/ui/widgets/button_view.dart';
-import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:fikkton/ui/widgets/text_edit_view.dart';
 import 'package:fikkton/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../res/app_images.dart';
 import '../../blocs/user/user_cubit.dart';
 import '../../blocs/user/user_states.dart';
 import '../../model/view_models/account_view_model.dart';
@@ -161,7 +159,7 @@ class _AnnounceState extends State<CreateAnnouncement> {
                                   );
                                 },
                                 color: AppColors.lightSecondary,
-                                child: const Text('Send'),
+                                child: const Text('Send', style: TextStyle(color: Colors.white),),
                               ),
                               const SizedBox(
                                 height: 15,

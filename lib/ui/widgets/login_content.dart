@@ -158,6 +158,7 @@ class _LoginContentState extends State<LoginContent> {
             if (state is AccountLoaded) {
               if (state.userData.status == 1) {
                 setToken.setToken(state.userData.token!);
+                StorageHandler.saveUserToken(state.userData.token);
                 StorageHandler.saveUserEmail(_emailController.text);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
@@ -180,6 +181,8 @@ class _LoginContentState extends State<LoginContent> {
               if (state.user.status == 1) {
                 if (state.user.data!.status! == '1') {
                   setToken.setToken(state.user.token ?? '');
+                StorageHandler.saveUserToken(state.user.token);
+
                   StorageHandler.saveUserEmail(_emailController.text);
                   StorageHandler.saveUserPassword(_passwordController.text);
                   StorageHandler.saveUserGender(state.user.data?.gender ?? '');

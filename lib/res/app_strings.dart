@@ -11,7 +11,7 @@ class AppStrings {
 
 
   /// Base
-  static const String _baseUrl = 'https://fikkton.com.ng/api/';
+  static const String _baseUrl = 'https://test.fikkton.com.ng/api/';
   
 
   /// User Endpoints
@@ -36,13 +36,13 @@ class AppStrings {
   
 
   static const  String createNotificationUrl  = '${_baseUrl}notify/create';
-  static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total?token=$token';
-  static   String getNotifications(String token) => '${_baseUrl}notify/index?token=$token';
-  static   String bookmarkListUrl(String token) => '${_baseUrl}book/index?token=$token';
-  static   String getPosts(String token) => '${_baseUrl}posts/index?token=$token';
-  static   String getDashboardAnalysis(String token) => '${_baseUrl}analyses/total?token=$token';
-  static   String getDraftedPosts(String token) => '${_baseUrl}posts/draft?token=$token';
-  static   String getComments(String token, String post) => '${_baseUrl}comments/show?token=$token&post_id=$post';
-  static   String getPostsDetails(String token,String postId) => '${_baseUrl}posts/show?post_id=$postId&token=$token';
-  static   String filterPost(String token,String filterParams, String genre, String type) => '${_baseUrl}posts/filter?filter_by=$filterParams&genre=$genre&token=$token&type=$type';
+  static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total';
+  static   String getNotifications(String token) => '${_baseUrl}notify/index';
+  static   String bookmarkListUrl(String token) => '${_baseUrl}book/index';
+  static   String getPosts(String token) => '${_baseUrl}posts/index';
+  static   String getDashboardAnalysis(String token) => '${_baseUrl}analyses/total';
+  static   String getDraftedPosts(String token) => '${_baseUrl}posts/draft';
+  static   String getComments(String token, String post) => '${_baseUrl}comments/show?post_id=$post';
+  static   String getPostsDetails(String token,String postId) => '${_baseUrl}posts/show?post_id=$postId';
+  static   String filterPost(String token,String filterParams, String genre, String type) => '${_baseUrl}posts/filter?filter_by=$filterParams&genre=$genre&type=$type';
 }
