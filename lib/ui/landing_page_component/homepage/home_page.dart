@@ -239,7 +239,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final timeFormat = Provider.of<UserViewModel>(context, listen: true);
+    final timeFormat = Provider.of<UserViewModel>(context, listen: false);
 
     return Scaffold(
         body: BlocConsumer<UserCubit, UserStates>(

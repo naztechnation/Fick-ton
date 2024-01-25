@@ -36,11 +36,11 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   Future<AuthData> verifyCode(
-      {required String code, required String token,}) async {
+      {required String code, required String email,}) async {
     final map =
         await Requests().post(AppStrings.verifyCodeUrl, body: {
       "code": code,
-      "token": token,
+      "email": email,
     });
 
     return AuthData.fromJson(map);

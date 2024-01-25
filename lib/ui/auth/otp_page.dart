@@ -265,12 +265,12 @@ class _OtpScreenState extends State<OtpScreen> {
     });
   }
 
-  _verifyCode(BuildContext ctx, String token) async{
+  _verifyCode(BuildContext ctx, String email) async{
 
     if (_formKey.currentState!.validate()) {
      await ctx
           .read<AccountCubit>()
-          .verifyCode(code: _pinController.text, token: token);
+          .verifyCode(code: _pinController.text, email: widget.email);
 
            setState(() {
             isResetPassword = false;

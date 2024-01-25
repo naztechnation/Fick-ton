@@ -157,8 +157,8 @@ class _LoginContentState extends State<LoginContent> {
           listener: (context, state) {
             if (state is AccountLoaded) {
               if (state.userData.status == 1) {
-                setToken.setToken(state.userData.token!);
-                StorageHandler.saveUserToken(state.userData.token);
+               // setToken.setToken(state.userData.token!);
+               // StorageHandler.saveUserToken(state.userData.token);
                 StorageHandler.saveUserEmail(_emailController.text);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
