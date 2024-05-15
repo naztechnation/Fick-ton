@@ -75,7 +75,7 @@ class _MovieDetailsState extends State<MovieDetails> {
   late UserCubit _userCubit;
 
   Data? postDetails;
-  List<Comments> comments = [];
+  List<Datum> comments = [];
 
   bool isPostComment = false;
 
@@ -87,7 +87,7 @@ class _MovieDetailsState extends State<MovieDetails> {
     token = await StorageHandler.getUserToken() ?? '';
     email = await StorageHandler.getUserEmail() ?? '';
 
-    _userCubit.getPostDetails(token: token, postId: widget.postId);
+   await _userCubit.getPostDetails(token: token, postId: widget.postId);
 
     await _userCubit.getComment(token: token, postId: widget.postId);
 
@@ -116,6 +116,13 @@ class _MovieDetailsState extends State<MovieDetails> {
       if (state is CommentLoaded) {
         if (state.postComment.status == 1) {
           comments = state.postComment.data ?? [];
+        } else {}
+      }
+
+       if (state is DeleteCommentLoaded) {
+        if (state.deleteComment.status == 1) {
+          Modals.showToast(state.deleteComment.message ?? '');
+          _userCubit.getComment(token: token, postId: widget.postId);
         } else {}
       }
 
@@ -164,13 +171,13 @@ class _MovieDetailsState extends State<MovieDetails> {
         return const LoadingPage();
       }
 
-      return (state is PostDetailsLoading)
+      return (state is PostDetailsLoading || state is CommentLoading || state is DeleteCommentLoading)
           ? Scaffold(body: const LoadingPage())
           : Scaffold(
               body: Scaffold(
                   resizeToAvoidBottomInset: false,
                   body: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 13),
                     child: Column(
                       children: [
                         SafeArea(
@@ -288,7 +295,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Text(
+                                     if(postDetails?.updatedAt != null)   Text(
                                           timeFormat.getCurrentTime(int.parse(
                                               postDetails?.updatedAt ?? '0')),
                                         ),
@@ -306,9 +313,11 @@ class _MovieDetailsState extends State<MovieDetails> {
                                     //       postDetails?.content ?? '',
                                     // ),
                                     Text(
-                                      postDetails?.content?.replaceAll('&amp;amp;', '')
-      .replaceAll('&amp;quot;', '"')
-      .replaceAll('\n', '') ?? '',
+                                      postDetails?.content
+                                              ?.replaceAll('&amp;amp;', '')
+                                              .replaceAll('&amp;quot;', '"')
+                                              .replaceAll('\n', '') ??
+                                          '',
                                       textAlign: TextAlign.justify,
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500,
@@ -374,7 +383,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 16.0),
+                              const SizedBox(height: 6.0),
                               (state is CommentLoading)
                                   ? ProgressIndicators.circularProgressBar(
                                       context)
@@ -390,6 +399,19 @@ class _MovieDetailsState extends State<MovieDetails> {
                                               comments[index].comment ?? '',
                                           title: replaceSubstring(
                                               comments[index].email ?? ''),
+                                               createComment: (String value) { 
+                                                if (value.isNotEmpty) {
+                                                 createComment(context, widget.postId,
+                                            value, comments[index].id ?? '');
+                                                } else {
+                                                  Modals.showToast('Please enter a comment to post');
+                                                }
+                                               }, repliedComments: comments[index].replies ?? [], 
+                                               userEmail: email,
+                                                deleteComment: (String value) async{ 
+                                                await _userCubit.deleteComment(commentId: value );
+
+                                                },
                                         );
                                       }),
                             ],
@@ -444,13 +466,21 @@ class _MovieDetailsState extends State<MovieDetails> {
                                     suffixIcon: GestureDetector(
                                       onTap: () {
                                         createComment(context, widget.postId,
-                                            commentController.text);
+                                            commentController.text, '');
                                       },
-                                      child: const SizedBox(
+                                      child:   Container(
                                           height: 10,
-                                          child: ImageView.svg(
-                                            AppImages.send,
-                                            height: 10,
+                                          margin: const EdgeInsets.only(right: 8),
+                                          decoration: BoxDecoration(shape: BoxShape.circle,
+                                           color: AppColors.lightPrimary,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: ImageView.svg(
+                                              AppImages.send,
+                                              height: 5,
+                                              color: Colors.white,
+                                            ),
                                           )),
                                     ),
                                   ),
@@ -462,12 +492,12 @@ class _MovieDetailsState extends State<MovieDetails> {
     });
   }
 
-  createComment(BuildContext ctx, String postId, String comment) {
+  createComment(BuildContext ctx, String postId, String comment, String replyTo) {
     // Modals.showToast(postId);
     if (_formKey.currentState!.validate()) {
       ctx
           .read<UserCubit>()
-          .createComment(token: token, postId: postId, comment: comment);
+          .createComment(token: token, postId: postId, comment: comment, replyTo: replyTo);
       FocusScope.of(ctx).unfocus();
     }
   }

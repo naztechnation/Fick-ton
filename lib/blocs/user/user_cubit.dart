@@ -162,6 +162,7 @@ class UserCubit extends Cubit<UserStates> {
     required String token,
     required String postId,
     required String comment,
+    required String replyTo,
   }) async {
     try {
       emit(CreateCommentLoading());
@@ -169,10 +170,40 @@ class UserCubit extends Cubit<UserStates> {
       final comments = await userRepository.createComment(
         token: token,
         postId: postId,
-        comment: comment,
+        comment: comment, replyTo: replyTo,
       );
 
       emit(CreateCommentLoaded(comments));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> deleteComment({
+     
+    required String commentId,
+     
+  }) async {
+    try {
+      emit(DeleteCommentLoading());
+
+      final comments = await userRepository.deleteComment(
+        
+        commentId: commentId,
+         
+      );
+
+      emit(DeleteCommentLoaded(comments));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {

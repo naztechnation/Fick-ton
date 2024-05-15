@@ -6,6 +6,8 @@ import 'package:fikkton/model/posts/get_posts.dart';
 import 'package:fikkton/model/posts/post_details.dart';
 
 import '../../model/posts/admin_model.dart';
+import '../../model/posts/create_comments.dart';
+import '../../model/posts/delete_confirm.dart';
 import '../../model/posts/notification_model.dart';
 
 
@@ -121,10 +123,22 @@ class CreateCommentLoading extends UserStates {
 }
 
 class CreateCommentLoaded extends UserStates {
-  final CommentData postComment;
+  final CreateComment postComment;
   const CreateCommentLoaded(this.postComment);
   @override
   List<Object> get props => [postComment];
+}
+
+class DeleteCommentLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class DeleteCommentLoaded extends UserStates {
+  final DeleteComment deleteComment;
+  const DeleteCommentLoaded(this.deleteComment);
+  @override
+  List<Object> get props => [deleteComment];
 }
 
 class CommentLoading extends UserStates {

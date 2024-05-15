@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:fikkton/model/auth_model/login.dart';
 import 'package:fikkton/model/posts/admin_model.dart';
+import 'package:fikkton/model/posts/delete_confirm.dart';
 import 'package:fikkton/model/posts/get_posts.dart';
 import 'package:fikkton/model/posts/notification_model.dart';
 
 import '../../../model/posts/bookmark_lists.dart';
 import '../../../model/posts/comment_lists.dart';
+import '../../../model/posts/create_comments.dart';
 import '../../../model/posts/post_details.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
@@ -46,23 +48,25 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<GetAllPosts> getAllPosts({ required String url}) async {
+  Future<GetAllPosts> getAllPosts({required String url}) async {
     final map = await Requests().get(url);
 
     return GetAllPosts.fromJson(map);
   }
 
   @override
-  Future<PostDetails> getPostsDetails({required String token, required String postId}) async {
-    final map = await Requests().get(AppStrings.getPostsDetails(token,postId));
+  Future<PostDetails> getPostsDetails(
+      {required String token, required String postId}) async {
+    final map = await Requests().get(AppStrings.getPostsDetails(token, postId));
 
     return PostDetails.fromJson(map);
   }
 
   @override
-  Future<CommentData> createComment(
+  Future<CreateComment> createComment(
       {required String token,
       required String postId,
+      required String replyTo,
       required String comment}) async {
     final map = await Requests().post(
       AppStrings.createComments,
@@ -70,21 +74,26 @@ class UserRepositoryImpl implements UserRepository {
         "token": token,
         "comment": comment,
         "post_id": postId,
+        "reply_to": replyTo,
       },
     );
 
+    return CreateComment.fromJson(map);
+  }
+
+  @override
+  Future<CommentData> getComment(
+      {required String token, required String postId}) async {
+    final map = await Requests().get(AppStrings.getComments(token, postId));
+
     return CommentData.fromJson(map);
   }
 
   @override
-  Future<CommentData> getComment({required String token, required String postId}) async {
-    final map = await Requests().get(AppStrings.getComments(token,postId));
-
-    return CommentData.fromJson(map);
-  }
-  
-  @override
-  Future<AuthData> likeBookmark({required String token, required String postId, required String url}) async {
+  Future<AuthData> likeBookmark(
+      {required String token,
+      required String postId,
+      required String url}) async {
     final map = await Requests().post(
       url,
       body: {
@@ -92,10 +101,14 @@ class UserRepositoryImpl implements UserRepository {
         "post_id": postId,
       },
     );
-        return AuthData.fromJson(map);
+    return AuthData.fromJson(map);
   }
-@override
-  Future<AuthData> createNotification({required String token, required String title, required String content}) async {
+
+  @override
+  Future<AuthData> createNotification(
+      {required String token,
+      required String title,
+      required String content}) async {
     final map = await Requests().post(
       AppStrings.createNotificationUrl,
       body: {
@@ -109,35 +122,42 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<BookmarkList> bookmarkList({required String token,}) async {
-    final map = await Requests().get(
-      AppStrings.bookmarkListUrl(token)
-       
-    );
+  Future<BookmarkList> bookmarkList({
+    required String token,
+  }) async {
+    final map = await Requests().get(AppStrings.bookmarkListUrl(token));
 
     return BookmarkList.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> deletePost({required String token, required String postId, required String url,  }) async {
-    final map = await Requests().post(url,
-    body: {
+  Future<AuthData> deletePost({
+    required String token,
+    required String postId,
+    required String url,
+  }) async {
+    final map = await Requests().post(
+      url,
+      body: {
         "token": token,
         "post_id": postId,
-         
       },
     );
 
     return AuthData.fromJson(map);
   }
 
-    @override
-  Future<AuthData> deletePinPost({required String token, required String postId, required String url,   }) async {
-    final map = await Requests().post(url,
-    body: {
+  @override
+  Future<AuthData> deletePinPost({
+    required String token,
+    required String postId,
+    required String url,
+  }) async {
+    final map = await Requests().post(
+      url,
+      body: {
         "token": token,
         "pin_id": postId,
-         
       },
     );
 
@@ -146,73 +166,86 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<DashBoardAnalysis> dashboardAnalysis({required String token}) async {
-    final map = await Requests().get(
-      AppStrings.getDashboardAnalysis(token)
-       
-    );
+    final map = await Requests().get(AppStrings.getDashboardAnalysis(token));
 
     return DashBoardAnalysis.fromJson(map);
   }
 
   @override
   Future<NotificationData> getNotifications({required String token}) async {
-    final map = await Requests().get(
-      AppStrings.getNotifications(token)
-       
-    );
+    final map = await Requests().get(AppStrings.getNotifications(token));
 
     return NotificationData.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> deleteNotification({required String token, required String notifyId})  async {
-    final map = await Requests().post(AppStrings.deleteNotification,
-    body: {
+  Future<AuthData> deleteNotification(
+      {required String token, required String notifyId}) async {
+    final map = await Requests().post(
+      AppStrings.deleteNotification,
+      body: {
         "token": token,
         "notify_id": notifyId,
-         
       },
     );
 
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> changePassword({required String token, required String password})  async {
-    final map = await Requests().post(AppStrings.changePasswordUrl,
-    body: {
+  Future<AuthData> changePassword(
+      {required String token, required String password}) async {
+    final map = await Requests().post(
+      AppStrings.changePasswordUrl,
+      body: {
         "token": token,
         "password": password,
-         
       },
     );
 
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<GetAllPosts> filterPost({required String token, required String genre, required String filterParams, required String type}) async {
-    final map = await Requests().get(
-      AppStrings.filterPost(token, filterParams, genre, type)
-       
-    );
+  Future<GetAllPosts> filterPost(
+      {required String token,
+      required String genre,
+      required String filterParams,
+      required String type}) async {
+    final map = await Requests()
+        .get(AppStrings.filterPost(token, filterParams, genre, type));
 
     return GetAllPosts.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> createAnnouncement({required String token, required String videoLink, required String content,   File? thumbnail}) async {
-    final map = await Requests().post(AppStrings.createAnnouncementUrl,
+  Future<AuthData> createAnnouncement(
+      {required String token,
+      required String videoLink,
+      required String content,
+      File? thumbnail}) async {
+    final map = await Requests().post(
+      AppStrings.createAnnouncementUrl,
       files: {'thumbnail': thumbnail ?? File('')},
-    body: {
+      body: {
         "token": token,
         "content": content,
         "video_link": content,
-       
-         
       },
     );
 
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<DeleteComment> deleteComment({required String commentId}) async {
+    final map = await Requests().post(
+      AppStrings.deleteCommentUrl,
+      body: {
+        "comment_id": commentId,
+      },
+    );
+
+    return DeleteComment.fromJson(map);
   }
 }

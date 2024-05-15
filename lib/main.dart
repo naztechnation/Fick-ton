@@ -81,6 +81,7 @@ Future<void> main() async {
 
   _firebaseMessaging.getToken().then((token) async {
     
+    
    
   });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
