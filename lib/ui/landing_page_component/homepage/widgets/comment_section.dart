@@ -4,8 +4,10 @@ import 'package:fikkton/ui/widgets/button_view.dart';
 import 'package:fikkton/ui/widgets/modals.dart';
 import 'package:fikkton/ui/widgets/text_edit_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../model/posts/comment_lists.dart';
+import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_images.dart';
 import '../../../widgets/image_view.dart';
 
@@ -13,15 +15,19 @@ class CommentSection extends StatefulWidget {
   final String title;
   final String userEmail;
   final String comment;
+  final String commentEmail;
+  final String commentId;
   final List<Comments> repliedComments;
   final Function(String value) createComment;
   final Function(String value) deleteComment;
+  final bool isLoading;
 
   CommentSection(
       {required this.title,
       required this.comment,
+      required this.commentId,
       required this.createComment,
-      required this.repliedComments, required this.userEmail, required this.deleteComment});
+      required this.repliedComments, required this.userEmail, required this.deleteComment, required this.commentEmail, required this.isLoading});
 
   @override
   State<CommentSection> createState() => _CommentSectionState();
@@ -56,6 +62,7 @@ class _CommentSectionState extends State<CommentSection> {
   @override
   Widget build(BuildContext context) {
 
+    final timeFormat = Provider.of<UserViewModel>(context, listen: true);
    
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
@@ -66,33 +73,54 @@ class _CommentSectionState extends State<CommentSection> {
           child: Column(
             children: [
               Row(
-                children: <Widget>[
-                  Container(
-                    width: 31,
-                    //height: 31,
-                    decoration: const BoxDecoration(
-                      color: AppColors.lightPrimary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        widget.title.isNotEmpty ? widget.title[0].toUpperCase() : '?',
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        width: 31,
+                        //height: 31,
+                        decoration: const BoxDecoration(
+                          color: AppColors.lightPrimary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            widget.title.isNotEmpty ? widget.title[0].toUpperCase() : '?',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        widget.title,
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(width: 16),
-                  Text(
-                    widget.title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  if (widget.userEmail.trim() == widget.commentEmail.toString().trim() || isAdmin == '1')
+                                GestureDetector(
+                                    onTap: () {
+                                      Modals.showAlertOptionDialog(context,
+                                          title: 'Delete Comment',
+                                          message:
+                                              'Are you sure you want to delete this comment?',
+                                          callback: () {
+                                             Modals.showToast(isAdmin);
+                                             //widget.deleteComment(widget.commentId); 
+                                          });
+                                    },
+                                    child: ImageView.asset(
+                                      AppImages.deleteComment,
+                                      height: 16,
+                                    ))
                 ],
               ),
               const SizedBox(height: 12),
@@ -188,6 +216,7 @@ class _CommentSectionState extends State<CommentSection> {
               GestureDetector(
                 onTap: () {
                   hideComment();
+                  timeFormat.isHideCommentBox(hide: comment);
                 },
                 child: Container(
                   color: Colors.white,
@@ -240,7 +269,7 @@ class _CommentSectionState extends State<CommentSection> {
                         const SizedBox(height: 5),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: ButtonView(
+                          child: widget.isLoading ? Text('Loading...'): ButtonView(
                             expanded: false,
                             padding:
                                 EdgeInsets.symmetric(vertical: 8, horizontal: 14),

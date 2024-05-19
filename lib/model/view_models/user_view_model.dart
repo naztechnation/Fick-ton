@@ -18,6 +18,7 @@ class UserViewModel extends BaseViewModel {
   String _draftLength = "0";
   String _publishedLength = "0";
   int _activeTab = 0;
+  bool _hideCommentBox = false;
 
   get_posts.GetAllPosts? _overallPosts;
   List<get_posts.Pinned> _pinnedPosts = [];
@@ -161,6 +162,13 @@ class UserViewModel extends BaseViewModel {
     return time;
   }
 
+  isHideCommentBox({required bool hide}){
+    _hideCommentBox = hide;
+
+    setViewState(ViewState.success);
+
+  }
+
   String formatTimeAgo(DateTime inputDate) {
     DateTime now = DateTime.now();
     Duration difference = now.difference(inputDate);
@@ -197,6 +205,7 @@ class UserViewModel extends BaseViewModel {
   List<get_posts.Pinned> get pinnedList => _pinnedPosts;
   String get draftedLength => _draftLength;
   int get activeTab => _activeTab;
+  bool get hideComment => _hideCommentBox;
   String get publishedLength => _publishedLength;
 
   get_posts.GetAllPosts? get overallPosts => _overallPosts;

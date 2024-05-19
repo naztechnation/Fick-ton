@@ -196,11 +196,11 @@ class _LoginContentState extends State<LoginContent> {
                       page: const LandingPage());
                 } else {
                   Modals.showToast(state.user.message ?? '',
-                      messageType: MessageType.success);
+                     );
                 }
               } else {
                 Modals.showToast(state.user.message ?? '',
-                    messageType: MessageType.success);
+                    );
               }
             } else if (state is AccountApiErr) {
               if (state.message != null) {

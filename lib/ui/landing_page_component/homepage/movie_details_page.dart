@@ -87,7 +87,7 @@ class _MovieDetailsState extends State<MovieDetails> {
     token = await StorageHandler.getUserToken() ?? '';
     email = await StorageHandler.getUserEmail() ?? '';
 
-   await _userCubit.getPostDetails(token: token, postId: widget.postId);
+    await _userCubit.getPostDetails(token: token, postId: widget.postId);
 
     await _userCubit.getComment(token: token, postId: widget.postId);
 
@@ -119,7 +119,7 @@ class _MovieDetailsState extends State<MovieDetails> {
         } else {}
       }
 
-       if (state is DeleteCommentLoaded) {
+      if (state is DeleteCommentLoaded) {
         if (state.deleteComment.status == 1) {
           Modals.showToast(state.deleteComment.message ?? '');
           _userCubit.getComment(token: token, postId: widget.postId);
@@ -131,6 +131,8 @@ class _MovieDetailsState extends State<MovieDetails> {
           Modals.showToast(state.postComment.message ?? '');
           commentController.text = '';
           _userCubit.getComment(token: token, postId: widget.postId);
+
+          timeFormat.isHideCommentBox(hide: false);
         } else {}
       }
       if (state is CreateCommentLoading) {
@@ -171,7 +173,9 @@ class _MovieDetailsState extends State<MovieDetails> {
         return const LoadingPage();
       }
 
-      return (state is PostDetailsLoading || state is CommentLoading || state is DeleteCommentLoading)
+      return (state is PostDetailsLoading ||
+              state is CommentLoading ||
+              state is DeleteCommentLoading)
           ? Scaffold(body: const LoadingPage())
           : Scaffold(
               body: Scaffold(
@@ -295,10 +299,11 @@ class _MovieDetailsState extends State<MovieDetails> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                     if(postDetails?.updatedAt != null)   Text(
-                                          timeFormat.getCurrentTime(int.parse(
-                                              postDetails?.updatedAt ?? '0')),
-                                        ),
+                                        if (postDetails?.updatedAt != null)
+                                          Text(
+                                            timeFormat.getCurrentTime(int.parse(
+                                                postDetails?.updatedAt ?? '0')),
+                                          ),
                                       ],
                                     ),
                                     const SizedBox(
@@ -399,19 +404,28 @@ class _MovieDetailsState extends State<MovieDetails> {
                                               comments[index].comment ?? '',
                                           title: replaceSubstring(
                                               comments[index].email ?? ''),
-                                               createComment: (String value) { 
-                                                if (value.isNotEmpty) {
-                                                 createComment(context, widget.postId,
-                                            value, comments[index].id ?? '');
-                                                } else {
-                                                  Modals.showToast('Please enter a comment to post');
-                                                }
-                                               }, repliedComments: comments[index].replies ?? [], 
-                                               userEmail: email,
-                                                deleteComment: (String value) async{ 
-                                                await _userCubit.deleteComment(commentId: value );
-
-                                                },
+                                          createComment: (String value) {
+                                            if (value.isNotEmpty) {
+                                              createComment(
+                                                  context,
+                                                  widget.postId,
+                                                  value,
+                                                  comments[index].id ?? '');
+                                            } else {
+                                              Modals.showToast(
+                                                  'Please enter a comment to post');
+                                            }
+                                          },
+                                          repliedComments:
+                                              comments[index].replies ?? [],
+                                          userEmail: email,
+                                          deleteComment: (String value) async {
+                                            await _userCubit.deleteComment(
+                                                commentId: value);
+                                          },
+                                          commentId: comments[index].id ?? '',
+                                          commentEmail:
+                                              comments[index].email ?? '', isLoading: state is CreateCommentLoading,
                                         );
                                       }),
                             ],
@@ -425,81 +439,96 @@ class _MovieDetailsState extends State<MovieDetails> {
                           height: 25,
                           padding: const EdgeInsets.only(bottom: 20),
                           child: ProgressIndicators.linearProgressBar(context))
-                      : SizedBox(
-                          height: 90,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 31,
-                                  height: 31,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.lightPrimary,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      email.isNotEmpty
-                                          ? email[0].toUpperCase()
-                                          : '?',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                      : (!timeFormat.hideComment)
+                          ? SizedBox(
+                              height: 90,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 31,
+                                      height: 31,
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.lightPrimary,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          email.isNotEmpty
+                                              ? email[0].toUpperCase()
+                                              : '?',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 14,
-                                ),
-                                Expanded(
-                                    child: Form(
-                                  key: _formKey,
-                                  child: TextEditView(
-                                    controller: commentController,
-                                    isDense: true,
-                                    filled: true,
-                                    hintText: 'Add a comment',
-                                    fillColor: Colors.grey.shade50,
-                                    suffixIcon: GestureDetector(
-                                      onTap: () {
-                                        createComment(context, widget.postId,
-                                            commentController.text, '');
-                                      },
-                                      child:   Container(
-                                          height: 10,
-                                          margin: const EdgeInsets.only(right: 8),
-                                          decoration: BoxDecoration(shape: BoxShape.circle,
-                                           color: AppColors.lightPrimary,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: ImageView.svg(
-                                              AppImages.send,
-                                              height: 5,
-                                              color: Colors.white,
-                                            ),
-                                          )),
+                                    const SizedBox(
+                                      width: 14,
                                     ),
-                                  ),
-                                )),
-                              ],
-                            ),
-                          ),
-                        )));
+                                    Expanded(
+                                        child: Form(
+                                      key: _formKey,
+                                      child: TextEditView(
+                                        controller: commentController,
+                                        isDense: true,
+                                        filled: true,
+                                        hintText: 'Add a comment',
+                                        fillColor: Colors.grey.shade50,
+                                        suffixIcon: GestureDetector(
+                                          onTap: () {
+                                            if (commentController.text
+                                                .trim()
+                                                .isNotEmpty) {
+                                              createComment(
+                                                  context,
+                                                  widget.postId,
+                                                  commentController.text,
+                                                  '');
+                                            } else {
+                                              Modals.showToast(
+                                                  'Enter a comment to continue');
+                                            }
+                                          },
+                                          child: Container(
+                                              height: 10,
+                                              margin: const EdgeInsets.only(
+                                                  right: 8),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppColors.lightPrimary,
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: ImageView.svg(
+                                                  AppImages.send,
+                                                  height: 5,
+                                                  color: Colors.white,
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                    )),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : SizedBox.shrink()));
     });
   }
 
-  createComment(BuildContext ctx, String postId, String comment, String replyTo) {
+  createComment(
+      BuildContext ctx, String postId, String comment, String replyTo) {
     // Modals.showToast(postId);
-    if (_formKey.currentState!.validate()) {
-      ctx
-          .read<UserCubit>()
-          .createComment(token: token, postId: postId, comment: comment, replyTo: replyTo);
+
+      ctx.read<UserCubit>().createComment(
+          token: token, postId: postId, comment: comment, replyTo: replyTo);
       FocusScope.of(ctx).unfocus();
-    }
+    
   }
 
   likeBookmark(BuildContext ctx, String postId, String url) {
