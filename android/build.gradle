@@ -1,20 +1,24 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = "2.0.20"
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = uri("https://storage.googleapis.com/r8-releases/raw")
+        }
+
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
-        // START: FlutterFire Configuration
-        classpath 'com.google.gms:google-services:4.3.14'
-        // END: FlutterFire Configuration
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath "com.android.tools.build:gradle:8.1.0"
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        classpath "com.google.gms:google-services:4.3.10"
+        classpath "com.android.tools:r8:8.2.24";
     }
 }
 
 allprojects {
+    //ext.kotlin_version = '1.9.0'
     repositories {
         google()
         mavenCentral()
@@ -26,7 +30,26 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    afterEvaluate {
+        if (it.name == "flutter_inappwebview_android") {
+            it.android.buildTypes.release.minifyEnabled = false
+        }
+    }
+}
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                if (namespace == null) {
+                    namespace project.group
+                }
+            }
+        }
+    }
+}
+subprojects {
+    project.evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {

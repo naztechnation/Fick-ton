@@ -6,7 +6,7 @@ class ProgressIndicators{
 
   static Widget circularProgressBar(BuildContext context,
       {double? value, double strokeWidth=2.5}) {
-    return CircularProgressIndicator(
+    return CircularProgressIndicator.adaptive(
         value: value,
         strokeWidth: strokeWidth,
         valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),

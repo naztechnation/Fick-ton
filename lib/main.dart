@@ -12,7 +12,6 @@ import 'res/app_strings.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await setupFlutterNotifications();
   showFlutterNotification(message);
@@ -32,7 +31,6 @@ Future<void> setupFlutterNotifications() async {
   if (isFlutterLocalNotificationsInitialized) {
     return;
   }
-
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
@@ -74,38 +72,34 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  
-  
-   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  
 
-  _firebaseMessaging.getToken().then((token) async {
-    
-   
-  });
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  _firebaseMessaging.getToken().then((token) async {});
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     if (message.data != {}) {
-      
       Future.delayed(Duration(seconds: 10), () {});
       showFlutterNotification(message);
     }
   });
 
-SystemChrome.setPreferredOrientations(
+  SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
-   runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => PageIndexProvider(), lazy: false),
-      ChangeNotifierProvider(create: (_) => AccountViewModel(), lazy: false),
-      ChangeNotifierProvider(create: (_) => UserViewModel(), lazy: false),
-    ],
-    child: const Fikkton(),
-  ), );
-    
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (_) => PageIndexProvider(), lazy: false),
+          ChangeNotifierProvider(
+              create: (_) => AccountViewModel(), lazy: false),
+          ChangeNotifierProvider(create: (_) => UserViewModel(), lazy: false),
+        ],
+        child: const Fikkton(),
+      ),
+    );
   });
-  
 }
 
 class Fikkton extends StatefulWidget {
@@ -115,14 +109,13 @@ class Fikkton extends StatefulWidget {
   State<Fikkton> createState() => _FikktonState();
 }
 
-class _FikktonState extends State<Fikkton> with WidgetsBindingObserver{
-
+class _FikktonState extends State<Fikkton> with WidgetsBindingObserver {
   String? initialMessage;
   bool _resolved = false;
 
   @override
   void initState() {
-     FirebaseMessaging.instance.getInitialMessage().then(
+    FirebaseMessaging.instance.getInitialMessage().then(
           (value) => setState(
             () {
               _resolved = true;
@@ -130,7 +123,6 @@ class _FikktonState extends State<Fikkton> with WidgetsBindingObserver{
             },
           ),
         );
-     
 
     FirebaseMessaging.onMessage.listen(showFlutterNotification);
 
@@ -138,7 +130,7 @@ class _FikktonState extends State<Fikkton> with WidgetsBindingObserver{
       print('A new onMessageOpenedApp event was published!');
     });
     super.initState();
-   WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -146,6 +138,7 @@ class _FikktonState extends State<Fikkton> with WidgetsBindingObserver{
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
