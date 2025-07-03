@@ -7,6 +7,7 @@ import 'handlers/secure_handler.dart';
 import 'res/app_colors.dart';
 import 'res/app_images.dart';
 import 'res/app_routes.dart';
+import 'ui/admin/new_post_page.dart';
 import 'ui/landing_page_component/main_page.dart';
 import 'ui/widgets/image_view.dart';
 import 'utils/navigator/page_navigator.dart';
@@ -44,17 +45,21 @@ class SplashScreenState extends State<SplashScreen>
 
   void navigationPage() {
 
-    if (isOnBoarding == '') {
-          AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
+    
 
-    } else if (userLoggedIn) {
-      AppNavigator.pushAndReplacePage(context,
-                      page: const LandingPage());
+     AppNavigator.pushAndReplacePage(context, page: MovieArticleUploadPage());
+
+    // if (isOnBoarding == '') {
+    //       AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
+
+    // } else if (userLoggedIn) {
+    //   AppNavigator.pushAndReplacePage(context,
+    //                   page: const LandingPage());
      
-    }else{
-      StorageHandler.logout();
-       AppNavigator.pushAndReplacePage(context, page:LoginScreen());
-    }
+    // }else{
+    //   StorageHandler.logout();
+    //    AppNavigator.pushAndReplacePage(context, page:LoginScreen());
+    // }
   }
     
   

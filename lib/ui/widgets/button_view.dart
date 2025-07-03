@@ -45,6 +45,7 @@ class ButtonView extends StatelessWidget {
     final buttonStyle = ElevatedButton.styleFrom(
       backgroundColor: effectiveColor,
       padding: padding,
+      foregroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(borderRadius),
         side: BorderSide(
@@ -54,7 +55,7 @@ class ButtonView extends StatelessWidget {
       ),
       textStyle: TextStyle(
         fontSize: fontSize,
-        color: effectiveTextColor,
+         
       ),
     );
 

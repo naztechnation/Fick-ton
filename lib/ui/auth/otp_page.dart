@@ -216,6 +216,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                               
                                               color: AppColors.lightSecondary,
                                               decoration: TextDecoration.underline,
+                                              decorationColor: AppColors.lightSecondary,
                                               fontWeight: FontWeight.w700,
                                               fontFamily: AppStrings.interSans,
                                               height: 2),
