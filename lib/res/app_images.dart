@@ -29,7 +29,7 @@ class AppImages {
   static const homeOutline = '${_baseUrl}home_outline.svg';
   static const thumbUp = '${_baseUrl}thumb_up.svg';
   static const send = '${_baseUrl}send.svg';
-  static const play = '${_baseUrl}play_circle.svg';
+  static const pla = '${_baseUrl}play_circle.svg';
   static const bookmark = '${_baseUrl}bookmark.svg';
   static const bookmarkOutline = '${_baseUrl}bookmark_outline.svg';
   static const notifications = '${_baseUrl}notifications.svg';

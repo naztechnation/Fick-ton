@@ -47,19 +47,19 @@ class SplashScreenState extends State<SplashScreen>
 
     
 
-     AppNavigator.pushAndReplacePage(context, page: MovieArticleUploadPage());
+    // AppNavigator.pushAndReplacePage(context, page: MovieArticleUploadPage());
 
-    // if (isOnBoarding == '') {
-    //       AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
+    if (isOnBoarding == '') {
+          AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
 
-    // } else if (userLoggedIn) {
-    //   AppNavigator.pushAndReplacePage(context,
-    //                   page: const LandingPage());
+    } else if (userLoggedIn) {
+      AppNavigator.pushAndReplacePage(context,
+                      page: const LandingPage());
      
-    // }else{
-    //   StorageHandler.logout();
-    //    AppNavigator.pushAndReplacePage(context, page:LoginScreen());
-    // }
+    }else{
+      StorageHandler.logout();
+       AppNavigator.pushAndReplacePage(context, page:LoginScreen());
+    }
   }
     
   

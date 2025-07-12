@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:fikkton/blocs/user/user.dart';
@@ -52,8 +50,7 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
     _userCubit.getPost(url: AppStrings.getPosts(token));
   }
 
-    List<Pinned> pinned = [];
-
+  List<Pinned> pinned = [];
 
   @override
   void initState() {
@@ -63,19 +60,18 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
 
   @override
   Widget build(BuildContext context) {
-     
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
         if (state is PostListsLoaded) {
           if (state.postLists.status == 1) {
-            Modals.showToast(state.postLists.message ?? '',
-                messageType: MessageType.success);
-                              pinned = state.postLists.data?.pinned ??  [];
-
+            // Modals.showToast(state.postLists.message ?? '',
+            //     messageType: MessageType.success);
+            pinned = state.postLists.data?.pinned ?? [];
           } else {
-           Modals.showToast(state.postLists.message ?? '',  messageType: MessageType.success);
+            // Modals.showToast(state.postLists.message ?? '',
+            //     messageType: MessageType.success);
           }
-        }else if (state is DeletePostLoaded) {
+        } else if (state is DeletePostLoaded) {
           if (state.deletePost.status == 1) {
             _userCubit.getPost(url: AppStrings.getPosts(token));
             Modals.showToast(
@@ -88,9 +84,7 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
           }
         }
       }, builder: (context, state) {
-         
-        
-         if (state is UserNetworkErr) {
+        if (state is UserNetworkErr) {
           return EmptyWidget(
             title: 'Network error',
             description: state.message,
@@ -99,13 +93,11 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
           );
         } else if (state is UserNetworkErrApiErr) {
           return EmptyWidget(
-            title: 'Network error',
-            description: state.message,
-            onRefresh: () =>
-                _userCubit.getPost(url: AppStrings.getPosts(token))
-          );
+              title: 'Network error',
+              description: state.message,
+              onRefresh: () =>
+                  _userCubit.getPost(url: AppStrings.getPosts(token)));
         }
-        
 
         return (state is PostListsLoading ||
                 state is DeletePostLoading ||
@@ -115,7 +107,8 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
                 ? const SizedBox(
                     height: 390,
                     child: Align(
-                        alignment: Alignment.center, child: Text('Announcements')),
+                        alignment: Alignment.center,
+                        child: Text('Announcements')),
                   )
                 : ListView.builder(
                     itemCount: pinned.length,
@@ -124,8 +117,6 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
                     itemBuilder: (BuildContext context, index) {
                       return AnnounceItems(
                         pin: pinned[index],
-                        
-                        
                         onDeleteTapped: () {
                           _deletePost(context, pinned[index].id ?? '');
                         },
@@ -136,9 +127,11 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
   }
 
   _deletePost(BuildContext ctx, String postId) {
-    ctx.read<UserCubit>().deletePinPost(postId: postId, token: token, url: AppStrings.deletePinned,);
+    ctx.read<UserCubit>().deletePinPost(
+          postId: postId,
+          token: token,
+          url: AppStrings.deletePinned,
+        );
     FocusScope.of(ctx).unfocus();
   }
-
-  
 }

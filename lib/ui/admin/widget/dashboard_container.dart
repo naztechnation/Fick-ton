@@ -45,7 +45,7 @@ class dashBoardContainer extends StatelessWidget {
                   title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 12,
                     color: txtColor,
                     fontWeight: FontWeight.w400,
                   ),

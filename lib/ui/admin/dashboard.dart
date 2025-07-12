@@ -1,5 +1,4 @@
 import 'package:fikkton/res/app_colors.dart';
-import 'package:fikkton/ui/landing_page_component/homepage/widgets/user_geograph.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';

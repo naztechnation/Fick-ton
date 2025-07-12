@@ -26,7 +26,7 @@ class _CoverImageContainerState extends State<CoverImageContainer> {
         user.loadImage(context);
       },
       child: Container(
-        height: 275,
+        height: 175,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: Colors.grey.shade200,
@@ -52,8 +52,8 @@ class _CoverImageContainerState extends State<CoverImageContainer> {
                 child: ImageView.asset(
                   AppImages.galleryAdd,
                   color: Colors.grey,
-                  width: 80,
-                  height: 80,
+                  width: 60,
+                  height: 60,
                 ),
               ),
       ),

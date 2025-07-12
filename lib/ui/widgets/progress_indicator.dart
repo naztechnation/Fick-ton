@@ -6,11 +6,15 @@ class ProgressIndicators{
 
   static Widget circularProgressBar(BuildContext context,
       {double? value, double strokeWidth=2.5}) {
-    return CircularProgressIndicator.adaptive(
-        value: value,
-        strokeWidth: strokeWidth,
-        valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-        backgroundColor: (AppColors.lightSecondary));
+    return SizedBox(
+      height: 20,
+      width: 20,
+      child: CircularProgressIndicator.adaptive(
+          value: value,
+          strokeWidth: strokeWidth,
+          valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+          backgroundColor: (AppColors.lightSecondary)),
+    );
   }
 
   static Widget linearProgressBar(BuildContext context,

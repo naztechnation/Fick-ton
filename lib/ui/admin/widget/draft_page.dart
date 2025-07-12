@@ -85,8 +85,8 @@ class _DraftPageState extends State<DraftPage> {
               draftedPosts = [];
               user.setDraftLength(draftedLength: '0');
             }
-            Modals.showToast(state.postLists.message ?? '',
-                messageType: MessageType.error);
+            // Modals.showToast(state.postLists.message ?? '',
+            //     messageType: MessageType.error);
           }
         }
         if (state is CreatePostLoaded) {
@@ -145,11 +145,19 @@ class _DraftPageState extends State<DraftPage> {
                         onPublishedTapped: () async {
                           await user.fileFromImageUrl(
                               draftedPosts[index].thumbnail ?? '');
+                          await user.fileFromImageUrl1(
+                              draftedPosts[index].image1 ?? '');
+                          await user.fileFromImageUrl2(
+                              draftedPosts[index].image2 ?? '');
 
                           _publishDraft(
                               context,
                               token,
                               user.imageURl ?? File(''),
+                              user.imageURl1 ?? File(''),
+                              user.imageURl2 ?? File(''),
+                              draftedPosts[index].content2 ?? '',
+
                               '1',
                               AppStrings.updatePost,
                               draftedPosts[index].id ?? '',
@@ -179,6 +187,9 @@ class _DraftPageState extends State<DraftPage> {
       BuildContext ctx,
       String token,
       File thumbnail,
+      File image1,
+      File image2,
+      String content2,
       String status,
       String url,
       String postId,
@@ -191,15 +202,16 @@ class _DraftPageState extends State<DraftPage> {
     ctx.read<UserCubit>().createPost(
           url: url,
           title: title,
-          token: token,
+         
           postId: postId,
           content: content,
-          videoLink: videoLink,
+          content2: content2,
+           
           thumbnail: thumbnail,
           genre: genre,
           status: status,
           author: author,
-          trending: trending,
+          trending: trending, image1: image1, image2: image2,
         );
   }
 }

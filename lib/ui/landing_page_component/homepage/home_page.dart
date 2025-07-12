@@ -142,17 +142,17 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.w500),
                       ),
                     ))),
-                const Positioned(
-                  top: 80,
-                  left: 0,
-                  right: 0,
-                  child: Align(
-                      alignment: Alignment.center,
-                      child: ImageView.svg(
-                        AppImages.play,
-                        height: 35,
-                      )),
-                )
+                // const Positioned(
+                //   top: 80,
+                //   left: 0,
+                //   right: 0,
+                //   child: Align(
+                //       alignment: Alignment.center,
+                //       child: ImageView.svg(
+                //         AppImages.play,
+                //         height: 35,
+                //       )),
+                // )
               ],
             ),
           ),
@@ -598,6 +598,7 @@ class _HomeState extends State<Home> {
                                     )
                                   ] else ...[
                                     ListView.builder(
+                                      padding: EdgeInsets.all(0),
                                         itemCount: allPosts.length,
                                         physics:
                                             const NeverScrollableScrollPhysics(),

@@ -67,17 +67,17 @@ class DraftItems extends StatelessWidget {
                         color: Colors.black26,
                       ),
                     ),
-                      const Positioned(
-                  top: 40,
-                  left: 0,
-                  right: 0,
-                  child: Align(
-                      alignment: Alignment.center,
-                      child: ImageView.svg(
-                        AppImages.play,
-                        height: 35,
-                      )),
-                )
+                //       const Positioned(
+                //   top: 40,
+                //   left: 0,
+                //   right: 0,
+                //   child: Align(
+                //       alignment: Alignment.center,
+                //       child: ImageView.svg(
+                //         AppImages.play,
+                //         height: 35,
+                //       )),
+                // )
                   ],
                 )),
           ),

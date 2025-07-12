@@ -17,11 +17,13 @@ class UserCubit extends Cubit<UserStates> {
   Future<void> createPost({
     required String title,
     required String url,
-    required String token,
+     
     required String postId,
     required String content,
     required File thumbnail,
-    required String videoLink,
+    required File image1,
+    required File image2,
+    required String content2,
     required String genre,
     required String status,
     required String author,
@@ -33,15 +35,15 @@ class UserCubit extends Cubit<UserStates> {
       final agents = await userRepository.createPost(
         title: title,
         url: url,
-        token: token,
+       // token: token,
         postId: postId,
         content: content,
-        videoLink: videoLink,
+        //videoLink: videoLink,
         thumbnail: thumbnail,
         genre: genre,
         status: status,
         author: author,
-        trending: trending,
+        trending: trending, image1: image1, image2: image2, content2: content2,
       );
 
       emit(CreatePostLoaded(agents));

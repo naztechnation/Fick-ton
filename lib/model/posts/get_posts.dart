@@ -114,6 +114,9 @@ class Posts {
   String? title;
   String? content;
   String? thumbnail;
+  String? content2;
+  String? image1;
+  String? image2;
   String? videoLink;
   String? author;
   String? genre;
@@ -130,6 +133,9 @@ class Posts {
       this.title,
       this.content,
       this.thumbnail,
+      this.content2,
+      this.image1,
+      this.image2,
       this.videoLink,
       this.author,
       this.genre,
@@ -146,6 +152,9 @@ class Posts {
     title = json['title'];
     content = json['content'];
     thumbnail = json['thumbnail'];
+    content2 = json['content2'];
+    image1 = json['image1'];
+    image2 = json['image2'];
     videoLink = json['video_link'];
     author = json['author'];
     genre = json['genre'];

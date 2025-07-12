@@ -24,8 +24,7 @@ import '../landing_page_component/homepage/widgets/filter_modal.dart';
 import '../widgets/loading_page.dart';
 import '../widgets/modals.dart';
 import '../widgets/progress_indicator.dart';
- 
-
+import 'widget/image1.dart';
 
 class NewPost extends StatelessWidget {
   final bool isUpdate;
@@ -97,11 +96,15 @@ class _NewPostState extends State<Post> {
   final videoUrlController = TextEditingController();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+  final content2Controller = TextEditingController();
   final genresController = TextEditingController();
   final authorController = TextEditingController();
 
   @override
   void initState() {
+      Provider.of<UserViewModel>(context, listen: false).clearImage();
+            Provider.of<UserViewModel>(context, listen: false).clearImage1();
+            Provider.of<UserViewModel>(context, listen: false).clearImage2();
     if (widget.isUpdate) {
       getPosts();
     }
@@ -121,23 +124,32 @@ class _NewPostState extends State<Post> {
             Modals.showToast(state.createPost.message ?? '',
                 messageType: MessageType.success);
             user.imageURl = null;
+            user.imageURl2 = null;
+            user.imageURl1 = null;
             clearFields();
+            user.clearImage();
+            user.clearImage1();
+            user.clearImage2();
+             
           } else {}
         } else if (state is PostDetailsLoaded) {
-          Modals.showToast(state.postDetails.message ?? '',
-              messageType: MessageType.success);
+          // Modals.showToast(state.postDetails.message ?? '',
+          //     messageType: MessageType.success);
           if (state.postDetails.status == 1) {
             titleController.text = state.postDetails.data?.title ?? '';
             contentController.text = state.postDetails.data?.content ?? '';
+            content2Controller.text = state.postDetails.data?.content2 ?? '';
             videoUrlController.text = state.postDetails.data?.videoLink ?? '';
             genresController.text = state.postDetails.data?.genre ?? '';
             authorController.text = state.postDetails.data?.author ?? '';
             postId = state.postDetails.data?.id ?? '';
             isChecked =
                 state.postDetails.data?.isTrending == "0" ? false : true;
-                isTrending = int.parse(state.postDetails.data?.isTrending ?? ''); 
+            isTrending = int.parse(state.postDetails.data?.isTrending ?? '');
 
-                user.fileFromImageUrl(state.postDetails.data?.thumbnail ?? '');
+            user.fileFromImageUrl(state.postDetails.data?.thumbnail ?? '');
+            user.fileFromImageUrl1(state.postDetails.data?.image1 ?? '');
+            user.fileFromImageUrl2(state.postDetails.data?.image2 ?? '');
           } else {}
         }
       }, builder: (context, state) {
@@ -228,24 +240,24 @@ class _NewPostState extends State<Post> {
                                 height: 15,
                               ),
                               CoverImageContainer(),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text(
-                                "Video URL",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              TextEditView(
-                                borderRadius: 16,
-                                controller: videoUrlController,
-                                validator: Validator.validate,
-                                isDense: true,
-                                fillColor: Colors.grey.shade200,
-                              ),
+                              // const SizedBox(
+                              //   height: 20,
+                              // ),
+                              // const Text(
+                              //   "Video URL",
+                              //   style: TextStyle(
+                              //       fontSize: 16, fontWeight: FontWeight.w400),
+                              // ),
+                              // const SizedBox(
+                              //   height: 5,
+                              // ),
+                              // TextEditView(
+                              //   borderRadius: 16,
+                              //   controller: videoUrlController,
+                              //   validator: Validator.validate,
+                              //   isDense: true,
+                              //   fillColor: Colors.grey.shade200,
+                              // ),
                               const SizedBox(
                                 height: 25,
                               ),
@@ -265,10 +277,10 @@ class _NewPostState extends State<Post> {
                                 fillColor: Colors.grey.shade200,
                               ),
                               const SizedBox(
-                                height: 25,
+                                height: 20,
                               ),
                               const Text(
-                                "Article",
+                                "Article1",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w400),
                               ),
@@ -276,11 +288,32 @@ class _NewPostState extends State<Post> {
                                 height: 5,
                               ),
                               TextEditView(
-                                maxLines: 20,
+                                maxLines: 9,
                                 hintText: 'Start writing your article here...',
                                 validator: Validator.validate,
                                 borderRadius: 16,
                                 controller: contentController,
+                                isDense: true,
+                                fillColor: Colors.grey.shade200,
+                              ),
+
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text(
+                                "Article2",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              TextEditView(
+                                maxLines: 9,
+                                hintText: 'Start writing your article here...',
+                                validator: Validator.validate,
+                                borderRadius: 16,
+                                controller: content2Controller,
                                 isDense: true,
                                 fillColor: Colors.grey.shade200,
                               ),
@@ -322,6 +355,29 @@ class _NewPostState extends State<Post> {
                               //   isDense: true,
                               //   fillColor: Colors.grey.shade200,
                               // ),
+                              const Text(
+                                "Image 1",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              CoverImageContainer1(),
+
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              const Text(
+                                "Image 2",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              CoverImageContainer2(),
+
                               const SizedBox(
                                 height: 25,
                               ),
@@ -334,28 +390,34 @@ class _NewPostState extends State<Post> {
                                 height: 5,
                               ),
                               TextEditView(
-                                 onTap: ( ) {
+                                onTap: () {
                                   Modals.showBottomSheetModal(context,
-                                              isDissmissible: true,
-                                              heightFactor: 1,
-                                              page: filterModalContent(
-                                                  filterItems: user.overallPosts?.data?.genres ?? [],
-                                                  title: 'Select Genre',
-                                                  context: context,
-                                                  onPressed: (item) {
-                                                    Navigator.pop(context);
+                                      isDissmissible: true,
+                                      heightFactor: 1,
+                                      page: filterModalContent(
+                                          filterItems:
+                                              user.overallPosts?.data?.genres ??
+                                                  [],
+                                          title: 'Select Genre',
+                                          context: context,
+                                          onPressed: (item) {
+                                            Navigator.pop(context);
 
-                                                    setState(() {
-                                                      genres = item;
-                                                      genresController.text = genres;
-                                                    });
-                                                  }));
+                                            setState(() {
+                                              genres = item;
+                                              genresController.text = genres;
+                                            });
+                                          }));
                                 },
                                 validator: Validator.validate,
                                 hintText: 'Enter Genres',
                                 borderRadius: 16,
                                 readOnly: true,
-                                suffixIcon: Icon(Icons.arrow_drop_down, size: 35, color: AppColors.lightSecondary,),
+                                suffixIcon: Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 35,
+                                  color: AppColors.lightSecondary,
+                                ),
                                 controller: genresController,
                                 isDense: true,
                                 fillColor: Colors.grey.shade200,
@@ -370,9 +432,9 @@ class _NewPostState extends State<Post> {
                                       onTap: () {
                                         setState(() {
                                           isChecked = !isChecked;
-                                          if(isChecked) {
+                                          if (isChecked) {
                                             isTrending = 1;
-                                          }else{
+                                          } else {
                                             isTrending = 0;
                                           }
                                         });
@@ -423,32 +485,35 @@ class _NewPostState extends State<Post> {
                                       children: [
                                         ButtonView(
                                           onPressed: () {
-                                            if (user.imageURl != null) {
+                                            if (user.imageURl != null &&
+                                                user.imageURl1 != null &&
+                                                user.imageURl2 != null) {
                                               if (widget.isUpdate) {
-                                                
-                                                 _createPost(
-                                                  context,
-                                                  setToken.token,
-                                                  user.imageURl ?? File(''),
-                                                  '1',
-                                                  AppStrings.updatePost,
-                                                  postId
-                                                );
+                                                _createPost(
+                                                    context,
+                                                    setToken.token,
+                                                    user.imageURl ?? File(''),
+                                                     user.imageURl1 ?? File(''),
+                                                    user.imageURl2 ?? File(''),
+                                                    '1',
+                                                    AppStrings.updatePost,
+                                                    postId);
 
                                                 // Modals.showToast(postId);
                                               } else {
                                                 _createPost(
-                                                  context,
-                                                  setToken.token,
-                                                  user.imageURl ?? File(''),
-                                                  '1',
-                                                  AppStrings.createPost,
-                                                  postId
-                                                );
-                                               }
+                                                    context,
+                                                    setToken.token,
+                                                    user.imageURl ?? File(''),
+                                                     user.imageURl1 ?? File(''),
+                                                    user.imageURl2 ?? File(''),
+                                                    '1',
+                                                    AppStrings.createPost,
+                                                    postId);
+                                              }
                                             } else {
                                               Modals.showToast(
-                                                  'please upload image');
+                                                  'please upload all images');
                                             }
                                           },
                                           color: AppColors.lightSecondary,
@@ -459,25 +524,29 @@ class _NewPostState extends State<Post> {
                                         ),
                                         ButtonView(
                                           onPressed: () {
-                                            if (user.imageURl != null) {
+                                            if (user.imageURl != null &&
+                                                user.imageURl1 != null &&
+                                                user.imageURl2 != null) {
                                               if (widget.isUpdate) {
-                                                 _createPost(
-                                                  context,
-                                                  setToken.token,
-                                                  user.imageURl ?? File(''),
-                                                  '0',
-                                                  AppStrings.updatePost,
-                                                  postId
-                                                );
+                                                _createPost(
+                                                    context,
+                                                    setToken.token,
+                                                    user.imageURl ?? File(''),
+                                                     user.imageURl1 ?? File(''),
+                                                    user.imageURl2 ?? File(''),
+                                                    '0',
+                                                    AppStrings.updatePost,
+                                                    postId);
                                               } else {
                                                 _createPost(
-                                                  context,
-                                                  setToken.token,
-                                                  user.imageURl ?? File(''),
-                                                  '0',
-                                                  AppStrings.createPost,
-                                                  postId
-                                                );
+                                                    context,
+                                                    setToken.token,
+                                                    user.imageURl ?? File(''),
+                                                    user.imageURl1 ?? File(''),
+                                                    user.imageURl2 ?? File(''),
+                                                    '0',
+                                                    AppStrings.createPost,
+                                                    postId);
                                               }
                                             } else {
                                               Modals.showToast(
@@ -510,30 +579,31 @@ class _NewPostState extends State<Post> {
     );
   }
 
-  _createPost(BuildContext ctx, String token, File thumbnail, String status,
-      String url, String postId) {
+  _createPost(BuildContext ctx, String token, File thumbnail, File image1,
+      File image2, String status, String url, String postId) {
     if (_formKey.currentState!.validate()) {
       ctx.read<UserCubit>().createPost(
             url: url,
             title: titleController.text,
-            token: token,
             postId: postId,
             content: contentController.text,
-            videoLink: videoUrlController.text,
             thumbnail: thumbnail,
             genre: genresController.text,
             status: status,
             author: authorController.text,
             trending: isTrending.toString(),
+            image1: image1,
+            image2: image2,
+            content2: content2Controller.text,
           );
       FocusScope.of(ctx).unfocus();
     }
   }
- 
 
   clearFields() {
     titleController.text = "";
     contentController.text = "";
+    content2Controller.text = "";
     videoUrlController.text = "";
     genresController.text = "";
     authorController.text = "";

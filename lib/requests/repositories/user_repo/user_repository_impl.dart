@@ -17,11 +17,13 @@ class UserRepositoryImpl implements UserRepository {
   Future<AuthData> createPost({
     required String title,
     required String url,
-    required String token,
+     
     required String postId,
     required String content,
     required File thumbnail,
-    required String videoLink,
+    required File image1,
+    required File image2,
+    required String content2,
     required String genre,
     required String status,
     required String author,
@@ -29,12 +31,13 @@ class UserRepositoryImpl implements UserRepository {
   }) async {
     final map = await Requests().post(
       url,
-      files: {'thumbnail': thumbnail},
+      files: {'thumbnail': thumbnail, 'image1': image1, 'image2': image2,},
       body: {
         "title": title,
-        "token": token,
+       // "token": token,
         "content": content,
-        "video_link": videoLink,
+        "content2": content2,
+       // "video_link": videoLink,
         "genre": genre,
         "author": author,
         "status": status,

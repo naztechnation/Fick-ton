@@ -15,11 +15,13 @@ abstract class UserRepository {
   Future<AuthData> createPost({
     required String title,
     required String url,
-    required String token,
+     
     required String postId,
     required String content,
     required File thumbnail,
-    required String videoLink,
+    required File image1,
+    required File image2,
+    required String content2,
     required String genre,
     required String status,
     required String author,

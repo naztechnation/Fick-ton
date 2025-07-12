@@ -15,6 +15,8 @@ class UserViewModel extends BaseViewModel {
   ImagePicker picker = ImagePicker();
 
   File? imageURl;
+  File? imageURl1;
+  File? imageURl2;
   String _draftLength = "0";
   String _publishedLength = "0";
   int _activeTab = 0;
@@ -57,6 +59,14 @@ class UserViewModel extends BaseViewModel {
     imageURl = null;
     setViewState(ViewState.success);
   }
+  Future<void> clearImage1() async {
+    imageURl1 = null;
+    setViewState(ViewState.success);
+  }
+  Future<void> clearImage2() async {
+    imageURl2 = null;
+    setViewState(ViewState.success);
+  }
 
   Future<File> fileFromImageUrl(
     String imageUrl,
@@ -72,6 +82,41 @@ class UserViewModel extends BaseViewModel {
     await file.writeAsBytes(response.bodyBytes);
 
     imageURl = file;
+    setViewState(ViewState.success);
+    return file;
+  }
+  Future<File> fileFromImageUrl1(
+    String imageUrl,
+  ) async {
+    String img = imageUrl;
+    final response = await http.get(Uri.parse(img));
+
+    final documentDirectory = await getApplicationDocumentsDirectory();
+
+    final String imageName = imageUrl.split('/').last;
+    final file = File('${documentDirectory.path}/$imageName');
+
+    await file.writeAsBytes(response.bodyBytes);
+
+    imageURl1 = file;
+    setViewState(ViewState.success);
+    return file;
+  }
+
+  Future<File> fileFromImageUrl2(
+    String imageUrl,
+  ) async {
+    String img = imageUrl;
+    final response = await http.get(Uri.parse(img));
+
+    final documentDirectory = await getApplicationDocumentsDirectory();
+
+    final String imageName = imageUrl.split('/').last;
+    final file = File('${documentDirectory.path}/$imageName');
+
+    await file.writeAsBytes(response.bodyBytes);
+
+    imageURl2 = file;
     setViewState(ViewState.success);
     return file;
   }
@@ -146,6 +191,146 @@ class UserViewModel extends BaseViewModel {
           );
         });
   }
+loadImage1(BuildContext context) async {
+    await showModalBottomSheet<dynamic>(
+        context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.0))),
+        builder: (BuildContext bc) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 15),
+              const Padding(
+                padding: EdgeInsets.only(
+                    left: 30.0, right: 8.0, top: 8.0, bottom: 8.0),
+                child: Text('Select the images source',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.lightSecondary,
+                        fontWeight: FontWeight.w400)),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.photo_camera,
+                  size: 25.0,
+                  color: Colors.grey,
+                ),
+                title: const Text('Camera',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.lightSecondary,
+                        fontWeight: FontWeight.w400)),
+                onTap: () async {
+                  Navigator.pop(context);
+
+                  final image = await ImagePicker().pickImage(
+                      source: ImageSource.camera,
+                      imageQuality: 80,
+                      maxHeight: 1000,
+                      maxWidth: 1000);
+                  imageURl1 = File(image!.path);
+                  setViewState(ViewState.success);
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.photo,
+                  size: 25.0,
+                  color: Colors.grey,
+                ),
+                title: const Text('Gallery',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.lightSecondary,
+                        fontWeight: FontWeight.w400)),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final image = await ImagePicker().pickImage(
+                      source: ImageSource.gallery,
+                      imageQuality: 80,
+                      maxHeight: 1000,
+                      maxWidth: 1000);
+                  imageURl1 = File(image!.path);
+                  setViewState(ViewState.success);
+                },
+              ),
+            ],
+          );
+        });
+  }
+loadImage2(BuildContext context) async {
+    await showModalBottomSheet<dynamic>(
+        context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.0))),
+        builder: (BuildContext bc) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 15),
+              const Padding(
+                padding: EdgeInsets.only(
+                    left: 30.0, right: 8.0, top: 8.0, bottom: 8.0),
+                child: Text('Select the images source',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.lightSecondary,
+                        fontWeight: FontWeight.w400)),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.photo_camera,
+                  size: 25.0,
+                  color: Colors.grey,
+                ),
+                title: const Text('Camera',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.lightSecondary,
+                        fontWeight: FontWeight.w400)),
+                onTap: () async {
+                  Navigator.pop(context);
+
+                  final image = await ImagePicker().pickImage(
+                      source: ImageSource.camera,
+                      imageQuality: 80,
+                      maxHeight: 1000,
+                      maxWidth: 1000);
+                  imageURl2 = File(image!.path);
+                  setViewState(ViewState.success);
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.photo,
+                  size: 25.0,
+                  color: Colors.grey,
+                ),
+                title: const Text('Gallery',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.lightSecondary,
+                        fontWeight: FontWeight.w400)),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final image = await ImagePicker().pickImage(
+                      source: ImageSource.gallery,
+                      imageQuality: 80,
+                      maxHeight: 1000,
+                      maxWidth: 1000);
+                  imageURl2 = File(image!.path);
+                  setViewState(ViewState.success);
+                },
+              ),
+            ],
+          );
+        });
+  }
 
   String getCurrentTime(int timestampInSeconds) {
     if (timestampInSeconds == '0') {
@@ -191,6 +376,8 @@ class UserViewModel extends BaseViewModel {
   }
 
   File? get imgURl => imageURl;
+  File? get imgURl1 => imageURl1;
+  File? get imgURl2 => imageURl2;
 
   List<get_posts.Posts> get postsList => _postsList;
   List<get_posts.Posts> get draftList => _draftPostsList;

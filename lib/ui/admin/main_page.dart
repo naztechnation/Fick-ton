@@ -62,7 +62,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
           ],
         ),
         child: FABBottomAppBar(
-          height: 80,
+          height: 100,
           onTabSelected: _onItemTapped,
           color: Colors.black87,
           selectedIconHeight: 25,

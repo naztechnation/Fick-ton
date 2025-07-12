@@ -272,7 +272,7 @@ class _ProfileState extends State<Profile> {
                             const SizedBox(
                               height: 20,
                             ),
-                            if (isAdmin == '1')
+                            //  if (isAdmin == '1')
                               ButtonView(
                                 onPressed: () {
                                   AppNavigator.pushAndStackPage(context,
