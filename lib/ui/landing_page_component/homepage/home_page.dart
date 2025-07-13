@@ -485,35 +485,35 @@ class _HomeState extends State<Home> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        FilterContainer(
-                                          text: recent,
-                                          onPressed: () {
-                                            Modals.showBottomSheetModal(context,
-                                                isDissmissible: true,
-                                                heightFactor: 0.8,
-                                                page: filterModalContent(
-                                                    filterItems: filterByList,
-                                                    title: 'Filter by',
-                                                    context: context,
-                                                    onPressed: (item) {
-                                                      Navigator.pop(context);
-                                                      setState(() {
-                                                        recent = item;
-                                                      });
+                                        // FilterContainer(
+                                        //   text: recent,
+                                        //   onPressed: () {
+                                        //     Modals.showBottomSheetModal(context,
+                                        //         isDissmissible: true,
+                                        //         heightFactor: 0.8,
+                                        //         page: filterModalContent(
+                                        //             filterItems: filterByList,
+                                        //             title: 'Filter by',
+                                        //             context: context,
+                                        //             onPressed: (item) {
+                                        //               Navigator.pop(context);
+                                        //               setState(() {
+                                        //                 recent = item;
+                                        //               });
 
-                                                      _userCubit
-                                                          .getFilteredPost(
-                                                              token: token,
-                                                              genre: genres,
-                                                              type: types,
-                                                              filterParams:
-                                                                  recent);
-                                                    }));
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
+                                        //               _userCubit
+                                        //                   .getFilteredPost(
+                                        //                       token: token,
+                                        //                       genre: genres,
+                                        //                       type: types,
+                                        //                       filterParams:
+                                        //                           recent);
+                                        //             }));
+                                        //   },
+                                        // ),
+                                        // const SizedBox(
+                                        //   width: 10,
+                                        // ),
                                         // FilterContainer(
                                         //   text: types,
                                         //   onPressed: () {
@@ -539,9 +539,9 @@ class _HomeState extends State<Home> {
                                         //             }));
                                         //   },
                                         // ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
+                                        // const SizedBox(
+                                        //   width: 10,
+                                        // ),
                                         FilterContainer(
                                           text: genres,
                                           onPressed: () {
@@ -575,6 +575,8 @@ class _HomeState extends State<Home> {
                                   const SizedBox(
                                     height: 20,
                                   ),
+                                  Divider(),
+                                  
                                   if (allPosts.isEmpty) ...[
                                     Container(
                                       height: 390,
