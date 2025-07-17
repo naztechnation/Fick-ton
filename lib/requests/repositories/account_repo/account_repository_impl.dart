@@ -11,12 +11,13 @@ class AccountRepositoryImpl implements AccountRepository {
       required String password,
       required String gender,
       
-      required String phone}) async {
+      // required String phone
+      }) async {
     final map = await Requests().post(AppStrings.registerUrl, body: {
       "email": email,
       "password": password,
       "gender": gender,
-      "phone": phone,
+      // "phone": phone,
       "subscribed_users": 'subscribed_users',
       
     });

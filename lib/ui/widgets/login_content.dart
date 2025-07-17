@@ -157,7 +157,7 @@ class _LoginContentState extends State<LoginContent> {
           listener: (context, state) {
             if (state is AccountLoaded) {
               if (state.userData.status == 1) {
-                setToken.setToken(state.userData.token!);
+                setToken.setToken(state.userData.token ?? "");
                 StorageHandler.saveUserEmail(_emailController.text);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
@@ -273,26 +273,26 @@ class _LoginContentState extends State<LoginContent> {
                                   isDense: true,
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 12),
-                                child: TextEditView(
-                                  controller: _phoneController,
-                                  validator: Validator.validate,
-                                  keyboardType: TextInputType.phone,
-                                  labelText: 'Phone Number',
-                                  prefixIcon: const Icon(
-                                    Ionicons.call_outline,
-                                    color: Colors.white,
-                                  ),
-                                  filled: false,
-                                  borderColor: Colors.white,
-                                  textColor: Colors.white,
-                                  borderRadius: 16,
-                                  borderWidth: 1,
-                                  isDense: true,
-                                ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 16.0, vertical: 12),
+                              //   child: TextEditView(
+                              //     controller: _phoneController,
+                              //     validator: Validator.validate,
+                              //     keyboardType: TextInputType.phone,
+                              //     labelText: 'Phone Number',
+                              //     prefixIcon: const Icon(
+                              //       Ionicons.call_outline,
+                              //       color: Colors.white,
+                              //     ),
+                              //     filled: false,
+                              //     borderColor: Colors.white,
+                              //     textColor: Colors.white,
+                              //     borderRadius: 16,
+                              //     borderWidth: 1,
+                              //     isDense: true,
+                              //   ),
+                              // ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0, vertical: 12),
@@ -552,7 +552,7 @@ class _LoginContentState extends State<LoginContent> {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
           gender: _genderController.text.trim(),
-          phoneNumber: _phoneController.text.trim(),
+          // phoneNumber: _phoneController.text.trim(),
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
       FocusScope.of(ctx).unfocus();

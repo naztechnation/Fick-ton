@@ -17,7 +17,7 @@ class AccountCubit extends Cubit<AccountStates> {
     required String gender,
     required String email,
     required String password,
-    required String phoneNumber,
+    // required String phoneNumber,
   }) async {
     try {
       emit(AccountProcessing());
@@ -26,7 +26,7 @@ class AccountCubit extends Cubit<AccountStates> {
         gender: gender,
         email: email,
         password: password,
-        phone: phoneNumber,
+        // phone: phoneNumber,
       );
 
       await viewModel.setToken(user.token ?? '');
