@@ -93,127 +93,125 @@ class _BookMarkState extends State<BookMark> {
           return const LoadingPage();
         }
 
-        return Column(
-          children: [
-            SafeArea(
-              child: SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.03,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Row(
-                    children: [
-                      ImageView.asset(
-                        AppImages.logo,
-                        width: 40,
-                        height: 40,
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        'Fik-kton',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      AppNavigator.pushAndStackPage(context,
-                          page:   SearchPage(postsLists: bookmarkList,));
-                    },
-                    child: const ImageView.svg(
-                      AppImages.search,
-                      width: 25,
-                      height: 25,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
+        return SafeArea(
+          child: Column(
+            children: [
+               
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text(
-                  'My Bookmarks (${bookmarkList.length})',
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
-                    if(bookmarkList.isEmpty)...[
-                   SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.7,
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
+                    const Row(
                       children: [
-                        Align(
-                            alignment: Alignment.center,
-                            child: ImageView.asset(AppImages.empty, height: 160,)),
-                        SizedBox(height: 40.0),
-                        Text(
-                          "Empty",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 18),
+                        ImageView.asset(
+                          AppImages.logo,
+                          width: 40,
+                          height: 40,
                         ),
-                        SizedBox(height: 30.0),
+                        SizedBox(
+                          width: 12,
+                        ),
                         Text(
-                          "You don’t have any bookmarks at this time",
-                          textAlign: TextAlign.center,
+                          'Fik-kton',
                           style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                          ),
+                              fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
-                  )
-                ]else...[
-                    ListView.builder(
-                        itemCount: bookmarkList.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, index) {
-                          return GestureDetector(
-                              onTap: () {
-                                AppNavigator.pushAndStackPage(context,
-                                    page: MovieDetailsScreen(
-                                      videoLinks:
-                                          bookmarkList[index].videoLink ?? '',
-                                      postId: bookmarkList[index].id ?? '',
-                                    ));
-                              },
-                              child: MoviesItems(
-                                posts: bookmarkList[index],
-                              ));
-                        }),
-                    const SizedBox(
-                      height: 30,
+                    GestureDetector(
+                      onTap: () {
+                        AppNavigator.pushAndStackPage(context,
+                            page:   SearchPage(postsLists: bookmarkList,));
+                      },
+                      child: const ImageView.svg(
+                        AppImages.search,
+                        width: 25,
+                        height: 25,
+                      ),
                     ),
                   ],
-          ]),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'My Bookmarks (${bookmarkList.length})',
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+          
+                      if(bookmarkList.isEmpty)...[
+                     SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.7,
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Align(
+                              alignment: Alignment.center,
+                              child: ImageView.asset(AppImages.empty, height: 160,)),
+                          SizedBox(height: 40.0),
+                          Text(
+                            "Empty",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 18),
+                          ),
+                          SizedBox(height: 30.0),
+                          Text(
+                            "You don’t have any bookmarks at this time",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ]else...[
+                      ListView.builder(
+                          itemCount: bookmarkList.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, index) {
+                            return GestureDetector(
+                                onTap: () {
+                                  AppNavigator.pushAndStackPage(context,
+                                      page: MovieDetailsScreen(
+                                        videoLinks:
+                                            bookmarkList[index].videoLink ?? '',
+                                        postId: bookmarkList[index].id ?? '',
+                                      ));
+                                },
+                                child: MoviesItems(
+                                  posts: bookmarkList[index],
+                                ));
+                          }),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
+            ]),
+                ),
+              ),
+            ],
+          ),
         );
       }),
     );

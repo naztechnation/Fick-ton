@@ -100,150 +100,148 @@ bool showother =  false;
 
         return (state is NotificationsLoading || state is DelNotificationsLoading)
             ? const LoadingPage()
-            : Column(
-          children: [
-            SafeArea(
-              child: SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.03,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Row(
-                    children: [
-                      ImageView.asset(
-                        AppImages.logo,
-                        width: 40,
-                        height: 40,
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        'Fik-kton',
-                        style:
-                            TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                 
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 26,
-            ),
-             const Padding(
-               padding: EdgeInsets.symmetric(horizontal:16.0),
-               child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Notifications',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-                        ),
-                      ),
-             ),
-            Expanded(
-                child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Column(children: [
-                 
-                  const SizedBox(
-                    height: 26,
-                  ),
-                if(notifications.isEmpty)...[
-                   SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.7,
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
+            : SafeArea(
+              child: Column(
+                        children: [
+              
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
                       children: [
-                        Align(
-                            alignment: Alignment.center,
-                            child: ImageView.asset(AppImages.empty, height: 160,)),
-                        SizedBox(height: 40.0),
-                        Text(
-                          "Empty",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 18),
+                        ImageView.asset(
+                          AppImages.logo,
+                          width: 40,
+                          height: 40,
                         ),
-                        SizedBox(height: 30.0),
+                        SizedBox(
+                          width: 12,
+                        ),
                         Text(
-                          "You don’t have any notification at this time",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                          ),
+                          'Fik-kton',
+                          style:
+                              TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
-                  )
-                ]else...[
-                  ListView.builder(
-                      itemCount: notifications.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context, index) {
-                        return GestureDetector(
-                          onTap: (){
-                            AppNavigator.pushAndStackPage(context, page:  NotificationsDetails(title: notifications[index].title ?? '', description: notifications[index].content ?? '', date:notifications[index].createdAt ?? '',));
-                          },
-                          child: Container(
-                            decoration:   BoxDecoration(
-                              color: (index % 2 == 0)? AppColors.lightSecondary.withOpacity(0.1) : Colors.white,
-                              border:   Border(bottom: BorderSide(color: Colors.grey.shade300))),
-                            padding: const EdgeInsets.symmetric(vertical: 18),
-                            child:   Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Column(
-                                
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    notifications[index].title.toString().toUpperCase(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        color: Colors.black),
-                                  ),
-                                  SizedBox(height: 12.0),
-                                  Text(
-                                    notifications[index].content ?? '',
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w400, fontSize: 14),
-                                  ),
-                                  SizedBox(height: 20.0),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                      timeFormat.getCurrentTime(int.parse(notifications[index].createdAt ?? ''))  ,
-                                      ),
-                                     
-                                       
-                                    ],
-                                  ),
-                                ],
-                              ),
+                   
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 26,
+              ),
+               const Padding(
+                 padding: EdgeInsets.symmetric(horizontal:16.0),
+                 child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Notifications',
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                          ),
+                        ),
+               ),
+              Expanded(
+                  child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Column(children: [
+                   
+                    const SizedBox(
+                      height: 26,
+                    ),
+                  if(notifications.isEmpty)...[
+                     SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.7,
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Align(
+                              alignment: Alignment.center,
+                              child: ImageView.asset(AppImages.empty, height: 160,)),
+                          SizedBox(height: 40.0),
+                          Text(
+                            "Empty",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 18),
+                          ),
+                          SizedBox(height: 30.0),
+                          Text(
+                            "You don’t have any notification at this time",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
                             ),
                           ),
-                        );
-                      }),
-                ]  
-                 
-                ]),
-              ),
-            )),
-          ],
-        );
+                        ],
+                      ),
+                    )
+                  ]else...[
+                    ListView.builder(
+                        itemCount: notifications.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, index) {
+                          return GestureDetector(
+                            onTap: (){
+                              AppNavigator.pushAndStackPage(context, page:  NotificationsDetails(title: notifications[index].title ?? '', description: notifications[index].content ?? '', date:notifications[index].createdAt ?? '',));
+                            },
+                            child: Container(
+                              decoration:   BoxDecoration(
+                                color: (index % 2 == 0)? AppColors.lightSecondary.withOpacity(0.1) : Colors.white,
+                                border:   Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                              padding: const EdgeInsets.symmetric(vertical: 18),
+                              child:   Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Column(
+                                  
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      notifications[index].title.toString().toUpperCase(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          color: Colors.black),
+                                    ),
+                                    SizedBox(height: 12.0),
+                                    Text(
+                                      notifications[index].content ?? '',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400, fontSize: 14),
+                                    ),
+                                    SizedBox(height: 20.0),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                        timeFormat.getCurrentTime(int.parse(notifications[index].createdAt ?? ''))  ,
+                                        ),
+                                       
+                                         
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                  ]  
+                   
+                  ]),
+                ),
+              )),
+                        ],
+                      ),
+            );
   }),
     );
   }

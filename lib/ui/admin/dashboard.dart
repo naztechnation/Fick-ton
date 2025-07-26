@@ -90,202 +90,201 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
         return (state is AdminAnalysisLoading)
             ? const LoadingPage()
-            : Column(
-                children: [
-                  SafeArea(
-                    child: SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.03,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            ImageView.asset(
-                              AppImages.logo,
-                              width: 40,
-                              height: 40,
-                            ),
-                            SizedBox(
-                              width: 12,
-                            ),
-                            Text(
-                              'Fik-kton',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 20),
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 14,
-                            ),
-                            const Text(
-                              'Dashboard',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Row(
+            : SafeArea(
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Row(
                               children: [
-                                Expanded(
-                                    child: GestureDetector(
-                                  onTap: () {
-                                    NavigationHelper.navigateToPage(
-                                        context,
-                                        const NewPost(
-                                          isUpdate: false,
-                                          postId: '',
-                                        ));
-                                  },
-                                  child: const dashBoardContainer(
-                                    color: AppColors.lightSecondary,
-                                    txtColor: Colors.white,
-                                    description: ImageView.svg(
-                                      AppImages.edit,
-                                      color: Colors.white,
-                                      height: 28,
-                                    ),
-                                    imageUrl: '',
-                                    title: 'Create New Post',
-                                  ),
-                                )),
-                                Expanded(
-                                    child: dashBoardContainer(
-                                  description: Text(
-                                    analysis?.data?.posts ?? '',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  imageUrl: AppImages.news,
-                                  title: 'Total Posts',
-                                )),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: dashBoardContainer(
-                                  description: Text(
-                                    analysis?.data?.users ?? '',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  imageUrl: AppImages.group,
-                                  title: 'Total Users',
-                                )),
-                                Expanded(
-                                    child: dashBoardContainer(
-                                  description: Text(
-                                    analysis?.data?.views ?? '',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  imageUrl: AppImages.visibility,
-                                  title: 'Total Views',
-                                )),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Material(
-                              type: MaterialType.card,
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  children: [
-                                    const Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "User Demographic",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          height: 9,
-                                          width: 9,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                            color: Color(0xffFF8150),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 5),
-                                        const Text("Views"),
-                                        const SizedBox(width: 50),
-                                        Container(
-                                          height: 9,
-                                          width: 9,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                            color: AppColors.lightSecondary,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 5),
-                                        const Text("Active Users"),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    if (analysis != null) ...[
-                                      Container(
-                                        padding: const EdgeInsets.all(10),
-                                        height: 320,
-                                        child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: AdminDashboardGraph(
-                                                analysis: analysis)),
-                                      ),
-                                    ] else ...[
-                                      const Text("No values available"),
-                                    ]
-                                  ],
+                                ImageView.asset(
+                                  AppImages.logo,
+                                  width: 40,
+                                  height: 40,
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'Fik-kton',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  )
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 20),
+                          child: Column(
+                            children: [
+                             
+                              const Text(
+                                'Dashboard',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w700),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: GestureDetector(
+                                    onTap: () {
+                                      NavigationHelper.navigateToPage(
+                                          context,
+                                          const NewPost(
+                                            isUpdate: false,
+                                            postId: '',
+                                          ));
+                                    },
+                                    child: const dashBoardContainer(
+                                      color: AppColors.lightSecondary,
+                                      txtColor: Colors.white,
+                                      description: ImageView.svg(
+                                        AppImages.edit,
+                                        color: Colors.white,
+                                        height: 28,
+                                      ),
+                                      imageUrl: '',
+                                      title: 'Create New Post',
+                                    ),
+                                  )),
+                                  Expanded(
+                                      child: dashBoardContainer(
+                                    description: Text(
+                                      analysis?.data?.posts ?? '',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    imageUrl: AppImages.news,
+                                    title: 'Total Posts',
+                                  )),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: dashBoardContainer(
+                                    description: Text(
+                                      analysis?.data?.users ?? '',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    imageUrl: AppImages.group,
+                                    title: 'Total Users',
+                                  )),
+                                  Expanded(
+                                      child: dashBoardContainer(
+                                    description: Text(
+                                      analysis?.data?.views ?? '',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    imageUrl: AppImages.visibility,
+                                    title: 'Total Views',
+                                  )),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Material(
+                                type: MaterialType.card,
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    children: [
+                                      const Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "User Demographic",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            height: 9,
+                                            width: 9,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(40),
+                                              color: Color(0xffFF8150),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5),
+                                          const Text("Views"),
+                                          const SizedBox(width: 50),
+                                          Container(
+                                            height: 9,
+                                            width: 9,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(40),
+                                              color: AppColors.lightSecondary,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5),
+                                          const Text("Active Users"),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      if (analysis != null) ...[
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          height: 320,
+                                          child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: AdminDashboardGraph(
+                                                  analysis: analysis)),
+                                        ),
+                                      ] else ...[
+                                        const Text("No values available"),
+                                      ]
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               );
       }),
     );

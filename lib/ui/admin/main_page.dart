@@ -54,7 +54,7 @@ class _AdminMainPageState extends State<AdminMainPage> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 80,
+        height: 120,
         decoration: const BoxDecoration(
           boxShadow: <BoxShadow>[
             BoxShadow(

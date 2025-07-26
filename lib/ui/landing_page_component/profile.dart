@@ -130,194 +130,192 @@ class _ProfileState extends State<Profile> {
 
         return (state is ChangePasswordLoading)
             ? const LoadingPage()
-            : Column(children: [
-                SafeArea(
-                  child: SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.03,
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          ImageView.asset(
-                            AppImages.logo,
-                            width: 40,
-                            height: 40,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Text(
-                            'Fik-kton',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 26,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Profile",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Colors.black),
+            : SafeArea(
+              child: Column(children: [
+                  
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            ImageView.asset(
+                              AppImages.logo,
+                              width: 40,
+                              height: 40,
+                            ),
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Text(
+                              'Fik-kton',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 26,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Form(
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            TextEditView(
-                              borderRadius: 16,
-                              hintText: email,
-                              readOnly: true,
-                              controller: emailController,
-                              isDense: true,
-                              fillColor: const Color(0xfffeee),
-                            ),
-                            const SizedBox(
-                              height: 23,
-                            ),
-                            TextEditView(
-                              borderRadius: 16,
-                              controller: phoneController,
-                              readOnly: true,
-                              hintText: phone,
-                              isDense: true,
-                              fillColor: const Color(0xfffeee),
-                            ),
-                            const SizedBox(
-                              height: 23,
-                            ),
-                            TextEditView(
-                              borderRadius: 16,
-                              hintText: gender,
-                              readOnly: true,
-                              controller: genderController,
-                              isDense: true,
-                              fillColor: const Color(0xfffeee),
-                            ),
-                            const SizedBox(
-                              height: 23,
-                            ),
-                            TextEditView(
-                              borderRadius: 16,
-                              hintText: 'Password',
-                              focusNode: myFocusNode,
-                              controller: passwordController,
-                              obscureText: isShowPassword,
-                              suffixIcon: isShowPassword
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        showPassword();
-                                      },
-                                      child: Icon(
-                                        Ionicons.eye,
-                                        color: AppColors.lightPrimary,
-                                        size: 25,
-                                      ))
-                                  : GestureDetector(
-                                      onTap: () {
-                                        showPassword();
-                                      },
-                                      child: Icon(
-                                        Ionicons.eye_off,
-                                        color: AppColors.lightPrimary,
-                                        size: 25,
-                                      )),
-                              isDense: true,
-                              fillColor: const Color(0xfffeee),
-                            ),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            ButtonView(
-                              onPressed: () {
-                                changePassword(context);
-                              },
-                              borderRadius: 30,
-                              color: Colors.white,
-                              borderColor: AppColors.lightSecondary,
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: const Text(
-                                'Change Password',
-                                style: TextStyle(
-                                    color: AppColors.lightPrimary,
-                                    fontSize: 14),
+                  const SizedBox(
+                    height: 26,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Profile",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 26,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Form(
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 20,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                             if (isAdmin == '1')
+                              TextEditView(
+                                borderRadius: 16,
+                                hintText: email,
+                                readOnly: true,
+                                controller: emailController,
+                                isDense: true,
+                                fillColor: const Color(0xfffeee),
+                              ),
+                              const SizedBox(
+                                height: 23,
+                              ),
+                              TextEditView(
+                                borderRadius: 16,
+                                controller: phoneController,
+                                readOnly: true,
+                                hintText: phone,
+                                isDense: true,
+                                fillColor: const Color(0xfffeee),
+                              ),
+                              const SizedBox(
+                                height: 23,
+                              ),
+                              TextEditView(
+                                borderRadius: 16,
+                                hintText: gender,
+                                readOnly: true,
+                                controller: genderController,
+                                isDense: true,
+                                fillColor: const Color(0xfffeee),
+                              ),
+                              const SizedBox(
+                                height: 23,
+                              ),
+                              TextEditView(
+                                borderRadius: 16,
+                                hintText: 'Password',
+                                focusNode: myFocusNode,
+                                controller: passwordController,
+                                obscureText: isShowPassword,
+                                suffixIcon: isShowPassword
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          showPassword();
+                                        },
+                                        child: Icon(
+                                          Ionicons.eye,
+                                          color: AppColors.lightPrimary,
+                                          size: 25,
+                                        ))
+                                    : GestureDetector(
+                                        onTap: () {
+                                          showPassword();
+                                        },
+                                        child: Icon(
+                                          Ionicons.eye_off,
+                                          color: AppColors.lightPrimary,
+                                          size: 25,
+                                        )),
+                                isDense: true,
+                                fillColor: const Color(0xfffeee),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
                               ButtonView(
                                 onPressed: () {
-                                  AppNavigator.pushAndStackPage(context,
-                                      page: const AdminMainPage());
+                                  changePassword(context);
                                 },
                                 borderRadius: 30,
                                 color: Colors.white,
                                 borderColor: AppColors.lightSecondary,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
+                                padding: const EdgeInsets.symmetric(vertical: 20),
                                 child: const Text(
-                                  'View Admin',
+                                  'Change Password',
                                   style: TextStyle(
                                       color: AppColors.lightPrimary,
                                       fontSize: 14),
                                 ),
                               ),
-                               const SizedBox(
-                              height: 20,
-                            ),
-                              ButtonView(
-                                onPressed: () {
-                                  StorageHandler.clearCache();
-                                  AppNavigator.pushAndReplacePage(context,
-                                      page: const LoginScreen());
-                                },
-                                borderRadius: 30,
-                                color: Colors.red,
-                                borderColor: Colors.red,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
-                                child: const Text(
-                                  'Log Out',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                               if (isAdmin == '1')
+                                ButtonView(
+                                  onPressed: () {
+                                    AppNavigator.pushAndStackPage(context,
+                                        page: const AdminMainPage());
+                                  },
+                                  borderRadius: 30,
+                                  color: Colors.white,
+                                  borderColor: AppColors.lightSecondary,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: const Text(
+                                    'View Admin',
+                                    style: TextStyle(
+                                        color: AppColors.lightPrimary,
+                                        fontSize: 14),
+                                  ),
                                 ),
-                              )
-                          ],
+                                 const SizedBox(
+                                height: 20,
+                              ),
+                                ButtonView(
+                                  onPressed: () {
+                                    StorageHandler.clearCache();
+                                    AppNavigator.pushAndReplacePage(context,
+                                        page: const LoginScreen());
+                                  },
+                                  borderRadius: 30,
+                                  color: Colors.red,
+                                  borderColor: Colors.red,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: const Text(
+                                    'Log Out',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14),
+                                  ),
+                                )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              ]);
+                  )
+                ]),
+            );
       }),
     );
   }

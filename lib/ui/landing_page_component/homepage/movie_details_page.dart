@@ -80,6 +80,8 @@ class _MovieDetailsState extends State<MovieDetails> {
 
   bool isPostComment = false;
 
+  bool isLoading = true;
+
   String token = '';
   String email = '';
   getPosts() async {
@@ -88,8 +90,13 @@ class _MovieDetailsState extends State<MovieDetails> {
     token = await StorageHandler.getUserToken() ?? '';
     email = await StorageHandler.getUserEmail() ?? '';
 
-    _userCubit.getPostDetails(token: token, postId: widget.postId);
-
+    setState(() {
+      isLoading = true;
+    });
+   await _userCubit.getPostDetails(token: token, postId: widget.postId);
+setState(() {
+      isLoading = false;
+    });
     await _userCubit.getComment(token: token, postId: widget.postId);
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -122,7 +129,7 @@ class _MovieDetailsState extends State<MovieDetails> {
 
       if (state is CreateCommentLoaded) {
         if (state.postComment.status == 1) {
-          Modals.showToast(state.postComment.message ?? '');
+          Modals.showToast(state.postComment.message ?? '', messageType: MessageType.success);
           commentController.text = '';
           _userCubit.getComment(token: token, postId: widget.postId);
         } else {}
@@ -134,7 +141,7 @@ class _MovieDetailsState extends State<MovieDetails> {
           _userCubit.getPostDetails(token: token, postId: widget.postId);
 
           Modals.showToast(state.createPost.message ?? '',
-              messageType: MessageType.error);
+              messageType: MessageType.success);
         } else {
           Modals.showToast(state.createPost.message ?? '',
               messageType: MessageType.error);
@@ -166,291 +173,293 @@ class _MovieDetailsState extends State<MovieDetails> {
         return const LoadingPage();
       }
 
-      return (state is PostDetailsLoading)
+      return (state is PostDetailsLoading || isLoading)
           ? Scaffold(body: const LoadingPage())
-          : Scaffold(
-              body: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    SafeArea(
-                      child: SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.03,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Align(
-                            alignment: Alignment.topLeft,
-                            child: ImageView.svg(
-                              AppImages.arrowBack,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        const ImageView.asset(
-                          AppImages.logo,
-                          width: 40,
-                          height: 40,
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        const Text(
-                          "Fik-kton",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                          child: Column(
+          :   Scaffold(
+               
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      
+                      Row(
                         children: [
-                          Container(
-                              height: 200,
-                              width: MediaQuery.sizeOf(context).width,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: ImageView.network(
-                                    postDetails?.thumbnail,
-                                    fit: BoxFit.cover,
-                                  ))),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      postDetails?.genre
-                                              .toString()
-                                              .capitalizeFirstOfEach ??
-                                          '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          color: AppColors.lightPrimary),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (postDetails?.isBooked == '0') {
-                                          likeBookmark(context, widget.postId,
-                                              AppStrings.bookmarkPost);
-                                        } else {
-                                          likeBookmark(context, widget.postId,
-                                              AppStrings.unBookmarkPost);
-                                        }
-                                      },
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 12.0),
-                                        child: ImageView.svg(
-                                          postDetails?.isBooked == '0'
-                                              ? AppImages.bookmarkOutline
-                                              : AppImages.bookmark,
-                                          height: 25,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 12.0),
-                                Text(
-                                  postDetails?.title
-                                          .toString()
-                                          .capitalizeFirstOfEach ??
-                                      '',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 18),
-                                ),
-                                const SizedBox(height: 16.0),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      timeFormat.getCurrentTime(int.parse(
-                                          postDetails?.updatedAt ?? '0')),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Divider(),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(30)),
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(30),
-                                        child: ImageView.network(
-                                            postDetails?.image1))),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Divider(),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  postDetails?.content
-                                          ?.replaceAll('&amp;amp;', '')
-                                          .replaceAll('&amp;quot;', '"')
-                                          .replaceAll('\n', '') ??
-                                      '',
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Colors.black),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Divider(),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                    height: 300,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(0)),
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(0),
-                                        child: ImageView.network(
-                                            postDetails?.image2))),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Divider(),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  postDetails?.content2
-                                          ?.replaceAll('&amp;amp;', '')
-                                          .replaceAll('&amp;quot;', '"')
-                                          .replaceAll('\n', '') ??
-                                      '',
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                         const SizedBox(
-                                  height: 10,
-                                ),
-                                const Divider(),
-                                const SizedBox(
-                                  height: 10,
-                                ),
                           GestureDetector(
                             onTap: () {
-                              if (postDetails?.isLiked == '0') {
-                                likeBookmark(context, widget.postId,
-                                    AppStrings.likePost);
-                              } else {
-                                likeBookmark(context, widget.postId,
-                                    AppStrings.deleteLike);
-                              }
+                              Navigator.pop(context);
                             },
-                            child: Row(
-                              children: [
-                                postDetails?.isLiked == '0'
-                                    ? Icon(
-                                        Ionicons.thumbs_up_outline,
-                                        color: AppColors.lightSecondary,
-                                      )
-                                    : Icon(
-                                        Ionicons.thumbs_up,
-                                        color: AppColors.lightSecondary,
-                                      ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  postDetails?.likes ?? '',
-                                ),
-                              ],
+                            child: const Align(
+                              alignment: Alignment.topLeft,
+                              child: ImageView.svg(
+                                AppImages.arrowBack,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                          Container(
-                            height: 50,
-                          )
-                          // const SizedBox(
-                          //   height: 15,
-                          // ),
-                          // const Divider(),
-                          // const SizedBox(
-                          //   height: 15,
-                          // ),
-                          // Align(
-                          //   alignment: Alignment.topLeft,
-                          //   child: Row(
-                          //     mainAxisAlignment:
-                          //         MainAxisAlignment.spaceBetween,
-                          //     children: [
-                          //       Text(
-                          //         "Comments (${comments.length})",
-                          //         style: const TextStyle(
-                          //             fontWeight: FontWeight.w700,
-                          //             fontSize: 16),
-                          //       ),
-                          //       const Icon(Icons.arrow_forward_sharp)
-                          //     ],
-                          //   ),
-                          // ),
-                          // const SizedBox(height: 16.0),
-                          // (state is CommentLoading)
-                          //     ? ProgressIndicators.circularProgressBar(
-                          //         context)
-                          //     : ListView.builder(
-                          //         itemCount: comments.length,
-                          //         shrinkWrap: true,
-                          //         physics:
-                          //             const NeverScrollableScrollPhysics(),
-                          //         itemBuilder:
-                          //             (BuildContext context, index) {
-                          //           return CommentSection(
-                          //             comment:
-                          //                 comments[index].comment ?? '',
-                          //             title: replaceSubstring(
-                          //                 comments[index].email ?? ''),
-                          //           );
-                          //         }),
+                          const SizedBox(
+                            width: 30,
+                          ),
+                          const ImageView.asset(
+                            AppImages.logo,
+                            width: 40,
+                            height: 40,
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          const Text(
+                            "Fik-kton",
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ],
-                      )),
-                    ),
-                  ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                            child: Column(
+                          children: [
+                            Container(
+                                height: 250,
+                                width: MediaQuery.sizeOf(context).width,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: ImageView.network(
+                                      postDetails?.thumbnail,
+                                      fit: BoxFit.cover,
+                                    ))),
+                            Padding(
+                              padding: const EdgeInsets.all(.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 10,),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        postDetails?.genre
+                                                .toString()
+                                                .capitalizeFirstOfEach ??
+                                            '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: AppColors.lightPrimary),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (postDetails?.isBooked == '0') {
+                                            likeBookmark(context, widget.postId,
+                                                AppStrings.bookmarkPost);
+                                          } else {
+                                            likeBookmark(context, widget.postId,
+                                                AppStrings.unBookmarkPost);
+                                          }
+                                        },
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 12.0),
+                                          child: ImageView.svg(
+                                            postDetails?.isBooked == '0'
+                                                ? AppImages.bookmarkOutline
+                                                : AppImages.bookmark,
+                                            height: 25,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 12.0),
+                                  Text(
+                                    postDetails?.title
+                                            .toString()
+                                            .capitalizeFirstOfEach ??
+                                        '',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 18),
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        timeFormat.getCurrentTime(int.parse(
+                                            postDetails?.updatedAt ?? '0')),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Divider(),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                      height: 250,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(20),
+                                          child: ImageView.network(
+                                              postDetails?.image1,
+                                      width: double.infinity,
+                                              
+                                               fit: BoxFit.cover,))),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Divider(),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    postDetails?.content
+                                            ?.replaceAll('&amp;amp;', '')
+                                            .replaceAll('&amp;quot;', '"')
+                                            .replaceAll('\n', '') ??
+                                        '',
+                                    textAlign: TextAlign.justify,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        color: Colors.black),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Divider(),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                      height: 250,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20)),
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(20),
+                                          child: ImageView.network(
+                                              postDetails?.image2, fit: BoxFit.cover,))),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Divider(),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    postDetails?.content2
+                                            ?.replaceAll('&amp;amp;', '')
+                                            .replaceAll('&amp;quot;', '"')
+                                            .replaceAll('\n', '') ??
+                                        '',
+                                    textAlign: TextAlign.justify,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                           const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Divider(),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                            GestureDetector(
+                              onTap: () {
+                                if (postDetails?.isLiked == '0') {
+                                  likeBookmark(context, widget.postId,
+                                      AppStrings.likePost);
+                                } else {
+                                  likeBookmark(context, widget.postId,
+                                      AppStrings.deleteLike);
+                                }
+                              },
+                              child: Row(
+                                children: [
+                                  postDetails?.isLiked == '0'
+                                      ? Icon(
+                                          Ionicons.thumbs_up_outline,
+                                          color: AppColors.lightSecondary,
+                                        )
+                                      : Icon(
+                                          Ionicons.thumbs_up,
+                                          color: AppColors.lightSecondary,
+                                        ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    postDetails?.likes ?? '',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 50,
+                            )
+                            // const SizedBox(
+                            //   height: 15,
+                            // ),
+                            // const Divider(),
+                            // const SizedBox(
+                            //   height: 15,
+                            // ),
+                            // Align(
+                            //   alignment: Alignment.topLeft,
+                            //   child: Row(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       Text(
+                            //         "Comments (${comments.length})",
+                            //         style: const TextStyle(
+                            //             fontWeight: FontWeight.w700,
+                            //             fontSize: 16),
+                            //       ),
+                            //       const Icon(Icons.arrow_forward_sharp)
+                            //     ],
+                            //   ),
+                            // ),
+                            // const SizedBox(height: 16.0),
+                            // (state is CommentLoading)
+                            //     ? ProgressIndicators.circularProgressBar(
+                            //         context)
+                            //     : ListView.builder(
+                            //         itemCount: comments.length,
+                            //         shrinkWrap: true,
+                            //         physics:
+                            //             const NeverScrollableScrollPhysics(),
+                            //         itemBuilder:
+                            //             (BuildContext context, index) {
+                            //           return CommentSection(
+                            //             comment:
+                            //                 comments[index].comment ?? '',
+                            //             title: replaceSubstring(
+                            //                 comments[index].email ?? ''),
+                            //           );
+                            //         }),
+                          ],
+                        )),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               // bottomNavigationBar: (state is CreateCommentLoading)
@@ -514,7 +523,7 @@ class _MovieDetailsState extends State<MovieDetails> {
               //           ),
               //         ),
               //       )
-            ));
+            );
     });
   }
 
