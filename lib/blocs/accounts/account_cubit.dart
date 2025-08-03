@@ -14,7 +14,7 @@ class AccountCubit extends Cubit<AccountStates> {
   final AccountViewModel viewModel;
 
   Future<void> registerUser({
-    required String gender,
+    // required String gender,
     required String email,
     required String password,
     // required String phoneNumber,
@@ -23,7 +23,7 @@ class AccountCubit extends Cubit<AccountStates> {
       emit(AccountProcessing());
 
       final user = await accountRepository.registerUser(
-        gender: gender,
+        // gender: gender,
         email: email,
         password: password,
         // phone: phoneNumber,

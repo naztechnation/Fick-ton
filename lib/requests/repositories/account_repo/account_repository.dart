@@ -4,7 +4,7 @@ import '../../../model/auth_model/login.dart';
 
 abstract class AccountRepository {
   Future<AuthData> registerUser({
-    required String gender,
+    // required String gender,
     
     required String email,
     required String password,

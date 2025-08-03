@@ -9,7 +9,8 @@ import '../../../../model/view_models/user_view_model.dart';
 
 class MoviesItems extends StatelessWidget {
   final Posts posts;
-  const MoviesItems({super.key, required this.posts});
+   
+  const MoviesItems({super.key, required this.posts, });
 
   @override
   Widget build(BuildContext context) {

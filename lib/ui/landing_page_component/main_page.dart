@@ -4,12 +4,14 @@ import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../res/app_colors.dart';
+import '../login_user.dart';
 import 'bookmark_page.dart';
 import 'homepage/home_page.dart';
 import 'profile.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+  final String token;
+  const LandingPage({super.key, required this.token});
 
   @override
   _LandingPageState createState() => _LandingPageState();
@@ -17,13 +19,20 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   int _selectedIndex = 0;
+  List<Widget> _pages = [];
+  
 
-  final List<Widget> _pages = [
+   @override
+  void initState() {
+      _pages = [
     const HomePage(),
-    const BookMarkPage(),
-   const NotificationsScreen(),
-    const ProfileScreen(),
+    (widget.token.isEmpty) ? RequireLoginScreen() : const BookMarkPage(),
+   (widget.token.isEmpty) ? RequireLoginScreen() : NotificationsScreen(),
+    (widget.token.isEmpty) ? RequireLoginScreen() : ProfileScreen(),
   ];
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

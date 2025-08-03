@@ -619,7 +619,7 @@ class _HomeState extends State<Home> {
                                                       ));
                                                 },
                                                 child: MoviesItems(
-                                                    posts: allPosts[index]));
+                                                    posts: allPosts[index],));
                                           }),
                                       const SizedBox(
                                         height: 30,

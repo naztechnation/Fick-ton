@@ -29,7 +29,12 @@ class SplashScreenState extends State<SplashScreen>
    bool userLoggedIn = false;
   String isOnBoarding = '';
 
+  String token = '';
+
+   
+
   getUserDetails() async {
+    token = await StorageHandler.getUserToken() ?? '';
     userLoggedIn = await StorageHandler.isLoggedIn();
     isOnBoarding = await StorageHandler.getOnBoardState();
   }
@@ -54,11 +59,13 @@ class SplashScreenState extends State<SplashScreen>
 
     } else if (userLoggedIn) {
       AppNavigator.pushAndReplacePage(context,
-                      page: const LandingPage());
+                      page:   LandingPage(token: token,));
      
     }else{
       StorageHandler.logout();
-       AppNavigator.pushAndReplacePage(context, page:LoginScreen());
+      StorageHandler.saveUserToken("");
+       AppNavigator.pushAndReplacePage(context,
+                      page:   LandingPage(token: token));
     }
   }
     
@@ -67,6 +74,7 @@ class SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
+    
     getUserDetails();
     animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));

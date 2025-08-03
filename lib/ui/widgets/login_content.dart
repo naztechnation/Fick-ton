@@ -38,6 +38,26 @@ class _LoginContentState extends State<LoginContent> {
 
   bool isShowPassword = true;
 
+   String token = '';
+
+
+  getToken() async {
+    
+
+    token = await StorageHandler.getUserToken() ?? '';
+setState(() {
+  
+});
+    
+  }
+   
+
+   @override
+  void initState() {
+    getToken();
+    super.initState();
+  }
+
   showPassword() {
     setState(() {
       isShowPassword = !isShowPassword;
@@ -187,10 +207,11 @@ class _LoginContentState extends State<LoginContent> {
                   StorageHandler.saveUserAdmin(state.user.data?.isAdmin ?? '');
                   Modals.showToast(
                     state.user.message ?? '',
+                    messageType: MessageType.success
                   );
                   StorageHandler.login();
                   AppNavigator.pushAndReplacePage(context,
-                      page: const LandingPage());
+                      page:   LandingPage(token:state.user.token ?? ''));
                 } else {
                   Modals.showToast(state.user.message ?? '',
                       messageType: MessageType.success);
@@ -293,37 +314,37 @@ class _LoginContentState extends State<LoginContent> {
                               //     isDense: true,
                               //   ),
                               // ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 12),
-                                child: TextEditView(
-                                  controller: _genderController,
-                                  labelText: 'Gender',
-                                  validator: Validator.validate,
-                                  readOnly: true,
-                                  onTap: () {
-                                    Modals.showBottomSheetModal(context,
-                                        isDissmissible: true,
-                                        heightFactor: 0.3,
-                                        page: selectGender());
-                                  },
-                                  prefixIcon: const Icon(
-                                    Ionicons.male_female_outline,
-                                    color: Colors.white,
-                                  ),
-                                  suffixIcon: const Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 32,
-                                    color: Colors.white,
-                                  ),
-                                  filled: false,
-                                  borderColor: Colors.white,
-                                  textColor: Colors.white,
-                                  borderRadius: 16,
-                                  borderWidth: 1,
-                                  isDense: true,
-                                ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 16.0, vertical: 12),
+                              //   child: TextEditView(
+                              //     controller: _genderController,
+                              //     labelText: 'Gender',
+                              //     validator: Validator.validate,
+                              //     readOnly: true,
+                              //     onTap: () {
+                              //       Modals.showBottomSheetModal(context,
+                              //           isDissmissible: true,
+                              //           heightFactor: 0.3,
+                              //           page: selectGender());
+                              //     },
+                              //     prefixIcon: const Icon(
+                              //       Ionicons.male_female_outline,
+                              //       color: Colors.white,
+                              //     ),
+                              //     suffixIcon: const Icon(
+                              //       Icons.arrow_drop_down,
+                              //       size: 32,
+                              //       color: Colors.white,
+                              //     ),
+                              //     filled: false,
+                              //     borderColor: Colors.white,
+                              //     textColor: Colors.white,
+                              //     borderRadius: 16,
+                              //     borderWidth: 1,
+                              //     isDense: true,
+                              //   ),
+                              // ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0, vertical: 12),
@@ -376,6 +397,11 @@ class _LoginContentState extends State<LoginContent> {
                                   borderRadius: 30,
                                   onPressed: () {
                                     _registerUser(context);
+                                    //  AppNavigator.pushAndReplacePage(context,
+                    // page: OtpScreen(
+                    //   email: _emailController.text.trim(),
+                    //   isForgotPassword: false,
+                    // ));
                                   },
                                   child: const Text(
                                     'Sign Up',
@@ -484,9 +510,10 @@ class _LoginContentState extends State<LoginContent> {
                                   borderRadius: 30,
                                   onPressed: () {
                                     _loginUser(context);
+                                     
                                   },
                                   child: const Text(
-                                    'Log In',
+                                    'Log in',
                                     style: TextStyle(
                                         color: AppColors.lightSecondary),
                                   ),
@@ -528,7 +555,7 @@ class _LoginContentState extends State<LoginContent> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: isLogin ? 'Sign Up' : 'Log In',
+                                  text: isLogin ? 'Sign up' : 'Log in',
                                   style: const TextStyle(
                                     color: AppColors.lightSecondary,
                                     fontWeight: FontWeight.bold,
@@ -551,7 +578,7 @@ class _LoginContentState extends State<LoginContent> {
   _registerUser(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
-          gender: _genderController.text.trim(),
+          // gender: _genderController.text.trim(),
           // phoneNumber: _phoneController.text.trim(),
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());

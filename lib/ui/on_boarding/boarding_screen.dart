@@ -8,6 +8,7 @@ import '../../res/app_images.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../../utils/size_config.dart';
 import '../auth/auth.dart';
+import '../landing_page_component/main_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -63,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       backgroundColor: colors[_currentPage],
       body: Stack(
         children: [
-          // Fullscreen background image
+          
           Positioned.fill(
             child: Image.asset(
               images[_currentPage],
@@ -71,7 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
       
-          // Rectangle overlay (optional transparency)
+           
           Positioned.fill(
             child: Container(
               decoration: const BoxDecoration(
@@ -150,10 +151,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               borderRadius: 30,
                               onPressed: () {
                                 StorageHandler.saveOnboardState('true');
-                                AppNavigator.pushAndReplacePage(
-                                  context,
-                                  page: const LoginScreen(),
-                                );
+                               AppNavigator.pushAndReplacePage(context,
+                      page:   LandingPage(token: "",));
                               },
                               child: const Text(
                                 "Start",

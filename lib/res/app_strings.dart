@@ -33,6 +33,7 @@ class AppStrings {
   static const  String changePasswordUrl = '${_baseUrl}users/change_password';
   static const  String resetPasswordUrl = '${_baseUrl}auth/reset_password';
   static const  String createAnnouncementUrl= '${_baseUrl}pin/create';
+  static const  String deleteUser= '${_baseUrl}users/delete';
   
 
   static const  String createNotificationUrl  = '${_baseUrl}notify/create';

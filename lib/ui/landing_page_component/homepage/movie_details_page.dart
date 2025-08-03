@@ -17,6 +17,8 @@ import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
 import '../../../res/enum.dart';
+import '../../../utils/navigator/page_navigator.dart';
+import '../../auth/auth.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/loading_page.dart';
@@ -93,11 +95,11 @@ class _MovieDetailsState extends State<MovieDetails> {
     setState(() {
       isLoading = true;
     });
-   await _userCubit.getPostDetails(token: token, postId: widget.postId);
-setState(() {
+    await _userCubit.getPostDetails(token: token, postId: widget.postId);
+    setState(() {
       isLoading = false;
     });
-    await _userCubit.getComment(token: token, postId: widget.postId);
+    //await _userCubit.getComment(token: token, postId: widget.postId);
 
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {});
@@ -129,7 +131,8 @@ setState(() {
 
       if (state is CreateCommentLoaded) {
         if (state.postComment.status == 1) {
-          Modals.showToast(state.postComment.message ?? '', messageType: MessageType.success);
+          Modals.showToast(state.postComment.message ?? '',
+              messageType: MessageType.success);
           commentController.text = '';
           _userCubit.getComment(token: token, postId: widget.postId);
         } else {}
@@ -168,21 +171,18 @@ setState(() {
         );
       } else if (state is PostDetailsLoading) {
         return const LoadingPage();
-      } 
-      else if (state is LikeBookmarkLoading) {
+      } else if (state is LikeBookmarkLoading) {
         return const LoadingPage();
       }
 
       return (state is PostDetailsLoading || isLoading)
           ? Scaffold(body: const LoadingPage())
-          :   Scaffold(
-               
+          : Scaffold(
               body: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      
                       Row(
                         children: [
                           GestureDetector(
@@ -237,7 +237,9 @@ setState(() {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const SizedBox(height: 10,),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -254,17 +256,27 @@ setState(() {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          if (postDetails?.isBooked == '0') {
-                                            likeBookmark(context, widget.postId,
-                                                AppStrings.bookmarkPost);
+                                          if (token.isEmpty) {
+                                            AppNavigator.pushAndReplacePage(
+                                                context,
+                                                page: LoginScreen());
                                           } else {
-                                            likeBookmark(context, widget.postId,
-                                                AppStrings.unBookmarkPost);
+                                            if (postDetails?.isBooked == '0') {
+                                              likeBookmark(
+                                                  context,
+                                                  widget.postId,
+                                                  AppStrings.bookmarkPost);
+                                            } else {
+                                              likeBookmark(
+                                                  context,
+                                                  widget.postId,
+                                                  AppStrings.unBookmarkPost);
+                                            }
                                           }
                                         },
                                         child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 12.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 12.0),
                                           child: ImageView.svg(
                                             postDetails?.isBooked == '0'
                                                 ? AppImages.bookmarkOutline
@@ -308,12 +320,13 @@ setState(() {
                                           borderRadius:
                                               BorderRadius.circular(20)),
                                       child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           child: ImageView.network(
-                                              postDetails?.image1,
-                                      width: double.infinity,
-                                              
-                                               fit: BoxFit.cover,))),
+                                            postDetails?.image1,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          ))),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -347,11 +360,15 @@ setState(() {
                                       height: 250,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20)),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
                                       child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           child: ImageView.network(
-                                              postDetails?.image2, fit: BoxFit.cover,))),
+                                            postDetails?.image2,
+                                            fit: BoxFit.cover,
+                                          ))),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -374,22 +391,27 @@ setState(() {
                                 ],
                               ),
                             ),
-                           const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Divider(),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Divider(),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             GestureDetector(
                               onTap: () {
+                                if (token.isEmpty) {
+                                            AppNavigator.pushAndReplacePage(
+                                                context,
+                                                page: LoginScreen());
+                                          } else {
                                 if (postDetails?.isLiked == '0') {
                                   likeBookmark(context, widget.postId,
                                       AppStrings.likePost);
                                 } else {
                                   likeBookmark(context, widget.postId,
                                       AppStrings.deleteLike);
-                                }
+                                }}
                               },
                               child: Row(
                                 children: [

@@ -209,17 +209,7 @@ class _ProfileState extends State<Profile> {
                               const SizedBox(
                                 height: 23,
                               ),
-                              TextEditView(
-                                borderRadius: 16,
-                                hintText: gender,
-                                readOnly: true,
-                                controller: genderController,
-                                isDense: true,
-                                fillColor: const Color(0xfffeee),
-                              ),
-                              const SizedBox(
-                                height: 23,
-                              ),
+                              
                               TextEditView(
                                 borderRadius: 16,
                                 hintText: 'Password',
@@ -302,7 +292,29 @@ class _ProfileState extends State<Profile> {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 20),
                                   child: const Text(
-                                    'Log Out',
+                                    'Log out',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14),
+                                  ),
+                                ),
+
+                                  const SizedBox(
+                                height: 20,
+                              ),
+                                ButtonView(
+                                  onPressed: () {
+                                    StorageHandler.clearCache();
+                                    AppNavigator.pushAndReplacePage(context,
+                                        page: const LoginScreen());
+                                  },
+                                  borderRadius: 30,
+                                  color: Colors.red,
+                                  borderColor: Colors.red,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: const Text(
+                                    'Delete account',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14),

@@ -9,14 +9,14 @@ class AccountRepositoryImpl implements AccountRepository {
   Future<AuthData> registerUser(
       {required String email,
       required String password,
-      required String gender,
+      // required String gender,
       
       // required String phone
       }) async {
     final map = await Requests().post(AppStrings.registerUrl, body: {
       "email": email,
       "password": password,
-      "gender": gender,
+      // "gender": gender,
       // "phone": phone,
       "subscribed_users": 'subscribed_users',
       
