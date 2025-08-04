@@ -29,15 +29,17 @@ class UserData {
   String? phone;
   String? gender;
   String? isAdmin;
+  String? userId;
   String? status;
 
-  UserData({this.phone, this.gender, this.isAdmin, this.status});
+  UserData({this.phone, this.gender, this.isAdmin, this.status, this.userId});
 
   UserData.fromJson(Map<String, dynamic> json) {
     phone = json['phone'];
     gender = json['gender'];
     isAdmin = json['is_admin'];
     status = json['status'];
+    userId = json['user_id'];
   }
 
   Map<String, dynamic> toJson() {

@@ -179,7 +179,7 @@ setState(() {
               if (state.userData.status == 1) {
                 setToken.setToken(state.userData.token ?? "");
                 StorageHandler.saveUserEmail(_emailController.text);
-               // StorageHandler.saveUserId(state.userData.data);
+                StorageHandler.saveUserId(state.userData.data?.userId ?? "");
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
                     FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -203,8 +203,10 @@ setState(() {
                   setToken.setToken(state.user.token ?? '');
                   StorageHandler.saveUserEmail(_emailController.text);
                   StorageHandler.saveUserPassword(_passwordController.text);
-                  StorageHandler.saveUserGender(state.user.data?.gender ?? '');
-                  StorageHandler.saveUserPhone(state.user.data?.phone ?? '');
+                  // StorageHandler.saveUserGender(state.user.data?.gender ?? '');
+                  // StorageHandler.saveUserPhone(state.user.data?.phone ?? '');
+                StorageHandler.saveUserId(state.user.data?.userId ?? "");
+
                   StorageHandler.saveUserAdmin(state.user.data?.isAdmin ?? '');
                   Modals.showToast(
                     state.user.message ?? '',

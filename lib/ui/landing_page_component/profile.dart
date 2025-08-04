@@ -104,10 +104,23 @@ class _ProfileState extends State<Profile> {
         if (state is ChangePasswordLoaded) {
           if (state.data.status == 1) {
             Modals.showToast(state.data.message ?? '',
-                messageType: MessageType.error);
+                messageType: MessageType.success);
             StorageHandler.saveUserPassword(passwordController.text);
             getEmail();
-          } else {}
+          } else {
+            Modals.showToast(state.data.message ?? '',
+                messageType: MessageType.error);
+          }
+        } else if (state is DeleteUserLoaded) {
+          if (state.delete.status == 1) {
+            StorageHandler.clearCache();
+            StorageHandler.saveUserToken("");
+            StorageHandler.clearCache();
+            AppNavigator.pushAndReplacePage(context, page: const LoginScreen());
+          } else {
+            Modals.showToast(state.delete.message ?? '',
+                messageType: MessageType.error);
+          }
         }
       }, builder: (context, state) {
         if (state is UserNetworkErr) {
@@ -130,7 +143,7 @@ class _ProfileState extends State<Profile> {
           return const LoadingPage();
         }
 
-        return (state is ChangePasswordLoading)
+        return (state is ChangePasswordLoading || state is DeleteUserLoading)
             ? const LoadingPage()
             : SafeArea(
                 child: Column(children: [
@@ -199,17 +212,17 @@ class _ProfileState extends State<Profile> {
                               const SizedBox(
                                 height: 23,
                               ),
-                              TextEditView(
-                                borderRadius: 16,
-                                controller: phoneController,
-                                readOnly: true,
-                                hintText: phone,
-                                isDense: true,
-                                fillColor: const Color(0xfffeee),
-                              ),
-                              const SizedBox(
-                                height: 23,
-                              ),
+                              // TextEditView(
+                              //   borderRadius: 16,
+                              //   controller: phoneController,
+                              //   readOnly: true,
+                              //   hintText: phone,
+                              //   isDense: true,
+                              //   fillColor: const Color(0xfffeee),
+                              // ),
+                              // const SizedBox(
+                              //   height: 23,
+                              // ),
                               TextEditView(
                                 borderRadius: 16,
                                 hintText: 'Password',
@@ -303,9 +316,7 @@ class _ProfileState extends State<Profile> {
                               ),
                               ButtonView(
                                 onPressed: () {
-                                  StorageHandler.clearCache();
-                                  StorageHandler.saveUserToken("");
-
+                                  
                                   showDeleteConfirmationDialog(context, () {
                                     _userCubit.deleteAccount(userId: userId);
                                   });

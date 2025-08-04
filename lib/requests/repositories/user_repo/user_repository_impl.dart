@@ -241,10 +241,12 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<GetAllPosts> deleteAccount({required String userId}) async {
+    
+    print(userId);
     final map = await Requests().post(
       AppStrings.deleteUser,
       body: {
-        "param": userId,
+        "user_id": userId,
       },
     );
 
