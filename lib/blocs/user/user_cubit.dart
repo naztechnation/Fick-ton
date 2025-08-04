@@ -85,6 +85,29 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+  Future<void> deleteAccount({required String userId}) async {
+    try {
+      emit(DeleteUserLoading());
+
+      final posts = await userRepository.deleteAccount(userId: userId);
+
+       
+
+      emit(DeleteUserLoaded(posts));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 
    Future<void> getDraftPost({required String url}) async {
     try {

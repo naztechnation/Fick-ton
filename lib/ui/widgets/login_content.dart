@@ -179,6 +179,7 @@ setState(() {
               if (state.userData.status == 1) {
                 setToken.setToken(state.userData.token ?? "");
                 StorageHandler.saveUserEmail(_emailController.text);
+               // StorageHandler.saveUserId(state.userData.data);
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
                     FirebaseMessaging messaging = FirebaseMessaging.instance;

@@ -48,6 +48,7 @@ class _ProfileState extends State<Profile> {
   String phone = '';
   String gender = '';
   String token = '';
+  String userId = '';
   String isAdmin = '';
 
   final emailController = TextEditingController();
@@ -69,6 +70,7 @@ class _ProfileState extends State<Profile> {
     _userCubit = context.read<UserCubit>();
 
     email = await StorageHandler.getUserEmail() ?? '';
+    userId = await StorageHandler.getUserId() ?? '';
     password = await StorageHandler.getUserPassword() ?? '';
     phone = await StorageHandler.getUserPhone() ?? '';
     gender = await StorageHandler.getUserGender() ?? '';
@@ -131,8 +133,7 @@ class _ProfileState extends State<Profile> {
         return (state is ChangePasswordLoading)
             ? const LoadingPage()
             : SafeArea(
-              child: Column(children: [
-                  
+                child: Column(children: [
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
@@ -209,7 +210,6 @@ class _ProfileState extends State<Profile> {
                               const SizedBox(
                                 height: 23,
                               ),
-                              
                               TextEditView(
                                 borderRadius: 16,
                                 hintText: 'Password',
@@ -248,7 +248,8 @@ class _ProfileState extends State<Profile> {
                                 borderRadius: 30,
                                 color: Colors.white,
                                 borderColor: AppColors.lightSecondary,
-                                padding: const EdgeInsets.symmetric(vertical: 20),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 child: const Text(
                                   'Change Password',
                                   style: TextStyle(
@@ -259,7 +260,7 @@ class _ProfileState extends State<Profile> {
                               const SizedBox(
                                 height: 20,
                               ),
-                               if (isAdmin == '1')
+                              if (isAdmin == '1')
                                 ButtonView(
                                   onPressed: () {
                                     AppNavigator.pushAndStackPage(context,
@@ -277,49 +278,49 @@ class _ProfileState extends State<Profile> {
                                         fontSize: 14),
                                   ),
                                 ),
-                                 const SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
-                                ButtonView(
-                                  onPressed: () {
-                                    StorageHandler.clearCache();
-                                    AppNavigator.pushAndReplacePage(context,
-                                        page: const LoginScreen());
-                                  },
-                                  borderRadius: 30,
-                                  color: Colors.red,
-                                  borderColor: Colors.red,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  child: const Text(
-                                    'Log out',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14),
-                                  ),
+                              ButtonView(
+                                onPressed: () {
+                                  StorageHandler.clearCache();
+                                  AppNavigator.pushAndReplacePage(context,
+                                      page: const LoginScreen());
+                                },
+                                borderRadius: 30,
+                                color: Colors.red,
+                                borderColor: Colors.red,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: const Text(
+                                  'Log out',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
                                 ),
-
-                                  const SizedBox(
+                              ),
+                              const SizedBox(
                                 height: 20,
                               ),
-                                ButtonView(
-                                  onPressed: () {
-                                    StorageHandler.clearCache();
-                                    AppNavigator.pushAndReplacePage(context,
-                                        page: const LoginScreen());
-                                  },
-                                  borderRadius: 30,
-                                  color: Colors.red,
-                                  borderColor: Colors.red,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  child: const Text(
-                                    'Delete account',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14),
-                                  ),
-                                )
+                              ButtonView(
+                                onPressed: () {
+                                  StorageHandler.clearCache();
+                                  StorageHandler.saveUserToken("");
+
+                                  showDeleteConfirmationDialog(context, () {
+                                    _userCubit.deleteAccount(userId: userId);
+                                  });
+                                },
+                                borderRadius: 30,
+                                color: Colors.red,
+                                borderColor: Colors.red,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: const Text(
+                                  'Delete account',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -327,8 +328,52 @@ class _ProfileState extends State<Profile> {
                     ),
                   )
                 ]),
-            );
+              );
       }),
+    );
+  }
+
+  void showDeleteConfirmationDialog(
+      BuildContext context, VoidCallback onConfirm) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: Row(
+            children: const [
+              Icon(Icons.warning_amber_rounded, color: Colors.red),
+              SizedBox(width: 8),
+              Text("Are you sure?"),
+            ],
+          ),
+          content: const Text(
+            "This action cannot be undone. Do you really want to proceed?",
+            style: TextStyle(fontSize: 16),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(), // cancel
+              child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+              ),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(); // close dialog
+                onConfirm(); // perform action
+              },
+              child:
+                  const Text("Delete", style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        );
+      },
     );
   }
 

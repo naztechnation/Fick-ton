@@ -30,6 +30,17 @@ class CreatePostLoaded extends UserStates {
   @override
   List<Object> get props => [createPost];
 }
+class DeleteUserLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class DeleteUserLoaded extends UserStates {
+  final GetAllPosts delete;
+  const DeleteUserLoaded(this.delete);
+  @override
+  List<Object> get props => [delete];
+}
 
 class ChangePasswordLoading extends UserStates {
   @override
