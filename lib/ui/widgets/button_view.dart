@@ -35,8 +35,9 @@ class ButtonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final effectiveColor =
-        disabled ? theme.colorScheme.surface : (color ?? theme.colorScheme.secondary);
+    final effectiveColor = disabled
+        ? theme.colorScheme.surface
+        : (color ?? theme.colorScheme.secondary);
     final effectiveBorderColor = disabled
         ? theme.textTheme.bodySmall?.color ?? Colors.grey
         : (borderColor ?? theme.colorScheme.secondary);
@@ -55,14 +56,15 @@ class ButtonView extends StatelessWidget {
       ),
       textStyle: TextStyle(
         fontSize: fontSize,
-         
       ),
     );
 
     final buttonChild = processing
         ? Align(
             alignment: Alignment.bottomCenter,
-            child: ProgressIndicators.circularProgressBar(context),
+            child: ProgressIndicators.circularProgressBar(
+              context,
+            ),
           )
         : child;
 
@@ -72,8 +74,6 @@ class ButtonView extends StatelessWidget {
       child: buttonChild,
     );
 
-    return expanded
-        ? SizedBox(width: double.infinity, child: button)
-        : button;
+    return expanded ? SizedBox(width: double.infinity, child: button) : button;
   }
 }

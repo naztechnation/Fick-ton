@@ -9,10 +9,9 @@ class EmptyWidget extends StatelessWidget {
   final void Function()? onRefresh;
   final String title;
   final String? description;
-  const EmptyWidget({this.title='No data',
-    this.description,
-    this.onRefresh,
-    Key? key}) : super(key: key);
+  const EmptyWidget(
+      {this.title = 'No data', this.description, this.onRefresh, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +22,26 @@ class EmptyWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const ImageView.asset(AppImages.failed),
-              const SizedBox(height: 25),
+              // const ImageView.asset(AppImages.failed),
+              // const SizedBox(height: 25),
               Text(title,
-                  style: const TextStyle(fontSize: 24,
-                      fontWeight: FontWeight.w600)),
-              if(description!=null)...[
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.w600)),
+              if (description != null) ...[
                 const SizedBox(height: 25),
-                Text(
-                    description!,
+                Text(description!,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18,
-                        fontWeight: FontWeight.w400))
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w400))
               ],
-              if(onRefresh!=null)...[
+              if (onRefresh != null) ...[
                 const SizedBox(height: 25),
                 ButtonView(
-                    onPressed: onRefresh ?? (){},
+                    onPressed: onRefresh ?? () {},
                     color: AppColors.lightSecondary,
                     child: const Text('Refresh',
-                        style: TextStyle(fontWeight: FontWeight.w600,
-                            fontSize: 18)))
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18)))
               ]
             ],
           ),

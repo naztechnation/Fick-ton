@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../res/app_colors.dart';
 
-class ProgressIndicators{
-
+class ProgressIndicators {
   static Widget circularProgressBar(BuildContext context,
-      {double? value, double strokeWidth=2.5}) {
+      {double? value, double strokeWidth = 2.5}) {
     return SizedBox(
       height: 20,
       width: 20,
@@ -13,18 +12,16 @@ class ProgressIndicators{
           value: value,
           strokeWidth: strokeWidth,
           valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-          backgroundColor: (AppColors.lightSecondary)),
+          backgroundColor: (Colors.white)),
     );
   }
 
   static Widget linearProgressBar(BuildContext context,
       {double? value, double? minHeight}) {
     return LinearProgressIndicator(
-      value: value,
-      minHeight: minHeight,
-      valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-      backgroundColor:AppColors.lightSecondary
-    );
+        value: value,
+        minHeight: minHeight,
+        valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+        backgroundColor: AppColors.lightSecondary);
   }
-
 }

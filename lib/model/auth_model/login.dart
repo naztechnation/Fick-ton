@@ -1,7 +1,7 @@
 class AuthData {
   int? status;
-  String? message;
-  String? token;
+  var message;
+  var token;
   UserData? data;
 
   AuthData({this.status, this.message, this.token, this.data});
@@ -26,11 +26,11 @@ class AuthData {
 }
 
 class UserData {
-  String? phone;
-  String? gender;
-  String? isAdmin;
-  String? userId;
-  String? status;
+  var phone;
+  var gender;
+  var isAdmin;
+  var userId;
+  var status;
 
   UserData({this.phone, this.gender, this.isAdmin, this.status, this.userId});
 

@@ -38,21 +38,14 @@ class _LoginContentState extends State<LoginContent> {
 
   bool isShowPassword = true;
 
-   String token = '';
-
+  String token = '';
 
   getToken() async {
-    
-
     token = await StorageHandler.getUserToken() ?? '';
-setState(() {
-  
-});
-    
+    setState(() {});
   }
-   
 
-   @override
+  @override
   void initState() {
     getToken();
     super.initState();
@@ -179,10 +172,11 @@ setState(() {
               if (state.userData.status == 1) {
                 setToken.setToken(state.userData.token ?? "");
                 StorageHandler.saveUserEmail(_emailController.text);
-                StorageHandler.saveUserId(state.userData.data?.userId ?? "");
+                StorageHandler.saveUserId(
+                    state.userData.data?.userId.toString() ?? "");
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
-                    FirebaseMessaging messaging = FirebaseMessaging.instance;
+                FirebaseMessaging messaging = FirebaseMessaging.instance;
                 messaging.subscribeToTopic('subscribed_users');
                 AppNavigator.pushAndReplacePage(context,
                     page: OtpScreen(
@@ -190,7 +184,6 @@ setState(() {
                       isForgotPassword: false,
                     ));
 
-                
                 clearTextViews();
               } else {
                 Modals.showToast(state.userData.message ?? '',
@@ -199,29 +192,29 @@ setState(() {
             }
             if (state is AccountUpdated) {
               if (state.user.status == 1) {
-                if (state.user.data!.status! == '1') {
-                  setToken.setToken(state.user.token ?? '');
-                  StorageHandler.saveUserEmail(_emailController.text);
-                  StorageHandler.saveUserPassword(_passwordController.text);
-                  // StorageHandler.saveUserGender(state.user.data?.gender ?? '');
-                  // StorageHandler.saveUserPhone(state.user.data?.phone ?? '');
-                StorageHandler.saveUserId(state.user.data?.userId ?? "");
+                // if (state.user.data!.status! == '1') {
+                setToken.setToken(state.user.token ?? '');
+                StorageHandler.saveUserEmail(_emailController.text);
+                StorageHandler.saveUserPassword(_passwordController.text);
+                // StorageHandler.saveUserGender(state.user.data?.gender ?? '');
+                // StorageHandler.saveUserPhone(state.user.data?.phone ?? '');
+                StorageHandler.saveUserId(
+                    state.user.data?.userId.toString() ?? "");
 
-                  StorageHandler.saveUserAdmin(state.user.data?.isAdmin ?? '');
-                  Modals.showToast(
-                    state.user.message ?? '',
-                    messageType: MessageType.success
-                  );
-                  StorageHandler.login();
-                  AppNavigator.pushAndReplacePage(context,
-                      page:   LandingPage(token:state.user.token ?? ''));
-                } else {
-                  Modals.showToast(state.user.message ?? '',
-                      messageType: MessageType.success);
-                }
-              } else {
+                StorageHandler.saveUserAdmin(
+                    state.user.data?.isAdmin.toString() ?? '');
                 Modals.showToast(state.user.message ?? '',
                     messageType: MessageType.success);
+                StorageHandler.login();
+                AppNavigator.pushAndReplacePage(context,
+                    page: LandingPage(token: state.user.token ?? ''));
+                // } else {
+                //   Modals.showToast(state.user.message ?? '',
+                //       messageType: MessageType.success);
+                // }
+              } else {
+                Modals.showToast(state.user.message ?? '',
+                    messageType: MessageType.error);
               }
             } else if (state is AccountApiErr) {
               if (state.message != null) {
@@ -401,10 +394,10 @@ setState(() {
                                   onPressed: () {
                                     _registerUser(context);
                                     //  AppNavigator.pushAndReplacePage(context,
-                    // page: OtpScreen(
-                    //   email: _emailController.text.trim(),
-                    //   isForgotPassword: false,
-                    // ));
+                                    // page: OtpScreen(
+                                    //   email: _emailController.text.trim(),
+                                    //   isForgotPassword: false,
+                                    // ));
                                   },
                                   child: const Text(
                                     'Sign Up',
@@ -513,7 +506,6 @@ setState(() {
                                   borderRadius: 30,
                                   onPressed: () {
                                     _loginUser(context);
-                                     
                                   },
                                   child: const Text(
                                     'Log in',

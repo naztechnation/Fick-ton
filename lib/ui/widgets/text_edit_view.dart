@@ -1,7 +1,5 @@
 import 'package:fikkton/res/app_colors.dart';
 import 'package:flutter/material.dart';
- 
-
 
 class TextEditView extends StatelessWidget {
   final ValueChanged<String>? onChanged;
@@ -66,7 +64,8 @@ class TextEditView extends StatelessWidget {
       this.helperText,
       this.maxLength,
       this.maxLines = 1,
-      this.textViewTitle = '', this.errorColor = Colors.white})
+      this.textViewTitle = '',
+      this.errorColor = Colors.white})
       : super(key: key);
 
   OutlineInputBorder _border(BuildContext context) => OutlineInputBorder(
@@ -85,9 +84,7 @@ class TextEditView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         
           TextFormField(
-            
             controller: controller,
             keyboardType: keyboardType,
             textInputAction: textInputAction,
@@ -104,27 +101,23 @@ class TextEditView extends StatelessWidget {
             onFieldSubmitted: onFieldSubmitted,
             focusNode: focusNode,
             style: TextStyle(color: textColor),
-            
             decoration: InputDecoration(
-              
                 border: _border(context),
                 enabledBorder: _border(context),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(
                         width: borderWidth,
-                        color: AppColors.lightSecondary,
-                        
+                        color: Colors.white,
                         style: BorderStyle.solid)),
                 focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(
                         width: borderWidth,
-                        color: borderColor ??
-                            Colors.white,
+                        color: borderColor ?? Colors.white,
                         style: BorderStyle.solid)),
                 errorBorder: _border(context),
-                   errorStyle:   TextStyle(color: errorColor),
+                errorStyle: TextStyle(color: errorColor),
                 disabledBorder: _border(context),
                 hintText: hintText,
                 hintStyle: TextStyle(color: textColor, fontSize: 14),
