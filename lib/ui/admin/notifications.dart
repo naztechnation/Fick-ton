@@ -114,7 +114,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             width: 12,
                           ),
                           Text(
-                            'Fik-kton',
+                            'Mulo',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w500),
                           ),

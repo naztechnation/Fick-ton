@@ -1,6 +1,6 @@
 class PostDetails {
   int? status;
-  String? message;
+  var message;
   Data? data;
 
   PostDetails({this.status, this.message, this.data});
@@ -23,25 +23,25 @@ class PostDetails {
 }
 
 class Data {
-  String? id;
-  String? title;
-  String? content;
-  
-  String? thumbnail;
-  String? content2;
-  String? image1;
-  String? image2;
-  String? videoLink;
-  String? author;
-  String? genre;
-  String? isTrending;
-  String? views;
-  String? likes;
-  String? createdAt;
-  String? updatedAt;
-  String? status;
-  String? isBooked;
-  String? isLiked;
+  var id;
+  var title;
+  var content;
+
+  var thumbnail;
+  var content2;
+  var image1;
+  var image2;
+  var videoLink;
+  var author;
+  var genre;
+  var isTrending;
+  var views;
+  var likes;
+  var createdAt;
+  var updatedAt;
+  var status;
+  var isBooked;
+  var isLiked;
 
   Data(
       {this.id,

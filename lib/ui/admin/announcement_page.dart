@@ -9,8 +9,6 @@ import '../landing_page_component/homepage/search_page.dart';
 import '../widgets/image_view.dart';
 import 'create_anouncement.dart';
 import 'create_message.dart';
- 
-
 
 class AnnouncementsPage extends StatefulWidget {
   const AnnouncementsPage({super.key});
@@ -40,7 +38,7 @@ class _AnnouncementsState extends State<AnnouncementsPage> {
           ),
           backgroundColor: Colors.transparent,
           title: Text(
-            'Fik-kton',
+            'Mulo',
             style: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
           ),
@@ -51,11 +49,9 @@ class _AnnouncementsState extends State<AnnouncementsPage> {
               Tab(
                 text: 'Create Notifications',
               ),
-              
               Tab(
                 text: 'Create Announcements',
               ),
-              
             ],
           ),
           actions: [
@@ -66,9 +62,7 @@ class _AnnouncementsState extends State<AnnouncementsPage> {
                 size: 35,
               ),
               onPressed: () {
-
-               
-                 AppNavigator.pushAndStackPage(context,
+                AppNavigator.pushAndStackPage(context,
                     page: SearchPage(
                       postsLists: user.postsList,
                     ));
@@ -83,7 +77,6 @@ class _AnnouncementsState extends State<AnnouncementsPage> {
           children: [
             createMessage(),
             CreateAnnouncement(),
-             
           ],
         ),
       ),

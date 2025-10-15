@@ -22,7 +22,6 @@ class DetailsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               
               Row(
                 children: [
                   GestureDetector(
@@ -49,7 +48,7 @@ class DetailsPage extends StatelessWidget {
                     width: 12,
                   ),
                   const Text(
-                    "Fik-kton",
+                    "Mulo",
                     style: TextStyle(fontSize: 18),
                   ),
                 ],
@@ -98,8 +97,8 @@ class DetailsPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Text(
-                                timeFormat
-                                    .getCurrentTime(int.parse(pinned.updatedAt ?? '0')),
+                                timeFormat.getCurrentTime(
+                                    int.parse(pinned.updatedAt ?? '0')),
                                 style: TextStyle(fontSize: 14)),
                           ),
                         ],

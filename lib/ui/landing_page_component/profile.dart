@@ -163,7 +163,7 @@ class _ProfileState extends State<Profile> {
                               width: 12,
                             ),
                             Text(
-                              'Fik-kton',
+                              'Mulo',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w500),
                             ),
@@ -316,7 +316,6 @@ class _ProfileState extends State<Profile> {
                               ),
                               ButtonView(
                                 onPressed: () {
-                                  
                                   showDeleteConfirmationDialog(context, () {
                                     _userCubit.deleteAccount(userId: userId);
                                   });

@@ -81,9 +81,12 @@ class NotificationTile extends StatelessWidget {
                         style: const TextStyle(
                             wordSpacing: 0, fontSize: 15, color: Colors.black),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
-                       timeFormat.getCurrentTime(int.parse(notifications[index].createdAt ?? '')),  
+                        timeFormat.getCurrentTime(
+                            int.parse(notifications[index].createdAt ?? '')),
                         textAlign: TextAlign.justify,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

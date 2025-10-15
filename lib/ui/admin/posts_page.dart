@@ -39,7 +39,7 @@ class _PostsState extends State<Posts> {
           ),
           backgroundColor: Colors.transparent,
           title: Text(
-            'Fik-kton',
+            'Mulo',
             style: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
           ),
@@ -51,7 +51,6 @@ class _PostsState extends State<Posts> {
               Tab(
                 text: 'Published(${user.publishedLength})',
               ),
-              
               Tab(
                 text: 'Announcements(${user.pinnedList.length})',
               ),
@@ -68,9 +67,7 @@ class _PostsState extends State<Posts> {
                 size: 35,
               ),
               onPressed: () {
-
-               
-                 AppNavigator.pushAndStackPage(context,
+                AppNavigator.pushAndStackPage(context,
                     page: SearchPage(
                       postsLists: user.postsList,
                     ));

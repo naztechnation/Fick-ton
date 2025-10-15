@@ -18,7 +18,6 @@ import 'homepage/search_page.dart';
 import 'homepage/widgets/movies_item.dart';
 
 class BookMarkPage extends StatelessWidget {
-
   const BookMarkPage({
     Key? key,
   }) : super(key: key);
@@ -81,7 +80,9 @@ class _BookMarkState extends State<BookMark> {
           return EmptyWidget(
             title: 'Network error',
             description: state.message,
-            onRefresh: () => _userCubit.bookmarkList(token: token, ),
+            onRefresh: () => _userCubit.bookmarkList(
+              token: token,
+            ),
           );
         } else if (state is UserNetworkErrApiErr) {
           return EmptyWidget(
@@ -96,7 +97,6 @@ class _BookMarkState extends State<BookMark> {
         return SafeArea(
           child: Column(
             children: [
-               
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -113,7 +113,7 @@ class _BookMarkState extends State<BookMark> {
                           width: 12,
                         ),
                         Text(
-                          'Fik-kton',
+                          'Mulo',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w500),
                         ),
@@ -122,7 +122,9 @@ class _BookMarkState extends State<BookMark> {
                     GestureDetector(
                       onTap: () {
                         AppNavigator.pushAndStackPage(context,
-                            page:   SearchPage(postsLists: bookmarkList,));
+                            page: SearchPage(
+                              postsLists: bookmarkList,
+                            ));
                       },
                       child: const ImageView.svg(
                         AppImages.search,
@@ -152,39 +154,40 @@ class _BookMarkState extends State<BookMark> {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-          
-                      if(bookmarkList.isEmpty)...[
-                     SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.7,
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                              alignment: Alignment.center,
-                              child: ImageView.asset(AppImages.empty, height: 160,)),
-                          SizedBox(height: 40.0),
-                          Text(
-                            "Empty",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 18),
-                          ),
-                          SizedBox(height: 30.0),
-                          Text(
-                            "You don’t have any bookmarks at this time",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
+                  child: Column(children: [
+                    if (bookmarkList.isEmpty) ...[
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.7,
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                                alignment: Alignment.center,
+                                child: ImageView.asset(
+                                  AppImages.empty,
+                                  height: 160,
+                                )),
+                            SizedBox(height: 40.0),
+                            Text(
+                              "Empty",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400, fontSize: 18),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ]else...[
+                            SizedBox(height: 30.0),
+                            Text(
+                              "You don’t have any bookmarks at this time",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ] else ...[
                       ListView.builder(
                           itemCount: bookmarkList.length,
                           physics: const NeverScrollableScrollPhysics(),
@@ -207,7 +210,7 @@ class _BookMarkState extends State<BookMark> {
                         height: 30,
                       ),
                     ],
-            ]),
+                  ]),
                 ),
               ),
             ],

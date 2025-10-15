@@ -102,9 +102,9 @@ class _NewPostState extends State<Post> {
 
   @override
   void initState() {
-      Provider.of<UserViewModel>(context, listen: false).clearImage();
-            Provider.of<UserViewModel>(context, listen: false).clearImage1();
-            Provider.of<UserViewModel>(context, listen: false).clearImage2();
+    Provider.of<UserViewModel>(context, listen: false).clearImage();
+    Provider.of<UserViewModel>(context, listen: false).clearImage1();
+    Provider.of<UserViewModel>(context, listen: false).clearImage2();
     if (widget.isUpdate) {
       getPosts();
     }
@@ -130,7 +130,6 @@ class _NewPostState extends State<Post> {
             user.clearImage();
             user.clearImage1();
             user.clearImage2();
-             
           } else {}
         } else if (state is PostDetailsLoaded) {
           // Modals.showToast(state.postDetails.message ?? '',
@@ -161,11 +160,10 @@ class _NewPostState extends State<Post> {
         return (isLoading)
             ? const LoadingPage()
             : SafeArea(
-              child: Form(
+                child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Row(
@@ -197,9 +195,10 @@ class _NewPostState extends State<Post> {
                                   width: 12,
                                 ),
                                 const Text(
-                                  'Fik-kton',
+                                  'Mulo',
                                   style: TextStyle(
-                                      fontSize: 18, fontWeight: FontWeight.w500),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -231,7 +230,8 @@ class _NewPostState extends State<Post> {
                                 const Text(
                                   "Add Cover Image",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w400),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 const SizedBox(
                                   height: 15,
@@ -261,7 +261,8 @@ class _NewPostState extends State<Post> {
                                 const Text(
                                   "Title",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w400),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 const SizedBox(
                                   height: 5,
@@ -279,35 +280,39 @@ class _NewPostState extends State<Post> {
                                 const Text(
                                   "Article1",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w400),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 const SizedBox(
                                   height: 5,
                                 ),
                                 TextEditView(
                                   maxLines: 9,
-                                  hintText: 'Start writing your article here...',
+                                  hintText:
+                                      'Start writing your article here...',
                                   validator: Validator.validate,
                                   borderRadius: 16,
                                   controller: contentController,
                                   isDense: true,
                                   fillColor: Colors.grey.shade200,
                                 ),
-              
+
                                 const SizedBox(
                                   height: 20,
                                 ),
                                 const Text(
                                   "Article2",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w400),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 const SizedBox(
                                   height: 5,
                                 ),
                                 TextEditView(
                                   maxLines: 9,
-                                  hintText: 'Start writing your article here...',
+                                  hintText:
+                                      'Start writing your article here...',
                                   validator: Validator.validate,
                                   borderRadius: 16,
                                   controller: content2Controller,
@@ -336,7 +341,7 @@ class _NewPostState extends State<Post> {
                                 //                     context: context,
                                 //                     onPressed: (item) {
                                 //                       Navigator.pop(context);
-              
+
                                 //                       setState(() {
                                 //                         genres = item;
                                 //                         authorController.text = genres;
@@ -355,33 +360,36 @@ class _NewPostState extends State<Post> {
                                 const Text(
                                   "Image 1",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w400),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 const SizedBox(
                                   height: 5,
                                 ),
                                 CoverImageContainer1(),
-              
+
                                 const SizedBox(
                                   height: 25,
                                 ),
                                 const Text(
                                   "Image 2",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w400),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 const SizedBox(
                                   height: 5,
                                 ),
                                 CoverImageContainer2(),
-              
+
                                 const SizedBox(
                                   height: 25,
                                 ),
                                 const Text(
                                   "Genres",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w400),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 const SizedBox(
                                   height: 5,
@@ -392,14 +400,14 @@ class _NewPostState extends State<Post> {
                                         isDissmissible: true,
                                         heightFactor: 1,
                                         page: filterModalContent(
-                                            filterItems:
-                                                user.overallPosts?.data?.genres ??
-                                                    [],
+                                            filterItems: user.overallPosts?.data
+                                                    ?.genres ??
+                                                [],
                                             title: 'Select Genre',
                                             context: context,
                                             onPressed: (item) {
                                               Navigator.pop(context);
-              
+
                                               setState(() {
                                                 genres = item;
                                                 genresController.text = genres;
@@ -490,20 +498,24 @@ class _NewPostState extends State<Post> {
                                                       context,
                                                       setToken.token,
                                                       user.imageURl ?? File(''),
-                                                       user.imageURl1 ?? File(''),
-                                                      user.imageURl2 ?? File(''),
+                                                      user.imageURl1 ??
+                                                          File(''),
+                                                      user.imageURl2 ??
+                                                          File(''),
                                                       '1',
                                                       AppStrings.updatePost,
                                                       postId);
-              
+
                                                   // Modals.showToast(postId);
                                                 } else {
                                                   _createPost(
                                                       context,
                                                       setToken.token,
                                                       user.imageURl ?? File(''),
-                                                       user.imageURl1 ?? File(''),
-                                                      user.imageURl2 ?? File(''),
+                                                      user.imageURl1 ??
+                                                          File(''),
+                                                      user.imageURl2 ??
+                                                          File(''),
                                                       '1',
                                                       AppStrings.createPost,
                                                       postId);
@@ -529,8 +541,10 @@ class _NewPostState extends State<Post> {
                                                       context,
                                                       setToken.token,
                                                       user.imageURl ?? File(''),
-                                                       user.imageURl1 ?? File(''),
-                                                      user.imageURl2 ?? File(''),
+                                                      user.imageURl1 ??
+                                                          File(''),
+                                                      user.imageURl2 ??
+                                                          File(''),
                                                       '0',
                                                       AppStrings.updatePost,
                                                       postId);
@@ -539,8 +553,10 @@ class _NewPostState extends State<Post> {
                                                       context,
                                                       setToken.token,
                                                       user.imageURl ?? File(''),
-                                                      user.imageURl1 ?? File(''),
-                                                      user.imageURl2 ?? File(''),
+                                                      user.imageURl1 ??
+                                                          File(''),
+                                                      user.imageURl2 ??
+                                                          File(''),
                                                       '0',
                                                       AppStrings.createPost,
                                                       postId);
@@ -551,7 +567,8 @@ class _NewPostState extends State<Post> {
                                               }
                                             },
                                             color: Colors.white,
-                                            borderColor: AppColors.lightSecondary,
+                                            borderColor:
+                                                AppColors.lightSecondary,
                                             child: const Text(
                                               'Save to Draft',
                                               style: TextStyle(
@@ -572,7 +589,7 @@ class _NewPostState extends State<Post> {
                     ],
                   ),
                 ),
-            );
+              );
       }),
     );
   }

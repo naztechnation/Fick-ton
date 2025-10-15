@@ -26,12 +26,10 @@ class SplashScreenState extends State<SplashScreen>
   late AnimationController animationController;
   late Animation<double> animation;
 
-   bool userLoggedIn = false;
+  bool userLoggedIn = false;
   String isOnBoarding = '';
 
   String token = '';
-
-   
 
   getUserDetails() async {
     token = await StorageHandler.getUserToken() ?? '';
@@ -49,32 +47,27 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   void navigationPage() {
-
-    
-
     // AppNavigator.pushAndReplacePage(context, page: MovieArticleUploadPage());
 
     if (isOnBoarding == '') {
-          AppNavigator.pushAndReplaceName(context, name: AppRoutes.onBoardingScreen);
-
+      AppNavigator.pushAndReplaceName(context,
+          name: AppRoutes.onBoardingScreen);
     } else if (userLoggedIn) {
       AppNavigator.pushAndReplacePage(context,
-                      page:   LandingPage(token: token,));
-     
-    }else{
+          page: LandingPage(
+            token: token,
+          ));
+    } else {
       StorageHandler.logout();
       StorageHandler.saveUserToken("");
-       AppNavigator.pushAndReplacePage(context,
-                      page:   LandingPage(token: token));
+      AppNavigator.pushAndReplacePage(context, page: LandingPage(token: token));
     }
   }
-    
-  
 
   @override
   void initState() {
     super.initState();
-    
+
     getUserDetails();
     animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
@@ -109,7 +102,6 @@ class SplashScreenState extends State<SplashScreen>
             height: MediaQuery.sizeOf(context).height,
             width: MediaQuery.sizeOf(context).width,
           ),
-          
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -118,13 +110,13 @@ class SplashScreenState extends State<SplashScreen>
                 width: animation.value * 200,
                 height: animation.value * 150,
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'FIK-KTON',
-                style: TextStyle(color: AppColors.cardColor, fontSize: 24),
-              )
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // const Text(
+              //   'Mulo',
+              //   style: TextStyle(color: AppColors.cardColor, fontSize: 24),
+              // )
             ],
           ),
         ],

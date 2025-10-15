@@ -95,7 +95,8 @@ class _MovieDetailsState extends State<MovieDetails> {
     setState(() {
       isLoading = true;
     });
-    await _userCubit.getPostDetails(token: token, postId: widget.postId);
+    await _userCubit.getPostDetails(
+        token: token, postId: widget.postId.toString());
     setState(() {
       isLoading = false;
     });
@@ -209,7 +210,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                             width: 12,
                           ),
                           const Text(
-                            "Fik-kton",
+                            "Mulo",
                             style: TextStyle(fontSize: 18),
                           ),
                         ],
@@ -264,12 +265,12 @@ class _MovieDetailsState extends State<MovieDetails> {
                                             if (postDetails?.isBooked == '0') {
                                               likeBookmark(
                                                   context,
-                                                  widget.postId,
+                                                  widget.postId.toString(),
                                                   AppStrings.bookmarkPost);
                                             } else {
                                               likeBookmark(
                                                   context,
-                                                  widget.postId,
+                                                  widget.postId.toString(),
                                                   AppStrings.unBookmarkPost);
                                             }
                                           }
@@ -278,7 +279,9 @@ class _MovieDetailsState extends State<MovieDetails> {
                                           padding: const EdgeInsets.only(
                                               right: 12.0),
                                           child: ImageView.svg(
-                                            postDetails?.isBooked == '0'
+                                            color: AppColors.lightPrimary,
+                                            postDetails?.isBooked.toString() ==
+                                                    '0'
                                                 ? AppImages.bookmarkOutline
                                                 : AppImages.bookmark,
                                             height: 25,
@@ -401,21 +404,21 @@ class _MovieDetailsState extends State<MovieDetails> {
                             GestureDetector(
                               onTap: () {
                                 if (token.isEmpty) {
-                                            AppNavigator.pushAndReplacePage(
-                                                context,
-                                                page: LoginScreen());
-                                          } else {
-                                if (postDetails?.isLiked == '0') {
-                                  likeBookmark(context, widget.postId,
-                                      AppStrings.likePost);
+                                  AppNavigator.pushAndReplacePage(context,
+                                      page: LoginScreen());
                                 } else {
-                                  likeBookmark(context, widget.postId,
-                                      AppStrings.deleteLike);
-                                }}
+                                  if (postDetails?.isLiked.toString() == '0') {
+                                    likeBookmark(context, widget.postId,
+                                        AppStrings.likePost);
+                                  } else {
+                                    likeBookmark(context, widget.postId,
+                                        AppStrings.deleteLike);
+                                  }
+                                }
                               },
                               child: Row(
                                 children: [
-                                  postDetails?.isLiked == '0'
+                                  postDetails?.isLiked.toString() == '0'
                                       ? Icon(
                                           Ionicons.thumbs_up_outline,
                                           color: AppColors.lightSecondary,
@@ -428,7 +431,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                     width: 10,
                                   ),
                                   Text(
-                                    postDetails?.likes ?? '',
+                                    postDetails?.likes.toString() ?? '',
                                   ),
                                 ],
                               ),

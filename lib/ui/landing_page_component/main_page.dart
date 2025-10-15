@@ -20,16 +20,15 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   int _selectedIndex = 0;
   List<Widget> _pages = [];
-  
 
-   @override
+  @override
   void initState() {
-      _pages = [
-    const HomePage(),
-    (widget.token.isEmpty) ? RequireLoginScreen() : const BookMarkPage(),
-   (widget.token.isEmpty) ? RequireLoginScreen() : NotificationsScreen(),
-    (widget.token.isEmpty) ? RequireLoginScreen() : ProfileScreen(),
-  ];
+    _pages = [
+      const HomePage(),
+      (widget.token.isEmpty) ? RequireLoginScreen() : const BookMarkPage(),
+      (widget.token.isEmpty) ? RequireLoginScreen() : NotificationsScreen(),
+      (widget.token.isEmpty) ? RequireLoginScreen() : ProfileScreen(),
+    ];
 
     super.initState();
   }
@@ -50,6 +49,7 @@ class _LandingPageState extends State<LandingPage> {
                   ? const ImageView.svg(
                       AppImages.home,
                       height: 22,
+                      color: AppColors.lightPrimary,
                     )
                   : const ImageView.svg(
                       AppImages.homeOutline,
@@ -62,6 +62,7 @@ class _LandingPageState extends State<LandingPage> {
                   ? const ImageView.svg(
                       AppImages.bookmark,
                       height: 22,
+                      color: AppColors.lightPrimary,
                     )
                   : const ImageView.svg(
                       AppImages.bookmarkOutline,
@@ -74,6 +75,7 @@ class _LandingPageState extends State<LandingPage> {
                   ? const ImageView.svg(
                       AppImages.notifications,
                       height: 25,
+                      color: AppColors.lightPrimary,
                     )
                   : const ImageView.svg(
                       AppImages.notificationsOutline,

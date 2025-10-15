@@ -1,40 +1,21 @@
 {
   "project_info": {
-    "project_number": "401383918438",
-    "project_id": "fikkton-mobile",
-    "storage_bucket": "fikkton-mobile.firebasestorage.app"
+    "project_number": "1072332130323",
+    "project_id": "mulo-21093",
+    "storage_bucket": "mulo-21093.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:401383918438:android:c570e06c6c286e799196a7",
+        "mobilesdk_app_id": "1:1072332130323:android:79736bfed4c9d6a6d3d7e6",
         "android_client_info": {
-          "package_name": "com.fikkton.fikkton"
+          "package_name": "com.mulo.mulo"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAm4fLBgmvf5Pj5Zwpc4m-ig8KtLQoAcdU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:401383918438:android:bc32aea771cc06579196a7",
-        "android_client_info": {
-          "package_name": "com.ng.fikkton"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAm4fLBgmvf5Pj5Zwpc4m-ig8KtLQoAcdU"
+          "current_key": "AIzaSyC6Z0x7ver8AkeYcHP_7a0NXdrXLYOYsos"
         }
       ],
       "services": {

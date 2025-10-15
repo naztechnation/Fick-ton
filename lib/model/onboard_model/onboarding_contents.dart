@@ -12,9 +12,10 @@ class OnboardingContents {
 
 List<OnboardingContents> contents = [
   OnboardingContents(
-    title: "Welcome to Fik-kton ",
+    title: "Welcome to Mulo ",
     image: "assets/images/image1.png",
-    desc: "Dive into the heart-pounding world of action-packed movies. Get the latest updates, trailers, and exclusive insights!. ",
+    desc:
+        "Dive into the heart-pounding world of action-packed movies. Get the latest updates, trailers, and exclusive insights!. ",
   ),
   OnboardingContents(
     title: "Stay on the Edge ",

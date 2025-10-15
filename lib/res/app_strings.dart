@@ -1,18 +1,13 @@
-
-
 class AppStrings {
-  static const String appName = 'FIK_KTON';
-  
+  static const String appName = 'Mulo';
+
   static const String interSans = 'InterSans';
   static const String urbanist = 'Urbanist';
 
   static const String networkErrorMessage = "Network error, try again later";
 
-
-
   /// Base
-  static const String _baseUrl = 'https://fikkton.com.ng/api/';
-  
+  static const String _baseUrl = 'https://mulo.com.ng/api/';
 
   /// User Endpoints
   static const String loginUrl = '${_baseUrl}auth/login';
@@ -27,23 +22,28 @@ class AppStrings {
   static const String unLikePost = '${_baseUrl}likes/delete';
   static const String bookmarkPost = '${_baseUrl}book/create';
   static const String unBookmarkPost = '${_baseUrl}book/delete';
-  static const  String deletePost = '${_baseUrl}posts/delete';
-  static const  String deletePinned = '${_baseUrl}pin/delete';
-  static const  String deleteNotification = '${_baseUrl}notify/delete';
-  static const  String changePasswordUrl = '${_baseUrl}users/change_password';
-  static const  String resetPasswordUrl = '${_baseUrl}auth/reset_password';
-  static const  String createAnnouncementUrl= '${_baseUrl}pin/create';
-  static const  String deleteUser= '${_baseUrl}users/delete';
-  
+  static const String deletePost = '${_baseUrl}posts/delete';
+  static const String deletePinned = '${_baseUrl}pin/delete';
+  static const String deleteNotification = '${_baseUrl}notify/delete';
+  static const String changePasswordUrl = '${_baseUrl}users/change_password';
+  static const String resetPasswordUrl = '${_baseUrl}auth/reset_password';
+  static const String createAnnouncementUrl = '${_baseUrl}pin/create';
+  static const String deleteUser = '${_baseUrl}users/delete';
 
-  static const  String createNotificationUrl  = '${_baseUrl}notify/create';
-  static   String dashBoardDetailsUrl(String token) => '${_baseUrl}analyses/total';
-  static   String getNotifications(String token) => '${_baseUrl}notify/index';
-  static   String bookmarkListUrl(String token) => '${_baseUrl}book/index';
-  static   String getPosts(String token) => '${_baseUrl}posts/index';
-  static   String getDashboardAnalysis(String token) => '${_baseUrl}analyses/total';
-  static   String getDraftedPosts(String token) => '${_baseUrl}posts/draft';
-  static   String getComments(String token, String post) => '${_baseUrl}comments/show?post_id=$post';
-  static   String getPostsDetails(String token,String postId) => '${_baseUrl}posts/show?post_id=$postId';
-  static   String filterPost(String token,String filterParams, String genre, String type) => '${_baseUrl}posts/filter?filter_by=$filterParams&genre=$genre&type=$type';
+  static const String createNotificationUrl = '${_baseUrl}notify/create';
+  static String dashBoardDetailsUrl(String token) =>
+      '${_baseUrl}analyses/total';
+  static String getNotifications(String token) => '${_baseUrl}notify/index';
+  static String bookmarkListUrl(String token) => '${_baseUrl}book/index';
+  static String getPosts(String token) => '${_baseUrl}posts/index';
+  static String getDashboardAnalysis(String token) =>
+      '${_baseUrl}analyses/total';
+  static String getDraftedPosts(String token) => '${_baseUrl}posts/draft';
+  static String getComments(String token, String post) =>
+      '${_baseUrl}comments/show?post_id=$post';
+  static String getPostsDetails(String token, String postId) =>
+      '${_baseUrl}posts/show?post_id=$postId';
+  static String filterPost(
+          String token, String filterParams, String genre, String type) =>
+      '${_baseUrl}posts/filter?filter_by=$filterParams&genre=$genre&type=$type';
 }

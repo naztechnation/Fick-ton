@@ -1,6 +1,6 @@
 class GetAllPosts {
   int? status;
-  String? message;
+  var message;
   PostData? data;
 
   GetAllPosts({this.status, this.message, this.data});
@@ -26,7 +26,7 @@ class PostData {
   List<Posts>? posts;
   List<String>? genres;
   List<String>? filterBy;
-   List<String>? type;
+  List<String>? type;
   List<Pinned>? pinned;
 
   PostData({this.posts, this.genres, this.filterBy});
@@ -62,18 +62,17 @@ class PostData {
     }
     return data;
   }
-   
-  }
+}
 
 class Pinned {
-  String? id;
-  String? content;
-  String? thumbnail;
-  String? videoLink;
-  String? author;
-  String? status;
-  String? createdAt;
-  String? updatedAt;
+  var id;
+  var content;
+  var thumbnail;
+  var videoLink;
+  var author;
+  var status;
+  var createdAt;
+  var updatedAt;
 
   Pinned(
       {this.id,
@@ -109,24 +108,25 @@ class Pinned {
     return data;
   }
 }
+
 class Posts {
-  String? id;
-  String? title;
-  String? content;
-  String? thumbnail;
-  String? content2;
-  String? image1;
-  String? image2;
-  String? videoLink;
-  String? author;
-  String? genre;
-  String? isTrending;
-  String? views;
-  String? likes;
-  String? createdAt;
-  String? updatedAt;
-  String? status;
-  String? isBooked;
+  var id;
+  var title;
+  var content;
+  var thumbnail;
+  var content2;
+  var image1;
+  var image2;
+  var videoLink;
+  var author;
+  var genre;
+  var isTrending;
+  var views;
+  var likes;
+  var createdAt;
+  var updatedAt;
+  var status;
+  var isBooked;
 
   Posts(
       {this.id,

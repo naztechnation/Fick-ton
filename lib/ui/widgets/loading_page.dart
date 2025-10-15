@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:fikkton/res/app_images.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../res/app_colors.dart';
 import 'image_view.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -10,12 +14,15 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: MediaQuery.sizeOf(context).height,
-        width: MediaQuery.sizeOf(context).width,
-        decoration: const BoxDecoration(
-            color:Colors.white,),
-        child: const Align(child: ImageView.asset(AppImages.loading2, height: 100, width: 100,)),
+        color: Colors.white,
+        child: Center(
+          child: Platform.isIOS
+              ? const CupertinoActivityIndicator()
+              : CircularProgressIndicator(
+                  color: AppColors.lightPrimary,
+                ),
+        ),
       ),
     );
-    
-    }}
+  }
+}

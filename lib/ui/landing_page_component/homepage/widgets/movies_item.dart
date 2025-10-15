@@ -1,4 +1,5 @@
 import 'package:fikkton/extentions/custom_string_extension.dart';
+import 'package:fikkton/res/app_colors.dart';
 import 'package:fikkton/res/app_images.dart';
 import 'package:fikkton/ui/widgets/image_view.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +10,16 @@ import '../../../../model/view_models/user_view_model.dart';
 
 class MoviesItems extends StatelessWidget {
   final Posts posts;
-   
-  const MoviesItems({super.key, required this.posts, });
+
+  const MoviesItems({
+    super.key,
+    required this.posts,
+  });
 
   @override
   Widget build(BuildContext context) {
     final timeFormat = Provider.of<UserViewModel>(context, listen: false);
-    
+
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -71,16 +75,21 @@ class MoviesItems extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  posts.genre?.capitalizeFirstOfEach ?? '',
+                  posts.genre?.toString().capitalizeFirstOfEach ?? '',
                   style: const TextStyle(
                       fontWeight: FontWeight.w400, fontSize: 14),
                 ),
                 const SizedBox(height: 12.0),
                 Text(
-                  posts.title?.capitalizeFirstOfEach.
-                  toString().replaceAll('&amp;amp;', '')
-      .replaceAll('&amp;quot;', '"')
-      .replaceAll('\n', '').replaceAll('&amp;', ',') ?? ''  ,
+                  posts.title
+                          ?.toString()
+                          .capitalizeFirstOfEach
+                          .toString()
+                          .replaceAll('&amp;amp;', '')
+                          .replaceAll('&amp;quot;', '"')
+                          .replaceAll('\n', '')
+                          .replaceAll('&amp;', ',') ??
+                      '',
                   style: const TextStyle(
                       fontWeight: FontWeight.w700, fontSize: 16),
                 ),
@@ -89,12 +98,14 @@ class MoviesItems extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                       timeFormat.getCurrentTime(int.parse(posts.updatedAt ?? '0')),
+                      timeFormat
+                          .getCurrentTime(int.parse(posts.updatedAt ?? '0')),
                     ),
                     const SizedBox(width: 8.0),
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
                       child: ImageView.svg(
+                        color: AppColors.lightPrimary,
                         posts.isBooked == '0'
                             ? AppImages.bookmarkOutline
                             : AppImages.bookmark,
@@ -111,7 +122,3 @@ class MoviesItems extends StatelessWidget {
     );
   }
 }
-
-
-
- 

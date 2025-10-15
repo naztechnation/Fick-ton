@@ -283,12 +283,12 @@ class _HomeState extends State<Home> {
                       child: SafeArea(
                         child: Column(
                           children: [
-                            
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Row(
                                     children: [
@@ -331,12 +331,13 @@ class _HomeState extends State<Home> {
                             Expanded(
                               child: SingleChildScrollView(
                                   child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                     Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 16.0),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0),
                                       child: CustomTab(
                                         list1: trendingPosts,
                                         list2: pinned,
@@ -370,20 +371,24 @@ class _HomeState extends State<Home> {
                                                                 pinned: pin,
                                                               ));
                                                     },
-                                                    image: pin.thumbnail ?? '',
+                                                    image: pin.thumbnail
+                                                            .toString() ??
+                                                        '',
                                                     content: pin.content
                                                             .toString()
                                                             .replaceAll(
                                                                 '&amp;amp;', '')
                                                             .replaceAll(
-                                                                '&amp;quot;', '"')
+                                                                '&amp;quot;',
+                                                                '"')
                                                             .replaceAll(
                                                                 '\n', '') ??
                                                         '',
                                                     time: timeFormat
-                                                        .getCurrentTime(int.parse(
-                                                            pin.updatedAt ??
-                                                                '0'))),
+                                                        .getCurrentTime(
+                                                            int.parse(
+                                                                pin.updatedAt ??
+                                                                    '0'))),
                                             ],
                                           ),
                                         ),
@@ -430,17 +435,20 @@ class _HomeState extends State<Home> {
                                                           context,
                                                           page:
                                                               MovieDetailsScreen(
-                                                            videoLinks: trendingPosts
-                                                                    .videoLink ??
-                                                                '',
+                                                            videoLinks:
+                                                                trendingPosts
+                                                                        .videoLink ??
+                                                                    '',
                                                             postId: trendingPosts
-                                                                    .id ??
+                                                                    .id
+                                                                    .toString() ??
                                                                 '',
                                                           ));
                                                     },
-                                                    image:
-                                                        trendingPosts.thumbnail ??
-                                                            '',
+                                                    image: trendingPosts
+                                                            .thumbnail
+                                                            .toString() ??
+                                                        '',
                                                     title: trendingPosts.title
                                                             .toString()
                                                             .replaceAll(
@@ -450,13 +458,13 @@ class _HomeState extends State<Home> {
                                                             .replaceAll(
                                                                 '\n', '') ??
                                                         '',
-                                                    genre:
-                                                        trendingPosts.genre ?? '',
-                                                    time: timeFormat
-                                                        .getCurrentTime(int.parse(
-                                                            trendingPosts
-                                                                    .updatedAt ??
-                                                                '0'))),
+                                                    genre: trendingPosts.genre
+                                                            .toString() ??
+                                                        '',
+                                                    time: timeFormat.getCurrentTime(
+                                                        int.parse(trendingPosts
+                                                                .updatedAt ??
+                                                            '0'))),
                                             ],
                                           ),
                                         ),
@@ -497,7 +505,7 @@ class _HomeState extends State<Home> {
                                           //               setState(() {
                                           //                 recent = item;
                                           //               });
-                        
+
                                           //               _userCubit
                                           //                   .getFilteredPost(
                                           //                       token: token,
@@ -523,11 +531,11 @@ class _HomeState extends State<Home> {
                                           //             context: context,
                                           //             onPressed: (item) {
                                           //               Navigator.pop(context);
-                        
+
                                           //               setState(() {
                                           //                 types = item;
                                           //               });
-                        
+
                                           //               _userCubit.getFilteredPost(
                                           //                   token: token,
                                           //                   genre: genres,
@@ -542,7 +550,8 @@ class _HomeState extends State<Home> {
                                           FilterContainer(
                                             text: genres,
                                             onPressed: () {
-                                              Modals.showBottomSheetModal(context,
+                                              Modals.showBottomSheetModal(
+                                                  context,
                                                   isDissmissible: true,
                                                   heightFactor: 1,
                                                   page: filterModalContent(
@@ -551,11 +560,11 @@ class _HomeState extends State<Home> {
                                                       context: context,
                                                       onPressed: (item) {
                                                         Navigator.pop(context);
-                        
+
                                                         setState(() {
                                                           genres = item;
                                                         });
-                        
+
                                                         _userCubit
                                                             .getFilteredPost(
                                                                 token: token,
@@ -573,7 +582,6 @@ class _HomeState extends State<Home> {
                                       height: 20,
                                     ),
                                     Divider(),
-                                    
                                     if (allPosts.isEmpty) ...[
                                       Container(
                                         height: 390,
@@ -597,7 +605,7 @@ class _HomeState extends State<Home> {
                                       )
                                     ] else ...[
                                       ListView.builder(
-                                        padding: EdgeInsets.all(0),
+                                          padding: EdgeInsets.all(0),
                                           itemCount: allPosts.length,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
@@ -609,17 +617,19 @@ class _HomeState extends State<Home> {
                                                   AppNavigator.pushAndStackPage(
                                                       context,
                                                       page: MovieDetailsScreen(
-                                                        videoLinks:
-                                                            allPosts[index]
-                                                                    .videoLink ??
-                                                                '',
-                                                        postId:
-                                                            allPosts[index].id ??
-                                                                '',
+                                                        videoLinks: allPosts[
+                                                                    index]
+                                                                .videoLink ??
+                                                            '',
+                                                        postId: allPosts[index]
+                                                                .id
+                                                                .toString() ??
+                                                            '',
                                                       ));
                                                 },
                                                 child: MoviesItems(
-                                                    posts: allPosts[index],));
+                                                  posts: allPosts[index],
+                                                ));
                                           }),
                                       const SizedBox(
                                         height: 30,

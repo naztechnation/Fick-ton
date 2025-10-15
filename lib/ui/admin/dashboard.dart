@@ -111,7 +111,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   width: 12,
                                 ),
                                 Text(
-                                  'Fik-kton',
+                                  'Mulo',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),
@@ -132,7 +132,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               horizontal: 10.0, vertical: 20),
                           child: Column(
                             children: [
-                             
                               const Text(
                                 'Dashboard',
                                 style: TextStyle(

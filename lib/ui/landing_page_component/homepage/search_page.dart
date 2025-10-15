@@ -34,8 +34,10 @@ class _SearchPageState extends State<SearchPage> {
   void searchPostList(String query) {
     setState(() {
       postsList = widget.postsLists
-          .where((posts) =>
-              posts.title.toString().toLowerCase().contains(query.toLowerCase()))
+          .where((posts) => posts.title
+              .toString()
+              .toLowerCase()
+              .contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -70,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
                   width: 30,
                 ),
                 const Text(
-                  "Fik-kton",
+                  "Mulo",
                   style: TextStyle(fontSize: 18),
                 ),
               ],
@@ -145,8 +147,9 @@ class _SearchPageState extends State<SearchPage> {
                               onTap: () {
                                 AppNavigator.pushAndStackPage(context,
                                     page: MovieDetailsScreen(
-                                      videoLinks: postsList[index].videoLink ?? '',
-                                      postId: postsList[index].id?? '',
+                                      videoLinks:
+                                          postsList[index].videoLink ?? '',
+                                      postId: postsList[index].id ?? '',
                                     ));
                               },
                               child: Container(
