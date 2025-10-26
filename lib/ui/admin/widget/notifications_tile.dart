@@ -104,7 +104,7 @@ class NotificationTile extends StatelessWidget {
                       message:
                           'Are you sure you want to delete this notification. This cannot be Undone.',
                       callback: () {
-                    onDeleteTapped(notifications[index].id ?? '');
+                    onDeleteTapped(notifications[index].id.toString() ?? '');
                   });
                 },
                 child: const ImageView.asset(

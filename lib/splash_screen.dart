@@ -98,7 +98,7 @@ class SplashScreenState extends State<SplashScreen>
                     fit: BoxFit.cover)),
           ),
           Container(
-            color: AppColors.lightPrimary.withOpacity(0.97),
+            color: Colors.black.withOpacity(0.8),
             height: MediaQuery.sizeOf(context).height,
             width: MediaQuery.sizeOf(context).width,
           ),

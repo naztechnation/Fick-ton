@@ -28,13 +28,14 @@ class NotificationData {
 }
 
 class NotificationsInfo {
-  String? id;
+  var id;
   String? title;
   String? content;
   String? type;
   String? createdAt;
 
-  NotificationsInfo({this.id, this.title, this.content, this.type, this.createdAt});
+  NotificationsInfo(
+      {this.id, this.title, this.content, this.type, this.createdAt});
 
   NotificationsInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];

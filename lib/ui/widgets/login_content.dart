@@ -1,7 +1,7 @@
 import 'package:fikkton/ui/auth/forgot_password.dart';
 import 'package:fikkton/ui/landing_page_component/main_page.dart';
 import 'package:fikkton/utils/navigator/page_navigator.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -176,8 +176,8 @@ class _LoginContentState extends State<LoginContent> {
                     state.userData.data?.userId.toString() ?? "");
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
-                FirebaseMessaging messaging = FirebaseMessaging.instance;
-                messaging.subscribeToTopic('subscribed_users');
+                // FirebaseMessaging messaging = FirebaseMessaging.instance;
+                // messaging.subscribeToTopic('subscribed_users');
                 AppNavigator.pushAndReplacePage(context,
                     page: OtpScreen(
                       email: _emailController.text.trim(),

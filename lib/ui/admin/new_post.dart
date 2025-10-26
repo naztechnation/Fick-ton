@@ -130,7 +130,10 @@ class _NewPostState extends State<Post> {
             user.clearImage();
             user.clearImage1();
             user.clearImage2();
-          } else {}
+          } else {
+            Modals.showToast(state.createPost.message ?? '',
+                messageType: MessageType.error);
+          }
         } else if (state is PostDetailsLoaded) {
           // Modals.showToast(state.postDetails.message ?? '',
           //     messageType: MessageType.success);

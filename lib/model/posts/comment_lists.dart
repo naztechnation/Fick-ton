@@ -28,14 +28,20 @@ class CommentData {
 }
 
 class Comments {
-  String? id;
-  String? userId;
-  String? comment;
-  String? postId;
-  String? createdAt;
-  String? email;
+  var id;
+  var userId;
+  var comment;
+  var postId;
+  var createdAt;
+  var email;
 
-  Comments({this.id, this.userId, this.comment, this.postId, this.createdAt, this.email});
+  Comments(
+      {this.id,
+      this.userId,
+      this.comment,
+      this.postId,
+      this.createdAt,
+      this.email});
 
   Comments.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,7 +49,7 @@ class Comments {
     comment = json['comment'];
     postId = json['post_id'];
     createdAt = json['created_at'];
-     email = json['email'];
+    email = json['email'];
   }
 
   Map<String, dynamic> toJson() {
@@ -54,7 +60,7 @@ class Comments {
     data['post_id'] = postId;
     data['created_at'] = createdAt;
     data['email'] = email;
-    
+
     return data;
   }
 }

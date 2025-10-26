@@ -167,7 +167,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   Expanded(
                                       child: dashBoardContainer(
                                     description: Text(
-                                      analysis?.data?.posts ?? '',
+                                      "${analysis?.data?.posts ?? ''}",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
@@ -185,7 +185,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   Expanded(
                                       child: dashBoardContainer(
                                     description: Text(
-                                      analysis?.data?.users ?? '',
+                                      "${analysis?.data?.users ?? ''}",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
@@ -196,7 +196,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   Expanded(
                                       child: dashBoardContainer(
                                     description: Text(
-                                      analysis?.data?.views ?? '',
+                                      "${analysis?.data?.views ?? ''}",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),

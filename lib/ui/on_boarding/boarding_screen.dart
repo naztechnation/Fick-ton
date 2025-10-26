@@ -64,26 +64,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       backgroundColor: colors[_currentPage],
       body: Stack(
         children: [
-          
           Positioned.fill(
             child: Image.asset(
               images[_currentPage],
               fit: BoxFit.cover,
             ),
           ),
-      
-           
+
           Positioned.fill(
             child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImages.rectangle),
-                  fit: BoxFit.cover,
-                ),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.8),
+
+                // image: DecorationImage(
+                //   image: AssetImage(AppImages.rectangle),
+                //   fit: BoxFit.cover,
+                // ),
               ),
             ),
           ),
-      
+
           // Onboarding content
           Column(
             children: [
@@ -116,7 +116,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
-                              color: Colors.white60,
+                              color: Colors.white,
                               fontSize: (width <= 550) ? 17 : 25,
                             ),
                           ),
@@ -140,7 +140,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         (int index) => _buildDots(index: index),
                       ),
                     ),
-      
+
                     // Button
                     _currentPage + 1 == contents.length
                         ? Padding(
@@ -151,8 +151,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               borderRadius: 30,
                               onPressed: () {
                                 StorageHandler.saveOnboardState('true');
-                               AppNavigator.pushAndReplacePage(context,
-                      page:   LandingPage(token: "",));
+                                AppNavigator.pushAndReplacePage(context,
+                                    page: LandingPage(
+                                      token: "",
+                                    ));
                               },
                               child: const Text(
                                 "Start",
@@ -179,7 +181,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ),
                           ),
-      
+
                     // Skip button
                     if (_currentPage + 1 != contents.length)
                       TextButton(

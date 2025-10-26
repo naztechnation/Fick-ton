@@ -1,5 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,19 +10,19 @@ import 'provider/items.dart';
 import 'res/app_routes.dart';
 import 'res/app_strings.dart';
 
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await setupFlutterNotifications();
-  showFlutterNotification(message);
-}
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await setupFlutterNotifications();
+//   showFlutterNotification(message);
+// }
 
-AndroidNotificationChannel channel = const AndroidNotificationChannel(
-  'high_importance_channel',
-  'High Importance Notifications',
-  description: 'This channel is used for important notifications.',
-  importance: Importance.high,
-);
+// AndroidNotificationChannel channel = const AndroidNotificationChannel(
+//   'high_importance_channel',
+//   'High Importance Notifications',
+//   description: 'This channel is used for important notifications.',
+//   importance: Importance.high,
+// );
 
 bool isFlutterLocalNotificationsInitialized = false;
 
@@ -31,58 +31,58 @@ Future<void> setupFlutterNotifications() async {
     return;
   }
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+  // await flutterLocalNotificationsPlugin
+  //     .resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>()
+  //     ?.createNotificationChannel(channel);
 
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+  //   alert: true,
+  //   badge: true,
+  //   sound: true,
+  // );
 
   isFlutterLocalNotificationsInitialized = true;
 }
 
-void showFlutterNotification(RemoteMessage message) {
-  RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-  if (notification != null && android != null && !kIsWeb) {
-    flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          icon: '@drawable/launcher_icon',
-        ),
-      ),
-    );
-  }
-}
+// void showFlutterNotification(RemoteMessage message) {
+//   RemoteNotification? notification = message.notification;
+//   AndroidNotification? android = message.notification?.android;
+//   if (notification != null && android != null && !kIsWeb) {
+//     flutterLocalNotificationsPlugin.show(
+//       notification.hashCode,
+//       notification.title,
+//       notification.body,
+//       NotificationDetails(
+//         android: AndroidNotificationDetails(
+//           channel.id,
+//           channel.name,
+//           channelDescription: channel.description,
+//           icon: '@drawable/launcher_icon',
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+// FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//     FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
 
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  // FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
-  _firebaseMessaging.getToken().then((token) async {});
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // _firebaseMessaging.getToken().then((token) async {});
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    if (message.data != {}) {
-      Future.delayed(Duration(seconds: 10), () {});
-      showFlutterNotification(message);
-    }
-  });
+  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   if (message.data != {}) {
+  //     Future.delayed(Duration(seconds: 10), () {});
+  //     showFlutterNotification(message);
+  //   }
+  // });
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
@@ -114,20 +114,20 @@ class _FikktonState extends State<Fikkton> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    FirebaseMessaging.instance.getInitialMessage().then(
-          (value) => setState(
-            () {
-              _resolved = true;
-              initialMessage = value?.data.toString();
-            },
-          ),
-        );
+    // FirebaseMessaging.instance.getInitialMessage().then(
+    //       (value) => setState(
+    //         () {
+    //           _resolved = true;
+    //           initialMessage = value?.data.toString();
+    //         },
+    //       ),
+    //     );
 
-    FirebaseMessaging.onMessage.listen(showFlutterNotification);
+    // FirebaseMessaging.onMessage.listen(showFlutterNotification);
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
-    });
+    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    //   print('A new onMessageOpenedApp event was published!');
+    // });
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }

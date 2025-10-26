@@ -68,8 +68,7 @@ class _DraftPageState extends State<DraftPage> {
           if (state.createPost.status == 1) {
             Modals.showToast(state.createPost.message ?? '',
                 messageType: MessageType.success);
-                        _userCubit.getDraftPost(url: AppStrings.getDraftedPosts(token));
-
+            _userCubit.getDraftPost(url: AppStrings.getDraftedPosts(token));
           } else {
             draftedPosts = [];
           }
@@ -81,7 +80,7 @@ class _DraftPageState extends State<DraftPage> {
 
             user.setDraftLength(draftedLength: draftedPosts.length.toString());
           } else {
-            if(state.postLists.message == 'No content available'){
+            if (state.postLists.message == 'No content available') {
               draftedPosts = [];
               user.setDraftLength(draftedLength: '0');
             }
@@ -157,10 +156,9 @@ class _DraftPageState extends State<DraftPage> {
                               user.imageURl1 ?? File(''),
                               user.imageURl2 ?? File(''),
                               draftedPosts[index].content2 ?? '',
-
                               '1',
                               AppStrings.updatePost,
-                              draftedPosts[index].id ?? '',
+                              draftedPosts[index].id.toString() ?? '',
                               draftedPosts[index].title ?? '',
                               draftedPosts[index].content ?? '',
                               draftedPosts[index].videoLink ?? '',
@@ -169,7 +167,8 @@ class _DraftPageState extends State<DraftPage> {
                               draftedPosts[index].isTrending.toString());
                         },
                         onDeleteTapped: () {
-                          _deletePost(context, draftedPosts[index].id ?? '');
+                          _deletePost(
+                              context, draftedPosts[index].id.toString() ?? '');
                         },
                       );
                     });
@@ -202,16 +201,16 @@ class _DraftPageState extends State<DraftPage> {
     ctx.read<UserCubit>().createPost(
           url: url,
           title: title,
-         
           postId: postId,
           content: content,
           content2: content2,
-           
           thumbnail: thumbnail,
           genre: genre,
           status: status,
           author: author,
-          trending: trending, image1: image1, image2: image2,
+          trending: trending,
+          image1: image1,
+          image2: image2,
         );
   }
 }

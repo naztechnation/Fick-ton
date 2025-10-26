@@ -23,10 +23,10 @@ class DashBoardAnalysis {
 }
 
 class Admin {
-  String? comments;
-  String? users;
-  String? posts;
-  String? views;
+  var comments;
+  var users;
+  var posts;
+  var views;
   UsersAnalysis? usersAnalysis;
   UsersAnalysis? viewsAnalysis;
 
@@ -111,7 +111,7 @@ class UsersAnalysis {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =   Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['Jan'] = this.jan;
     data['Feb'] = this.feb;
     data['Mar'] = this.mar;

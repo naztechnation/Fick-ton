@@ -118,7 +118,7 @@ class _AnnouncementsState extends State<AnnouncementsTab> {
                       return AnnounceItems(
                         pin: pinned[index],
                         onDeleteTapped: () {
-                          _deletePost(context, pinned[index].id ?? '');
+                          _deletePost(context, "${pinned[index].id ?? ''}");
                         },
                       );
                     });

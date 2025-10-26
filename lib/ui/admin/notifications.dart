@@ -1,3 +1,4 @@
+import 'package:fikkton/res/enum.dart';
 import 'package:fikkton/ui/admin/widget/notifications_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,7 +71,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         }
         if (state is DelNotificationsLoaded) {
           if (state.notify.status == 1) {
-            Modals.showToast(state.notify.message ?? '');
+            Modals.showToast(state.notify.message ?? '',
+                messageType: MessageType.success);
             _userCubit.getNotifications(token: token);
           } else {}
         }

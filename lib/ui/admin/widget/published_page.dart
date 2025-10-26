@@ -121,7 +121,8 @@ class _PublishedPageState extends State<PublishedPage> {
                           return PublishedItems(
                             posts: allPosts[index],
                             onTap: () {
-                              _deletePost(context, allPosts[index].id ?? '');
+                              _deletePost(
+                                  context, "${allPosts[index].id ?? ''}");
                             },
                           );
                         });
@@ -130,7 +131,8 @@ class _PublishedPageState extends State<PublishedPage> {
   }
 
   _deletePost(BuildContext ctx, String postId) {
-    ctx.read<UserCubit>().deletePost(postId: postId, token: token, url: AppStrings.deletePost, pin: '');
+    ctx.read<UserCubit>().deletePost(
+        postId: postId, token: token, url: AppStrings.deletePost, pin: '');
     FocusScope.of(ctx).unfocus();
   }
 }
